@@ -20,6 +20,20 @@ html, body {
   height: 80%;
 }
 
+.legend {
+  text-align: left;
+  line-height: 18px;
+  color: #555;
+}
+
+.legend ul {
+  padding-left: 0px;
+}
+
+.legend li {
+  list-style-type: none;
+}
+
 /* navigation */
 
 .nav {
