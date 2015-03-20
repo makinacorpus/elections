@@ -43,7 +43,7 @@ var App = function(){
   }
 
   function highlightFeature(event){
-    //this.setStyle({'weight': 0.1});
+    this.setStyle({'weight': 3});
     var dep = this.feature.properties.DEP;
     var canton = this.feature.properties.CT;
     if( !regex.exec(dep) ){
@@ -65,19 +65,26 @@ var App = function(){
   
   self.legend.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'legend info');
+    this.update();
     return this._div;
   };
 
-
   self.legend.update = function (data) {
-    var rows = [];
-    $.each(data.binomes, function(){
-      var parti = this.parti;
-      var nom = this.nom;
-      rows.push('<li><div>' + parti + '<br>' + nom + '</div></li>')
-    })
-    this._div.innerHTML = '<b> CANTON : ' + data.libelle + '</b><ul>' + rows.join("") + '</ul>';
-    this._div.innerHTML += "Survolez un bureau de vote pour plus de détails";
+    var html = "";
+    if(!!data){
+      var rows = [];
+      $.each(data.binomes, function(){
+        var parti = this.parti;
+        var nom = this.nom;
+        rows.push('<li><div>' + parti + '<br>' + nom + '</div></li>')
+      })
+      html = '<b> CANTON : ' + data.libelle + '</b><ul>' + rows.join("") + '</ul>';
+    }
+    else{
+      html = '<b> Candidats par canton </b><p>Survolez un bureau de vote pour plus de détails</p>';
+    }
+    this._div.innerHTML = html;
+
   };
 
   /** Init **/
