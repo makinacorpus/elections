@@ -5,6 +5,7 @@ var App = function(){
   self.tileLayer;
   self.contourLayer;
   self.map;
+  self.data;
 
   /** options **/
 
@@ -29,6 +30,7 @@ var App = function(){
       onEachFeature: onEachFeature,
       renderer: canvas
   });
+  var regex = new RegExp(/[A-Za-z]+/)
 
   /** Related to feature **/
 
@@ -40,19 +42,54 @@ var App = function(){
     });
   }
 
-  function highlightFeature(feature, layer){
-    this.setStyle({'weight': 2, fillOpacity: 0.4});
+  function highlightFeature(event){
+    //this.setStyle({'weight': 0.1});
+    var dep = this.feature.properties.DEP;
+    var canton = this.feature.properties.CT;
+    if( !regex.exec(dep) ){
+      dep = parseInt(dep);
+    }
+    if( !regex.exec(canton) ){
+      canton = parseInt(canton);
+    }
+    self.legend.update(self.data[dep].cantons[canton]);
   }
 
   function resetHighlight(feature, layer){
     this.setStyle({'weight': 0.4, fillOpacity: 0})
   }
+  
+  /** Legends **/
+
+  self.legend = L.control({position: 'topright'});
+  
+  self.legend.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'legend info');
+    return this._div;
+  };
+
+
+  self.legend.update = function (data) {
+    var rows = [];
+    $.each(data.binomes, function(){
+      var parti = this.parti;
+      var nom = this.nom;
+      rows.push('<li><div>' + parti + '<br>' + nom + '</div></li>')
+    })
+    this._div.innerHTML = '<b> CANTON : ' + data.libelle + '</b><ul>' + rows.join("") + '</ul>';
+    this._div.innerHTML += "Survolez un bureau de vote pour plus de détails";
+  };
 
   /** Init **/
 
   self.init = function(){
     // init map
     self.map = L.map(options.containerId);
+    self.legend.addTo(self.map)
+
+    $.getJSON("./data/candidatures.json", function(data){
+      self.data = data;
+    });
 
     // center on France
     self.map.setView(new L.LatLng(46.603354,1.8883335), 6);
@@ -72,27 +109,5 @@ var App = function(){
 
     contourLayer.addTo(self.map);
     self.tileLayer.addTo(self.map);
-
-        // legend
-        var legend = L.control({position: 'topright'});
-        legend.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'legend info');
-            this.update();
-            return this._div;
-        };
-        legend.update = function (bureau) {
-            var html = '<h3>Résultats 1<sup>er</sup> tour</h3>';
-            //~ if(bureau && results[bureau]) {
-                //~ html+='<ul>';
-                //~ for(var parti in results[bureau].scores) {
-                    //~ html += '<li>'+parti+' '+ results[bureau].scores[parti]+'</li>';
-                //~ }
-                //~ html+='</ul>';
-            //~ }
-            //~ html += 'Survolez un bureau de vote pour plus de détails'
-            this._div.innerHTML = html;
-        };
-        legend.addTo(self.map);
-
   }
 }
