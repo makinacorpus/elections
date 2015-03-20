@@ -28,14 +28,14 @@ var App = function(){
 
 
   function onEachFeature(feature, layer) {
-    layer.setStyle({ color: '#f00', weight: 1, fillOpacity: 0});
+    layer.setStyle({ color: '#f00', weight: 0.4, fillOpacity: 0});
     layer.on({
       mouseover: highlightFeature,
       mouseout: resetHighlight
     });
   }
   function highlightFeature(feature, layer){
-    this.setStyle({'weight': 2, fillOpacity: 1});
+    this.setStyle({'weight': 2, fillOpacity: 0.4});
   }
   function resetHighlight(feature, layer){
     this.setStyle({'weight': 1, fillOpacity: 0})
