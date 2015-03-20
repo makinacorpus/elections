@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <script>
+      L_PREFER_CANVAS = true; // experimental
+    </script>
+    <head>
+      <title>Élections départementales</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="http://frommelt.fr/leaflet-0.8-dev/leaflet.css" />
+      <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="./css/app.css" />
+    </head>
+
+    <body>
+      <div id="header"></div>
+      <div id="map"></div>
+      <div id="footer"></div>
+    </body>
+
+    <script src="http://frommelt.fr/leaflet-0.8-dev/leaflet.js"></script>
+    <script src="./js/jquery-2.1.3.min.js"></script>
+    <script src="./js/leaflet-omnivore.js"></script>
+    <script src="./js/departement.js"></script>
+    <script>
+    $(document).ready(function(){
+      var app = new App();
+      app.init();
+      console.log("init")
+    });
+    </script>
+</html>
+
