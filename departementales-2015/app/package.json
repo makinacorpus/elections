@@ -1,0 +1,18 @@
+{
+  "name": "election",
+  "version": "0.0.1",
+  "description": "A simple server.",
+  "keywords": [],
+  "author": "",
+  "contributors": [],
+  "license": "",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "http-server": "~0.8.0"
+  }, 
+  "bin": {
+    "http-server": "./node_modules/http-server/bin/http-server"
+  }
+}
