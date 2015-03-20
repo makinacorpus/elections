@@ -74,7 +74,7 @@ var App = function(){
     if(!!data){
       var rows = [];
       $.each(data.binomes, function(){
-        var parti = this.parti;
+        var parti = this.parti.substr(3);
         var nom = this.nom;
         rows.push('<li><div>' + parti + '<br>' + nom + '</div></li>')
       })
