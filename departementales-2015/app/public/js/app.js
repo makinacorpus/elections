@@ -38,16 +38,16 @@ var App = function(){
     this.setStyle({'weight': 2, fillOpacity: 0.4});
   }
   function resetHighlight(feature, layer){
-    this.setStyle({'weight': 1, fillOpacity: 0})
+    this.setStyle({'weight': 0.4, fillOpacity: 0})
   }
 
 
   self.init = function(){
     // init map
-   self.map = L.map(options.containerId);
+    self.map = L.map(options.containerId);
 
     // center on France
-   self.map.setView(new L.LatLng(46.603354,1.8883335), 6);
+    self.map.setView(new L.LatLng(46.603354,1.8883335), 6);
     
     // add an OpenStreetMap tile layer
     self.tileLayer =L.tileLayer(options.tileUrl, {
