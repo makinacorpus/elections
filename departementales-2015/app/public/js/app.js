@@ -6,6 +6,8 @@ var App = function(){
   self.contourLayer;
   self.map;
 
+  /** options **/
+
   var options = {
     tileUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
     candidats: {
@@ -19,6 +21,8 @@ var App = function(){
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }
 
+  /** **/
+
   var canvas = L.canvas();
 
   var customLayer = L.geoJson(null, {
@@ -26,6 +30,7 @@ var App = function(){
       renderer: canvas
   });
 
+  /** Related to feature **/
 
   function onEachFeature(feature, layer) {
     layer.setStyle({ color: '#f00', weight: 1, fillOpacity: 0});
@@ -34,25 +39,29 @@ var App = function(){
       mouseout: resetHighlight
     });
   }
+
   function highlightFeature(feature, layer){
     this.setStyle({'weight': 2, fillOpacity: 1});
   }
+
   function resetHighlight(feature, layer){
     this.setStyle({'weight': 1, fillOpacity: 0})
   }
 
+  /** Init **/
 
   self.init = function(){
     // init map
-   self.map = L.map(options.containerId);
+    self.map = L.map(options.containerId);
 
     // center on France
-   self.map.setView(new L.LatLng(46.603354,1.8883335), 6);
-    
+    self.map.setView(new L.LatLng(46.603354,1.8883335), 6);
+      
     // add an OpenStreetMap tile layer
     self.tileLayer =L.tileLayer(options.tileUrl, {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution: options.attribution
     })
+
     if(options.contour.type === "topojson"){
       var contourLayer = omnivore.topojson(options.contour.url, null, customLayer);
       // small fix
