@@ -35,13 +35,11 @@ var App = function() {
 
         // read result from csv
         var results = {};
-        $.get('../../data/resultats/tour1/'+departement+'.csv', null, function(data) {
-            var lines = data.split('\n');
-            for(var i=1;i<lines.length;i++) {
-                var row = lines[i].split(';');
-                var bureau = row[1];
-                var parti = row[3];
-                var score = row[4];
+        $.getJSON('../../data/resultats/tour1/'+departement+'.json', function(data) {
+            for(var i=1;i<data.length;i++) {
+                var bureau = data[i][1];
+                var parti = data[i][3];
+                var score = data[i][4];
                 if(!results[bureau]) {
                     results[bureau] = {
                         scores: {},
