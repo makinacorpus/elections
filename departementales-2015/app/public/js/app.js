@@ -33,7 +33,7 @@ var App = function(){
   /** Related to feature **/
 
   function onEachFeature(feature, layer) {
-    layer.setStyle({ color: '#f00', weight: 1, fillOpacity: 0});
+    layer.setStyle({ color: '#f00', weight: 0.4, fillOpacity: 0});
     layer.on({
       mouseover: highlightFeature,
       mouseout: resetHighlight
@@ -41,11 +41,11 @@ var App = function(){
   }
 
   function highlightFeature(feature, layer){
-    this.setStyle({'weight': 2, fillOpacity: 1});
+    this.setStyle({'weight': 2, fillOpacity: 0.4});
   }
 
   function resetHighlight(feature, layer){
-    this.setStyle({'weight': 1, fillOpacity: 0})
+    this.setStyle({'weight': 0.4, fillOpacity: 0})
   }
 
   /** Init **/
