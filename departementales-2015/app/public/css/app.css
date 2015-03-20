@@ -20,6 +20,15 @@ html, body {
   height: 80%;
 }
 
+.info {
+  padding: 6px 8px;
+  font-family: 'Cabin', sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  min-width: 390px;
+}
+
 .legend {
   text-align: left;
   line-height: 18px;
@@ -32,6 +41,10 @@ html, body {
 
 .legend li {
   list-style-type: none;
+}
+
+.leaflet-bar a.leaflet-control-touchhover-toggled {
+  background: #888;
 }
 
 /* navigation */

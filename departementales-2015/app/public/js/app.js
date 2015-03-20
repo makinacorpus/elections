@@ -72,5 +72,27 @@ var App = function(){
 
     contourLayer.addTo(self.map);
     self.tileLayer.addTo(self.map);
+
+        // legend
+        var legend = L.control({position: 'topright'});
+        legend.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'legend info');
+            this.update();
+            return this._div;
+        };
+        legend.update = function (bureau) {
+            var html = '<h3>Résultats 1<sup>er</sup> tour</h3>';
+            //~ if(bureau && results[bureau]) {
+                //~ html+='<ul>';
+                //~ for(var parti in results[bureau].scores) {
+                    //~ html += '<li>'+parti+' '+ results[bureau].scores[parti]+'</li>';
+                //~ }
+                //~ html+='</ul>';
+            //~ }
+            //~ html += 'Survolez un bureau de vote pour plus de détails'
+            this._div.innerHTML = html;
+        };
+        legend.addTo(self.map);
+
   }
 }
