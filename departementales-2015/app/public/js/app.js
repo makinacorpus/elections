@@ -10,7 +10,7 @@ var App = function(){
   /** options **/
 
   var options = {
-    tileUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
     candidats: {
 
     },
@@ -19,7 +19,7 @@ var App = function(){
         type: 'topojson',
     },
     containerId: 'map',
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    attribution: 'Tiles by <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }
 
   /** **/
