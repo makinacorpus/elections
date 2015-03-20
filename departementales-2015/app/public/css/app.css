@@ -1,3 +1,38 @@
-#map{
-    height: 800px;
+
+html, body {
+  height:100%;
+}
+
+
+/* Header */
+
+#logo {
+  float: right;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 200px;
+}
+
+/* Carte */
+
+#map {
+  width: 100%;
+  height: 80%;
+}
+
+/* navigation */
+
+.nav {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0.5em;
+}
+
+.nav li {
+  padding: 2px 5px;
+  border-right: #CCC solid 1px;
+}
+
+.inline li {
+  float: left;
 }
