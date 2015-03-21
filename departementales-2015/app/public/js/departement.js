@@ -10,7 +10,21 @@ var App = function() {
         'ABS': 'grey',
     };
     var self = this;
-    var departement = location.search.slice(location.search.indexOf("dep=")+4, location.search.indexOf("dep=")+6);
+
+    var departement;
+
+    (function () {
+        var qs = {}, qsa = [];
+        if (location.search.length) {
+            qsa = location.search.substr(1).split('&');
+            qsa.forEach(function (element, index) {
+                var array = element.split('=');
+                qs[array[0]] = array[1];
+            });
+        }
+        departement = qs.dep || '31';
+    }());
+
     var options = {
         tileUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
         contour: {
