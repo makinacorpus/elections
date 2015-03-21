@@ -35,7 +35,7 @@ var App = function(){
   /** Related to feature **/
 
   function onEachFeature(feature, layer) {
-    layer.setStyle({ color: '#f00', weight: 0.4, fillOpacity: 0});
+    layer.setStyle({ color: '#CCC', weight: 0.5, fillColor: 'darkgrey', fillOpacity: 0.7});
     layer.on({
       mouseover: highlightFeature,
       mouseout: resetHighlight
@@ -43,7 +43,7 @@ var App = function(){
   }
 
   function highlightFeature(event){
-    this.setStyle({'weight': 3});
+    this.setStyle({weight: 3, fillOpacity: 0});
     var dep = this.feature.properties.DEP;
     var canton = this.feature.properties.CT;
     if( !regex.exec(dep) ){
@@ -56,7 +56,7 @@ var App = function(){
   }
 
   function resetHighlight(feature, layer){
-    this.setStyle({'weight': 0.4, fillOpacity: 0})
+    this.setStyle({weight: 0.5, fillColor: 'darkgrey', fillOpacity: 0.7})
   }
   
   /** Legends **/
