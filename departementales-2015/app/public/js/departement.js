@@ -1,4 +1,24 @@
-var App = function() {
+var App = function(dataset) {
+
+    function _dptFromQueryString () {
+        var qs = {}, qsa = [];
+        if (location.search.length) {
+            qsa = location.search.substr(1).split('&');
+            qsa.forEach(function (element, index) {
+                var array = element.split('=');
+                qs[array[0]] = array[1];
+            });
+        }
+        return qs.dep || '31';
+    }
+
+    var departement;
+
+    if (dataset && dataset.dpt) {
+        departement = dataset.dpt;
+    } else {
+        departement = _dptFromQueryString();
+    }
 
     var colors = {
         // TO BE COMPLETED
@@ -11,19 +31,8 @@ var App = function() {
     };
     var self = this;
 
-    var departement;
 
-    (function () {
-        var qs = {}, qsa = [];
-        if (location.search.length) {
-            qsa = location.search.substr(1).split('&');
-            qsa.forEach(function (element, index) {
-                var array = element.split('=');
-                qs[array[0]] = array[1];
-            });
-        }
-        departement = qs.dep || '31';
-    }());
+
 
     var options = {
         tileUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',

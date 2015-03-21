@@ -20,23 +20,44 @@
       <footer id="footer"></footer>
     </body>
 
+    <script src="http://blog.apps.npr.org/pym.js/dist/pym.min.js"></script>
     <script src="http://frommelt.fr/leaflet-0.8-dev/leaflet.js"></script>
     <script src="./js/jquery-2.1.3.min.js"></script>
     <script src="./js/leaflet-omnivore.js"></script>
     <script src="./js/departement.js"></script>
     <script>
-    $(document).ready(function(){
-      var app = new App();
-      app.init();
-      console.log("init")
-    });
-    </script>
+      jQuery(document).ready(function($) {
+        var dataset, pymChild, app;
 
-    <script src="http://blog.apps.npr.org/pym.js/dist/pym.min.js"></script>
-    <script>
-      if (self !== top) {
-        var pymChild = new pym.Child();
-      }
+        /**
+         * Only if inside an iframe
+         */
+        if (self !== top && pym) {
+          pymChild = new pym.Child();
+
+          /**
+           * Inform parent we are ready
+           */
+          pymChild.sendMessage('event', 'ready');
+
+          /**
+           * Manage data sent by parent
+           */
+          pymChild.onMessage('data', function (data) {
+            try {
+              dataset = JSON.parse(data);
+              app = new App(dataset);
+              app.init();
+            } catch (e) {
+              console.error("Parsing error:", e);
+              app = new App();
+              app.init();
+            }
+          });
+        } else {
+          app = new App();
+          app.init();
+        }
+      });
     </script>
 </html>
-
