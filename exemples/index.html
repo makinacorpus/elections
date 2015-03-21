@@ -1,0 +1,78 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Exemple d'integration des cartes Makina Corpus</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css">
+
+        <style>
+            body {
+                padding: 2em 10em;
+            }
+            iframe {
+                outline: 1px dotted #eee;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h1>Exemple d'integration des cartes</h1>
+
+
+        <h2>Appel du SDK</h2>
+        <p>Chargement asynchrone du SDK javascript,<br>
+        <em>(une seule fois pour chaque page où doit être insérée une carte)</em></p>
+        <blockquote>
+            <code>
+                <pre>
+&lt;script&gt;(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+js.async=true; js.src = "http://makinacorpus.github.io/elections/iframe-loader/mkc.js";
+fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader'));&lt;/script&gt;
+                </pre>
+            </code>
+        </blockquote>
+
+        <h3>OU</h3>
+
+        <blockquote>
+            <code>
+                <pre>
+&lt;script src="http://makinacorpus.github.io/elections/iframe-loader/mkc.js" id="mkc-iframe-loader" async&gt;&lt;/script&gt;
+                </pre>
+            </code>
+        </blockquote>
+
+        <h2>Insertion d'un carte</h2>
+
+            <p>La carte sera insérée à l'emplacement de cette balise</p>
+
+            <blockquote>
+                <code>
+                    <pre>
+&lt;div class="mkc-placeholder" data-source="2015-cantons-et-candidats"&gt;&lt;/div&gt;
+                    </pre>
+                </code>
+            </blockquote>
+
+        <div class="mkc-placeholder" data-source="2015-cantons-et-candidats"></div>
+
+            <blockquote>
+                <code>
+                    <pre>
+&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"&gt;&lt;/div&gt;
+                    </pre>
+                </code>
+            </blockquote>
+
+        <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"></div>
+
+        <script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+        js.async=true; js.src = "http://makinacorpus.github.io/elections/iframe-loader/mkc.js";
+        fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader'));</script>
+    </body>
+</html>
