@@ -52,7 +52,7 @@ var App = function(){
     if( !regex.exec(canton) ){
       canton = parseInt(canton);
     }
-    self.legend.update(self.data[dep].cantons[canton]);
+    self.legend.update(self.data[dep].cantons[canton], dep, canton);
   }
 
   function resetHighlight(feature, layer){
@@ -69,7 +69,7 @@ var App = function(){
     return this._div;
   };
 
-  self.legend.update = function (data) {
+  self.legend.update = function (data, dep, canton) {
     var html = "";
     if(!!data){
       var rows = [];
@@ -78,7 +78,7 @@ var App = function(){
         var nom = this.nom;
         rows.push('<li><div>' + parti + '<br>' + nom + '</div></li>')
       })
-      html = '<b> CANTON : ' + data.libelle + '</b><ul>' + rows.join("") + '</ul>';
+      html = '<b>Département ' + dep + '</b><br><b> canton : ' + data.libelle + '</b> (canton n°<b>' + canton + '</b>)<ul>' + rows.join("") + '</ul>';
     }
     else{
       html = '<b> Candidats par canton </b><p>Survolez un bureau de vote pour plus de détails</p>';
