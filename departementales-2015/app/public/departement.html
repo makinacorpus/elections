@@ -29,5 +29,12 @@
       console.log("init")
     });
     </script>
+
+    <script src="http://blog.apps.npr.org/pym.js/dist/pym.min.js"></script>
+    <script>
+      if (self !== top) {
+        var pymChild = new pym.Child();
+      }
+    </script>
 </html>
 
