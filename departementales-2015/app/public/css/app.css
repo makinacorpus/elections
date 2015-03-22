@@ -15,11 +15,11 @@ html, body {
 }
 
 /* Carte */
-main {
+#main {
   position: relative;
 }
 
-main::before {
+#main::before {
   content: "";
   display: block;
   padding-top: 40%;

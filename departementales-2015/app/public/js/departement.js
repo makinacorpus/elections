@@ -44,7 +44,7 @@ var App = function(dataset) {
         attribution: 'Tuiles par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }
 
-    var canvas = L.canvas();
+    // var canvas = L.canvas();
 
     self.init = function(){
         // init map
@@ -82,8 +82,8 @@ var App = function(dataset) {
             }
             // draw bureaux
             var customLayer = L.geoJson(null, {
-                onEachFeature: onEachFeature,
-                renderer: canvas
+                onEachFeature: onEachFeature
+                // renderer: canvas
             });
             function highlightFeature(e) {
                 var layer = e.target;
