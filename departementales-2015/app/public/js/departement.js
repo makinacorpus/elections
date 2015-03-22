@@ -46,7 +46,7 @@ var App = function(dataset) {
 
     self.init = function(){
         // init map
-        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14});
+        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14}).setActiveArea('activeArea');
 
         // add an OpenStreetMap tile layer
         self.tileLayer =L.tileLayer(options.tileUrl, {

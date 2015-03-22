@@ -92,7 +92,7 @@ var App = function(){
 
   self.init = function(){
     // init map
-    self.map = L.map(options.containerId, {minZoom: options.minZoom});
+    self.map = L.map(options.containerId, {minZoom: options.minZoom}).setActiveArea('activeArea');
     self.legend.addTo(self.map)
 
     $.getJSON("./data/candidatures.json", function(data){
