@@ -27,11 +27,8 @@ var App = function(){
 
   /** **/
 
-  var canvas = L.canvas();
-
   var customLayer = L.geoJson(null, {
-      onEachFeature: onEachFeature,
-      renderer: canvas
+      onEachFeature: onEachFeature
   });
   var regex = new RegExp(/[A-Za-z]+/);
 
