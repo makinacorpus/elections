@@ -23,6 +23,7 @@
     <script src="./js/leaflet-omnivore.js"></script>
     <script src="./js/leaflet.activearea.js"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
+    <script src="./js/mkc-mapframe.js"></script>
     <script src="./js/departement.js"></script>
     <script>
       jQuery(document).ready(function($) {
@@ -32,7 +33,7 @@
          * Only if inside an iframe
          */
         if (self !== top && pym) {
-          pymChild = new pym.Child();
+          pymChild = new pym.Child({ polling: 1000 });
 
           /**
            * Inform parent we are ready
@@ -46,6 +47,7 @@
             try {
               dataset = JSON.parse(data);
               app = new App(dataset);
+              app.setPym(pymChild);
               app.init();
             } catch (e) {
               console.error("Parsing error:", e);

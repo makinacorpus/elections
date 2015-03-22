@@ -1,23 +1,13 @@
 var App = function(dataset) {
 
-    function _dptFromQueryString () {
-        var qs = {}, qsa = [];
-        if (location.search.length) {
-            qsa = location.search.substr(1).split('&');
-            qsa.forEach(function (element, index) {
-                var array = element.split('=');
-                qs[array[0]] = array[1];
-            });
-        }
-        return qs.dep || '31';
-    }
-
-    var departement;
+    var departement, pymChild;
 
     if (dataset && dataset.dpt) {
         departement = dataset.dpt;
+    } else if (mkcMapFrame) {
+        departement = mkcMapFrame.dptFromQS() || '31';
     } else {
-        departement = _dptFromQueryString();
+        departement = '31';
     }
 
     var colors = {
@@ -31,9 +21,6 @@ var App = function(dataset) {
     };
     var self = this;
 
-
-
-
     var options = {
         tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
         contour: {
@@ -44,7 +31,17 @@ var App = function(dataset) {
         attribution: 'Tuiles par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }
 
+    self.setPym = function (pC) {
+        pymChild = pC;
+    }
+
     self.init = function(){
+        if (mkcMapFrame && dataset) {
+            if (pymChild) {
+                mkcMapFrame.init(dataset, pymChild);
+            }
+        }
+
         // init map
         self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14, attributionControl: false}).setActiveArea('activeArea');
         // add an OpenStreetMap tile layer

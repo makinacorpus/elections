@@ -17,6 +17,7 @@ blockquote {
     background: #f6f6f6;
     padding: 1rem;
     font-size: 0.9rem;
+    overflow: auto;
 }
 
 code {
