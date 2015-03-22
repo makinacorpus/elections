@@ -40,14 +40,14 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% - 30rem);
+  width: calc(100% - 12rem);
   height: 100%;
 }
 
 #map .legend {
   margin: 0;
   padding: 1rem;
-  width: 30rem;
+  width: 12rem;
   height: 100%;
   text-align: left;
   background: rgba(255,255,255,0.8);
