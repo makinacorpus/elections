@@ -48,7 +48,7 @@ var App = function(dataset) {
 
     self.init = function(){
         // init map
-        self.map = L.map(options.containerId, {fullscreenControl: true});
+        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14});
 
         // add an OpenStreetMap tile layer
         self.tileLayer =L.tileLayer(options.tileUrl, {
@@ -138,7 +138,8 @@ var App = function(dataset) {
                 }
                 html+='</ul>';
             }
-            html += 'Survolez un bureau de vote pour plus de détails'
+            html += 'Survolez un bureau de vote pour plus de détails';
+            html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
             this._div.innerHTML = html;
         };
         legend.addTo(self.map);
