@@ -1,3 +1,13 @@
+/*
+   -- COLORS :
+   vert makina = #d6e61f
+   rose makina = #d52668
+   orange = #f08a00
+
+   light-grey = #f6f6f6
+   medium-grey = #aaaaaa
+   dark-grey = #333333
+*/
 
 html, body {
   overflow: hidden;
@@ -5,14 +15,7 @@ html, body {
   padding: 0;
 }
 
-
 /* Header */
-
-#logo {
-  float: right;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
 
 /* Carte */
 #main {
@@ -33,27 +36,31 @@ html, body {
   left: 0;
 }
 
-.info {
-  padding: 6px 8px;
-  font-family: 'Cabin', sans-serif;
-  background: white;
-  background: rgba(255,255,255,0.8);
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  min-width: 390px;
+.activeArea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
 }
 
-.legend {
+#map .legend {
+  margin: 0;
+  padding: 1rem;
+  width: 40%;
+  height: 100%;
   text-align: left;
-  line-height: 18px;
-  color: #555;
+  background: rgba(255,255,255,0.8);
+  color: #333333;
 }
 
 .legend ul {
   padding-left: 0px;
+  list-style: none;
 }
 
-.legend li {
-  list-style-type: none;
+#logo {
+  float: right;
 }
 
 .leaflet-bar a.leaflet-control-touchhover-toggled {
