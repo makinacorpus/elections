@@ -25,7 +25,7 @@ html, body {
 #main::before {
   content: "";
   display: block;
-  padding-top: 40%;
+  padding-top: 75%;
 }
 
 #map {
@@ -40,18 +40,19 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 60%;
+  width: calc(100% - 30rem);
   height: 100%;
 }
 
 #map .legend {
   margin: 0;
   padding: 1rem;
-  width: 40%;
+  width: 30rem;
   height: 100%;
   text-align: left;
   background: rgba(255,255,255,0.8);
   color: #333333;
+  overflow: auto;
 }
 
 .legend ul {
