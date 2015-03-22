@@ -10,14 +10,19 @@
 */
 
 iframe {
-    outline: 1px dotted #eee;
+  outline: 1px dotted #eee;
 }
 
 blockquote {
-    background: #f6f6f6;
-    padding: 1rem;
-    font-size: 0.9rem;
-    overflow: auto;
+  background: #f6f6f6;
+  font-size: 0.9rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow: auto;
+}
+
+section > blockquote {
+  margin: 1rem;
 }
 
 code {
@@ -31,33 +36,33 @@ pre {
 }
 
 #main h2 {
-    display: block;
-    background: #333333;
-    color: white;
-    margin: 0;
-    padding: 2rem;
-    text-align: center;
-    border-bottom: 0;
+  display: block;
+  background: #333333;
+  color: white;
+  margin: 0;
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 0;
 }
 
 #main h3 {
-    margin-top: 3rem;
+  margin-top: 3rem;
 }
 
 .map-exemples {
-    width: 100%;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
 }
 
 .map-exemples > div {
-    width: 100%;
-    margin: 1rem 2.5%;
+  width: 100%;
+  margin: 1rem 2.5%;
 }
 
 @media (min-width: 768px) {
   .map-exemples > div {
-      float: left;
-      width: 45%;
-      margin: 1rem 2.5%;
+    float: left;
+    width: 45%;
+    margin: 1rem 2.5%;
   }
 }

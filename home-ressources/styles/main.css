@@ -111,43 +111,9 @@ h1 {
    overflow: hidden;
 }
 
-@media (min-width: 769px) {
-   #works li:first-child {
-      margin-left: 0;
-   }
-
-   #works li:last-child {
-      margin-right: 0;
-   }
-
-   #works li img {
-      opacity: 0.7;
-   }
-
-   #works li .caption {
-      opacity: 0;
-   }
-
-   #works li:hover img {
-      opacity: 0.7;
-      left: -5%;
-   }
-
-   #works li:hover .caption {
-      opacity: 1;
-      bottom: 5%;
-   }
-}
-
-@media (max-width: 768px) {
-   #works li {
-      width: 90%;
-      margin: 1rem 5%;
-   }
-}
-
 #works li a {
    display: block;
+   font-size: 1.1rem;
    width: 100%;
    height: 100%;
    background: -webkit-linear-gradient(45deg, #d6e61f 0%, #05abe0 100%);
@@ -159,9 +125,9 @@ h1 {
    height: auto;
    position: absolute;
    top: 0;
-   left: -15%;
-   opacity: 0.7;
-   transition: all 0.2s ease-out;
+   left: -5%;
+   opacity: 0.6;
+   transition: all 0.3s ease-out;
 }
 
 #works li span, #works li p {
@@ -189,6 +155,42 @@ h1 {
    text-align: center;
    color: white;
    transition: all 0.2s ease-out;
+}
+
+@media (min-width: 769px) {
+   #works li:first-child {
+      margin-left: 0;
+   }
+
+   #works li:last-child {
+      margin-right: 0;
+   }
+
+   #works li img {
+      opacity: 0.8;
+   }
+
+   #works li .caption {
+      opacity: 0;
+   }
+
+   #works li:hover img {
+      opacity: 0.6;
+      top: -5%;
+   }
+
+   #works li:hover .caption {
+      opacity: 1;
+      bottom: 5%;
+      transition: all 0.2s ease-out 0.2s;
+   }
+}
+
+@media (max-width: 768px) {
+   #works li {
+      width: 90%;
+      margin: 1rem 5%;
+   }
 }
 
 /***** END-CONTENT *****/
