@@ -46,11 +46,10 @@ var App = function(dataset) {
 
     self.init = function(){
         // init map
-        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14}).setActiveArea('activeArea');
-
+        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14, attributionControl: false}).setActiveArea('activeArea');
         // add an OpenStreetMap tile layer
         self.tileLayer =L.tileLayer(options.tileUrl, {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            attribution: options.attribution
         });
         self.tileLayer.addTo(self.map);
 
@@ -140,5 +139,6 @@ var App = function(dataset) {
             this._div.innerHTML = html;
         };
         legend.addTo(self.map);
+        L.control.attribution({position: 'topright'}).addTo(self.map);
     }
 }

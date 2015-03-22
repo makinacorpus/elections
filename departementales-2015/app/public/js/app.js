@@ -92,8 +92,9 @@ var App = function(){
 
   self.init = function(){
     // init map
-    self.map = L.map(options.containerId, {minZoom: options.minZoom}).setActiveArea('activeArea');
-    self.legend.addTo(self.map)
+    self.map = L.map(options.containerId, {minZoom: options.minZoom, attributionControl: false}).setActiveArea('activeArea');
+    self.legend.addTo(self.map);
+    L.control.attribution({position: 'topright'}).addTo(self.map);
 
     $.getJSON("./data/candidatures.json", function(data){
       self.data = data;
@@ -117,8 +118,8 @@ var App = function(){
       
     // add an OpenStreetMap tile layer
     self.tileLayer = L.tileLayer(options.tileUrl, {
-        attribution: options.attribution
-    })
+      attribution: options.attribution
+    });
 
     if(options.contour.type === "topojson"){
       var contourLayer = omnivore.topojson(options.contour.url, null, customLayer);
