@@ -114,12 +114,40 @@ main h2 {
    float: left;
    overflow: hidden;
 }
-#works li:first-child {
-   margin-left: 0;
+
+@media (min-width: 768px) {
+   #works li:first-child {
+      margin-left: 0;
+   }
+
+   #works li:last-child {
+      margin-right: 0;
+   }
+
+   #works li img {
+      opacity: 0.7;
+   }
+
+   #works li .caption {
+      opacity: 0;
+   }
+
+   #works li:hover img {
+      opacity: 0.7;
+      left: -5%;
+   }
+
+   #works li:hover .caption {
+      opacity: 1;
+      bottom: 5%;
+   }
 }
 
-#works li:last-child {
-   margin-right: 0;
+@media (max-width: 768px) {
+   #works li {
+      width: 90%;
+      margin: 1rem 5%;
+   }
 }
 
 #works li a {
@@ -131,12 +159,12 @@ main h2 {
 }
 
 #works li img {
-   width: 115%;
+   width: 150%;
    height: auto;
    position: absolute;
    top: 0;
    left: -15%;
-   opacity: 0.9;
+   opacity: 0.7;
    transition: all 0.2s ease-out;
 }
 
@@ -164,18 +192,7 @@ main h2 {
    border-top: 2px solid white;
    text-align: center;
    color: white;
-   opacity: 0;
    transition: all 0.2s ease-out;
-}
-
-#works li:hover img {
-   opacity: 0.7;
-   left: -5%;
-}
-
-#works li:hover .caption {
-   opacity: 1;
-   bottom: 5%;
 }
 
 /***** END-CONTENT *****/
