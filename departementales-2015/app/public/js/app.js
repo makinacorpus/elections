@@ -14,8 +14,8 @@ var App = function(){
   var options = {
     tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
     minZoom: 5,
+    maxZoom: 14,
     candidats: {
-
     },
     contour: {
         url: './data/canton_2015-ms.json',
@@ -92,7 +92,7 @@ var App = function(){
 
   self.init = function(){
     // init map
-    self.map = L.map(options.containerId, {minZoom: options.minZoom, attributionControl: false}).setActiveArea('activeArea');
+    self.map = L.map(options.containerId, {minZoom: options.minZoom, maxZoom: options.maxZoom, attributionControl: false}).setActiveArea('activeArea');
     self.legend.addTo(self.map);
     L.control.attribution({position: 'topright'}).addTo(self.map);
 
@@ -114,7 +114,7 @@ var App = function(){
     });
 
     // center on France
-    self.map.setView(new L.LatLng(46.603354,1.8883335), 6);
+    self.map.setView(new L.LatLng(44,0), 6);
       
     // add an OpenStreetMap tile layer
     self.tileLayer = L.tileLayer(options.tileUrl, {
