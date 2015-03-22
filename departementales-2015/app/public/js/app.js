@@ -126,6 +126,9 @@ var App = function(){
     self.cantLayer.on("dblclick", function(event){
       self.map.fire("dblclick", event);
     });
+    self.cantLayer.on("mouseout", function(event){
+      self.legend.update();
+    })
 
     self.cantLayer.addTo(self.map);
     self.tileLayer.addTo(self.map);
