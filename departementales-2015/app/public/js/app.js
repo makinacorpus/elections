@@ -32,6 +32,7 @@ var App = function(){
 
   var options = {
     tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
+    minZoom: 5,
     candidats: {
 
     },
@@ -114,18 +115,27 @@ var App = function(){
 
   self.init = function(){
     // init map
-    self.map = L.map(options.containerId);
+    self.map = L.map(options.containerId, {minZoom: options.minZoom});
     self.legend.addTo(self.map)
 
     $.getJSON("./data/candidatures.json", function(data){
       self.data = data;
+    });
+    $.getJSON("../../../resources/departements.geojson", function(data) {
+      var style = {
+        color: 'black',
+        opacity: 1,
+        weight: 3,
+        clickable: false,
+      }
+      L.geoJson(data, {style: style}).addTo(self.map);
     });
 
     // center on France
     self.map.setView(new L.LatLng(46.603354,1.8883335), 6);
       
     // add an OpenStreetMap tile layer
-    self.tileLayer =L.tileLayer(options.tileUrl, {
+    self.tileLayer = L.tileLayer(options.tileUrl, {
         attribution: options.attribution
     })
 
