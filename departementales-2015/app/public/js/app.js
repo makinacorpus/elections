@@ -27,6 +27,7 @@ var App = function(){
     "BC-UMP":"#0066CC",
     "BC-VEC":"#00C000"
   };
+  self.depLayer;
 
   /** options **/
 
@@ -57,7 +58,7 @@ var App = function(){
   /** Related to feature **/
 
   function onEachFeature(feature, layer) {
-    layer.setStyle({ color: '#CCC', weight: 0.5, fillColor: 'darkgrey', fillOpacity: 0.7});
+    layer.setStyle({ color: '#CCC', weight: 1, fillColor: 'darkgrey', fillOpacity: 0.7});
     layer.on({
       mouseover: highlightFeature,
       mouseout: resetHighlight
@@ -128,7 +129,8 @@ var App = function(){
         weight: 3,
         clickable: false,
       }
-      L.geoJson(data, {style: style}).addTo(self.map);
+      self.depLayer = L.geoJson(data, {style: style});
+      self.depLayer.addTo(self.map);
     });
 
     // center on France
@@ -149,5 +151,14 @@ var App = function(){
 
     contourLayer.addTo(self.map);
     self.tileLayer.addTo(self.map);
+
+    // Remove department Layer on zoom.
+    self.map.on('zoomend', function (e) {
+      if (self.map.getZoom() >= 10) {
+        self.map.removeLayer(self.depLayer);
+      } else {
+        self.map.addLayer(self.depLayer);
+      }
+    });
   }
 }
