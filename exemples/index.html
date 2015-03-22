@@ -39,17 +39,24 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
             <section class="map-exemples">
                 <h3>Insertion d'une carte</h3>
                 <p>La carte sera insérée à l'emplacement de ces balises</p>
+                <div id="departements">
+                    <blockquote>
+                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"&gt;&lt;/div&gt;</code>
+                    </blockquote>
+                    <blockquote>
+                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31 <strong>data-height="30"</strong>&gt;&lt;/div&gt;</code>
+                    </blockquote>
+                    <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31" data-height="30"></div>
+                    <blockquote>
+                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31 <strong>data-logo="http://mydomain.com/mylogo.png"</strong>&gt;&lt;/div&gt;</code>
+                    </blockquote>
+                    <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31" data-logo="http://dummyimage.com/128x96/aaa/fff.png"></div>
+                </div>
                 <div id="cantons-candidats">
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-cantons-et-candidats"&gt;&lt;/div&gt;</code>
                     </blockquote>
                     <div class="mkc-placeholder" data-source="2015-cantons-et-candidats"></div>
-                </div>
-                <div id="departements">
-                    <blockquote>
-                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"&gt;&lt;/div&gt;</code>
-                    </blockquote>
-                    <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"></div>
                 </div>
             </section>
         </div>
