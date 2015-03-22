@@ -1,21 +1,39 @@
 {
-"BC-COM":"#CCC",
-"BC-DIV":"#CCC",
-"BC-DLF":"#CCC",
-"BC-DVD":"#ADC1FD",
-"BC-DVG":"#FFC0C0",
-"BC-EXD":"#404040",
-"BC-EXG":"#BB0000",
-"BC-FG":"#DD0000",
-"BC-FN":"#C0C0C0",
-"BC-MDM":"#FF9900",
-"BC-PG":"#DD0000",
-"BC-RDG":"#FFD1DC",
-"BC-SOC":"#FF8080",
-"BC-UC":"#74C2C3",
-"BC-UD":"#CCC",
-"BC-UDI":"#00FFFF",
-"BC-UG":"#CCC",
-"BC-UMP":"#0066CC",
-"BC-VEC":"#00C000"
+"ANAR":"#000000",
+"EXG":"#BB0000",
+"LO":"#BB0000",
+"NPA":"#BB0000",
+"FG":"#DD0000",
+"PCF":"#DD0000",
+"PG":"#DD0000",
+"MRC":"#CC6666",
+"ND":"#CC6666",
+"VEC":"#00C000", // ?
+"EELV":"#00C000",
+"CAP":"#77FF77",
+"DVE":"#77FF77", // ?
+"PS":"#FF8080",
+"SOC":"#FF8080", // ?
+"PRG":"#FFD1DC",
+"RDG":"#FFD1DC", // ?
+"DVG":"#FFC0C0",
+"MDM":"#FF9900",
+"UC":"#74C2C3",
+"NC":"#00FFFF",
+"UDI":"#00FFFF",
+"DVD":"#ADC1FD",
+"UMP":"#0066CC"
+"PR":"#0066CC",
+"DLR":"#8040C0",
+"MPF":"#8040C0",
+"PP":"#8040C0",
+"FN":"#C0C0C0",
+"SP":"#C0C0C0",
+"EXD":"#404040",
+"DIV":"#F0F0F0",
+"COM":"#CCC", // ?
+"DLF":"#CCC", // ?
+"UC":"#74C2C3", // ?
+"UD":"#CCC", // ?
+"UG":"#CCC" // ?
 }
