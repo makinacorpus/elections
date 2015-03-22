@@ -1,0 +1,49 @@
+/*
+   -- COLORS :
+   vert makina = #d6e61f
+   rose makina = #d52668
+   orange = #f08a00
+
+   light-grey = #f6f6f6
+   medium-grey = #aaaaaa
+   dark-grey = #333333
+*/
+
+iframe {
+    outline: 1px dotted #eee;
+}
+
+blockquote {
+    background: #f6f6f6;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+pre {
+    margin: 0;
+}
+
+#main h2 {
+    display: block;
+    background: #333333;
+    color: white;
+    margin: 0;
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 0;
+}
+
+#main h3 {
+    margin-top: 3rem;
+}
+
+.map-exemples {
+    width: 100%;
+    overflow: hidden;
+}
+
+.map-exemples > div {
+    float: left;
+    width: 45%;
+    margin: 1rem 2.5%;
+}
