@@ -134,7 +134,7 @@ var App = function(dataset) {
 
             html += 'Survolez un bureau de vote pour plus de détails';
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
-            (dataset && dataset.logo) && (html += '<img src="' + dataset.logo + '" />');
+            (dataset && dataset.logo) && (html += '<img id="vendor-logo" src="' + dataset.logo + '" />');
             this._div.innerHTML = html;
         };
         legend.addTo(self.map);

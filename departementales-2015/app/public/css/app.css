@@ -72,6 +72,11 @@ html, body {
   bottom: 3rem;
 }
 
+#vendor-logo {
+  position: absolute;
+  bottom: 6rem;
+}
+
 .leaflet-bar a.leaflet-control-touchhover-toggled {
   background: #888;
 }
