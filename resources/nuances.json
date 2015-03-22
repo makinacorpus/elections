@@ -8,21 +8,21 @@
 "PG":"#DD0000",
 "MRC":"#CC6666",
 "ND":"#CC6666",
-"VEC":"#00C000", // ?
+"VEC":"#00C000",
 "EELV":"#00C000",
 "CAP":"#77FF77",
-"DVE":"#77FF77", // ?
+"DVE":"#77FF77",
 "PS":"#FF8080",
-"SOC":"#FF8080", // ?
+"SOC":"#FF8080",
 "PRG":"#FFD1DC",
-"RDG":"#FFD1DC", // ?
+"RDG":"#FFD1DC",
 "DVG":"#FFC0C0",
 "MDM":"#FF9900",
 "UC":"#74C2C3",
 "NC":"#00FFFF",
 "UDI":"#00FFFF",
 "DVD":"#ADC1FD",
-"UMP":"#0066CC"
+"UMP":"#0066CC",
 "PR":"#0066CC",
 "DLR":"#8040C0",
 "MPF":"#8040C0",
@@ -31,9 +31,9 @@
 "SP":"#C0C0C0",
 "EXD":"#404040",
 "DIV":"#F0F0F0",
-"COM":"#CCC", // ?
-"DLF":"#CCC", // ?
-"UC":"#74C2C3", // ?
-"UD":"#CCC", // ?
-"UG":"#CCC" // ?
+"COM":"#CCC",
+"DLF":"#CCC",
+"UC":"#74C2C3",
+"UD":"#ADC1FD",
+"UG":"#FFC0C0"
 }

@@ -6,27 +6,7 @@ var App = function(){
   self.contourLayer;
   self.map;
   self.data;
-  self.colors = {
-    "BC-COM":"#CCC",
-    "BC-DIV":"#CCC",
-    "BC-DLF":"#CCC",
-    "BC-DVD":"#ADC1FD",
-    "BC-DVG":"#FFC0C0",
-    "BC-EXD":"#404040",
-    "BC-EXG":"#BB0000",
-    "BC-FG":"#DD0000",
-    "BC-FN":"#C0C0C0",
-    "BC-MDM":"#FF9900",
-    "BC-PG":"#DD0000",
-    "BC-RDG":"#FFD1DC",
-    "BC-SOC":"#FF8080",
-    "BC-UC":"#74C2C3",
-    "BC-UD":"#CCC",
-    "BC-UDI":"#00FFFF",
-    "BC-UG":"#CCC",
-    "BC-UMP":"#0066CC",
-    "BC-VEC":"#00C000"
-  };
+  self.colors;
   self.depLayer;
 
   /** options **/
@@ -97,9 +77,8 @@ var App = function(){
     if(!!data){
       var rows = [];
       $.each(data.binomes, function() {
-        var parti = this.parti;
-        var color = colors[parti] || '#CCC';
         var parti = this.parti.substr(3);
+        var color = colors[parti] || '#CCC';
         var nom = this.nom;
         rows.push('<li><div style="display:inline-block;margin-right: 5px;height:20px;width:40px;border:1px solid '+ color + '; background-color:'+color+';opacity:0.6;"></div><div style="display:inline-block;">' + parti + '<br>' + nom + '</div></li>')
       })
@@ -131,6 +110,9 @@ var App = function(){
       }
       self.depLayer = L.geoJson(data, {style: style});
       self.depLayer.addTo(self.map);
+    });
+    $.getJSON("../../../resources/nuances.json", function(data) {
+      self.colors = data;
     });
 
     // center on France
