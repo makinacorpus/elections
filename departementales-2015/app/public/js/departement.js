@@ -48,7 +48,7 @@ var App = function(dataset) {
 
     self.init = function(){
         // init map
-        self.map = L.map(options.containerId);
+        self.map = L.map(options.containerId, {fullscreenControl: true});
 
         // add an OpenStreetMap tile layer
         self.tileLayer =L.tileLayer(options.tileUrl, {
