@@ -55,13 +55,21 @@ html, body {
   overflow: auto;
 }
 
+#map .leaflet-control-attribution {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  text-align: right;
+}
+
 .legend ul {
   padding-left: 0px;
   list-style: none;
 }
 
 #logo {
-  float: right;
+  position: absolute;
+  bottom: 3rem;
 }
 
 .leaflet-bar a.leaflet-control-touchhover-toggled {
