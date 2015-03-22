@@ -35,13 +35,13 @@ var App = function(dataset) {
 
 
     var options = {
-        tileUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+        tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
         contour: {
             url: '../../../resources/carte_elec/carte_elec_dept_'+departement+'.geojson',
             type: 'geojson',
         },
         containerId: 'map',
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution: 'Tuiles par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }
 
     var canvas = L.canvas();
