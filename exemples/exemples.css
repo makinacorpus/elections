@@ -43,7 +43,14 @@ pre {
 }
 
 .map-exemples > div {
-    float: left;
-    width: 45%;
+    width: 100%;
     margin: 1rem 2.5%;
+}
+
+@media (min-width: 768px) {
+  .map-exemples > div {
+      float: left;
+      width: 45%;
+      margin: 1rem 2.5%;
+  }
 }

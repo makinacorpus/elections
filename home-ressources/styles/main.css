@@ -111,7 +111,7 @@ h1 {
    overflow: hidden;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
    #works li:first-child {
       margin-left: 0;
    }
