@@ -1,0 +1,190 @@
+/* -- RESET -- */
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+   display: block;
+}
+
+/***** END-RESET *****/
+
+
+
+
+/*
+   -- COLORS :
+   vert makina = #d6e61f
+   rose makina = #d52668
+   orange = #f08a00
+
+   light-grey = #f6f6f6
+   medium-grey = #aaaaaa
+   dark-grey = #333333
+*/
+* {
+   box-sizing: border-box;
+}
+a {
+   color: inherit;
+}
+h1 {
+   font-size: 2rem;
+}
+h2 {
+   font-size: 1.8rem;
+   margin-top: 0;
+}
+h3 {
+   font-size: 1.6rem;
+   margin-top: 0;
+}
+
+html, body {
+   height:100%;
+   margin:0;
+   font-family: 'Cabin', sans-serif;
+   font-size: 14px;
+   line-height: 1.5em;
+}
+body {
+}
+
+/* -- HEADER -- */
+
+header {
+   padding: 0.5rem 1rem;
+   background: #f6f6f6;
+   overflow: hidden;
+}
+
+h1 {
+   float: left;
+   color: #333333;
+   font-weight: lighter;
+}
+
+#logo {
+   float: right;
+}
+
+/***** END-HEADER *****/
+
+
+/* -- CONTENT -- */
+main {
+   color: #333333;
+}
+
+main > section {
+   padding: 2rem;
+}
+
+.intro {
+   font-size: 1.2rem;
+   text-align: center;
+   padding: 1rem;
+}
+
+main h2 {
+   font-weight: lighter;
+   border-bottom: 1px solid #f6f6f6;
+}
+
+#works {
+   background: #333333;
+   color: #f6f6f6;
+}
+
+#works h2 {
+   border-color: #222222;
+}
+
+#works ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   overflow: hidden;
+}
+
+#works li {
+   width: 28%;
+   height: 20vh;
+   position: relative;
+   margin: 1rem 3.99999%;
+   float: left;
+   overflow: hidden;
+}
+#works li:first-child {
+   margin-left: 0;
+}
+
+#works li:last-child {
+   margin-right: 0;
+}
+
+#works li a {
+   display: block;
+   width: 100%;
+   height: 100%;
+   background: -webkit-linear-gradient(45deg, #d6e61f 0%, #05abe0 100%);
+   background: linear-gradient(45deg, #d6e61f 0%,#05abe0 100%);
+}
+
+#works li img {
+   width: 115%;
+   height: auto;
+   position: absolute;
+   top: 0;
+   left: -15%;
+   opacity: 0.9;
+   transition: all 0.2s ease-out;
+}
+
+#works li span, #works li p {
+   text-shadow: 0px 1px 1px #333333;
+}
+
+#works li .title {
+   position: absolute;
+   top: 15%;
+   left: 10%;
+   font-size: 1.5rem;
+   font-weight: bolder;
+   color: white;
+}
+
+#works li .caption {
+   height: 50%;
+   width: 90%;
+   margin: 0 5%;
+   padding: 1rem;
+   position: absolute;
+   bottom: 0%;
+   left: 0;
+   border-top: 2px solid white;
+   text-align: center;
+   color: white;
+   opacity: 0;
+   transition: all 0.2s ease-out;
+}
+
+#works li:hover img {
+   opacity: 0.7;
+   left: -5%;
+}
+
+#works li:hover .caption {
+   opacity: 1;
+   bottom: 5%;
+}
+
+/***** END-CONTENT *****/
+
+/* -- FOOTER -- */
+footer {
+   background: #333333;
+   padding: 1rem;
+   color: white;
+}
+
+/***** END-FOOTER *****/

@@ -1,80 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Des élections mises en cartes</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Des expériences cartographiques de Makina Corpus sur les scrutins électoraux" />
-<meta name="twitter:card" value="summary">
-<meta name="twitter:site" content="@makina_corpus">
-<meta name="twitter:title" content="Des élections mises en cartes">
-<meta name="twitter:description" content="Des expériences cartographiques de Makina Corpus sur les scrutins électoraux">
-<meta name="twitter:creator" content="@makina_corpus">
-<meta name="twitter:image" content="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png">
-<meta property="og:title" content="Des élections mises en cartes" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://cartes-elections.makina-corpus.net" />
-<meta property="og:image" content="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png" />
-<meta property="og:description" content="Des expériences cartographiques de Makina Corpus sur les scrutins électoraux" />
-<style>
- html, body {
-   height:100%;
-   font-family: 'Cabin', sans-serif;
-   margin:0;
- }
- body {
-   width: 98%;
-   padding-left:1%;
- }
- h1 {
-   margin:0;
-   padding-top: 10px;
-   padding-bottom: 10px;
- }
- #logo {
-   float: right;
-   padding-top: 5px;
-   padding-bottom: 5px;
-  }
- #footer {
-   padding-top: 5px;
-   padding-bottom: 5px;
-   font-size: 1.2em;
- }
-</style>
+  <title>Des élections mises en cartes</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Des expériences cartographiques de Makina Corpus sur les scrutins électoraux" />
+  <meta name="twitter:card" value="summary">
+  <meta name="twitter:site" content="@makina_corpus">
+  <meta name="twitter:title" content="Des élections mises en cartes">
+  <meta name="twitter:description" content="Des expériences cartographiques de Makina Corpus sur les scrutins électoraux">
+  <meta name="twitter:creator" content="@makina_corpus">
+  <meta name="twitter:image" content="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png">
+  <meta property="og:title" content="Des élections mises en cartes" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="http://cartes-elections.makina-corpus.net" />
+  <meta property="og:image" content="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png" />
+  <meta property="og:description" content="Des expériences cartographiques de Makina Corpus sur les scrutins électoraux" />
+<link rel="stylesheet" type="text/css" href="home-ressources/styles/main.css">
 </head>
 <body>
-<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>
-<h1>Des élections mises en cartes</h1>
-<p>Bienvenue sur le site de Makina Corpus consacré aux élections et à leurs représentations cartographiques.</p>
-<h2>L'actualité du jour : les élections départementales 2015 !</h2>
-<p><ul>
-  <li><a href="departementales-2015/app/public/">Carte des cantons et liste des candidats</a></li>
-  <li><a href="departementales-2015/app/public/departement.html?dep=31">Carte COLLABORATIVE des résultats par département</a></li>
-</ul></p>
-<h2>Vous souhaitez utiliser nos cartes ?</h2>
-<p>Voici :
-<ul>
-  <li>La <a href="exemples">documentation</a> d'utilisation</li>
-  <li>Les <a href="https://github.com/makinacorpus/elections/blob/gh-pages/departementales-2015/credits.md">licenses</a> de l'ensemble des composants utilisés pour les cartes des élections départementales 2015</li>
-</ul></p>
-<br><br><br>
-<h2>Certaines de nos autres expériences de webmapping</h2>
-<ul>
-  <li><a href="http://makina-corpus.com/realisations/cartes-interactives-des-municipales-2014">les cartes interactives des municipales 2014</a></li>
-  <li><a href="http://makina-corpus.com/realisations/cartes-historiques-en-ligne-de-toulouse">les cartes historiques de Toulouse</a></li>
-  <li><a href="http://dessine-moi-une-ville.makina-corpus.net/">un fond de plan personnalisé</a></li>
-</ul></p>
-<div id="footer">
-  N'hésitez pas à nous contacter pour d'autres projets : <a href="mailto:sig@makina-corpus.com">sig@makina-corpus.com</a>
-</div>
- <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
- })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-49309002-1', 'makinacorpus.github.io');
-ga('send', 'pageview');
- </script>
+  <header>
+    <h1>Des élections mises en cartes</h1>
+    <a href="http://www.makina-corpus.com" target="_blank">
+      <img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png">
+    </a>
+  </header>
+  <main>
+    <p class="intro">Bienvenue sur le site de Makina Corpus consacré aux élections et à leurs représentations cartographiques.</p>
+    <section id="elections">
+      <h2>L'actualité du jour : les élections départementales 2015 !</h2>
+      <ul>
+        <li><a href="departementales-2015/app/public/">Carte des cantons et liste des candidats</a></li>
+        <li><a href="departementales-2015/app/public/departement.html?dep=31">Carte COLLABORATIVE des résultats par département</a></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Vous souhaitez utiliser nos cartes ?</h2>
+      <p>
+        <ul>
+          <li>
+            La <a href="exemples">documentation</a> d'utilisation
+          </li>
+          <li>
+            Les <a href="https://github.com/makinacorpus/elections/blob/gh-pages/departementales-2015/credits.md">licenses</a> de l'ensemble des composant
+          </li>
+        </ul>
+      </p>
+    </section>
+    <section id="works">
+      <h2>Certaines de nos autres expériences de webmapping :</h2>
+      <ul>
+        <li>
+          <a href="http://makina-corpus.com/realisations/cartes-interactives-des-municipales-2014">
+            <img src="home-ressources/images/carte-elections-municipales-2014-toulouse.png">
+            <span class="title">Municipales 2014</span>
+            <p class="caption">les cartes interactives des municipales 2014</p>
+          </a>
+        </li>
+        <li>
+          <a href="http://makina-corpus.com/realisations/cartes-historiques-en-ligne-de-toulouse">
+            <img src="home-ressources/images/cartes-historiques-toulouse.png">
+            <span class="title">Carte historiques</span>
+            <p class="caption">les cartes historiques de Toulouse</p>
+          </a>
+        </li>
+        <li>
+          <a href="http://dessine-moi-une-ville.makina-corpus.net/">
+            <img src="home-ressources/images/hand-drawn-map-of-toulouse.png">
+            <span class="title">Dessine moi une ville</span>
+            <p class="caption">Exemple de fond de plan personnalisés</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>N'hésitez pas à nous contacter pour d'autres projets : <a href="mailto:sig@makina-corpus.com">sig@makina-corpus.com</a></p>
+  </footer>
+   <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-49309002-1', 'makinacorpus.github.io');
+  ga('send', 'pageview');
+   </script>
 </body>
 </html>
