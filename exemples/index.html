@@ -23,22 +23,16 @@
                 <p>Chargement asynchrone du SDK javascript,<br>
                 <em>(une seule fois pour chaque page où doit être insérée une carte)</em></p>
                 <blockquote>
-                    <code>
-                        <pre>
-&lt;script&gt;(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0];
+                    <code>&lt;script&gt;(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
 js.async=true; js.src = "http://makinacorpus.github.io/elections/iframe-loader/mkc.js";
-fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader'));&lt;/script&gt;</pre>
-                    </code>
+fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader'));&lt;/script&gt;</code>
                 </blockquote>
 
                 <h4>OU</h4>
 
                 <blockquote>
-                    <code>
-                        <pre>
-&lt;script src="http://makinacorpus.github.io/elections/iframe-loader/mkc.js" id="mkc-iframe-loader" async&gt;&lt;/script&gt;</pre>
-                    </code>
+                    <code>&lt;script src="http://makinacorpus.github.io/elections/iframe-loader/mkc.js" id="mkc-iframe-loader" async&gt;&lt;/script&gt;</code>
                 </blockquote>
             </section>
 
@@ -47,19 +41,13 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                 <p>La carte sera insérée à l'emplacement de ces balises</p>
                 <div id="cantons-candidats">
                     <blockquote>
-                        <code>
-                            <pre>
-&lt;div class="mkc-placeholder" data-source="2015-cantons-et-candidats"&gt;&lt;/div&gt;</pre>
-                        </code>
+                        <code>&lt;div class="mkc-placeholder" data-source="2015-cantons-et-candidats"&gt;&lt;/div&gt;</code>
                     </blockquote>
                     <div class="mkc-placeholder" data-source="2015-cantons-et-candidats"></div>
                 </div>
                 <div id="departements">
                     <blockquote>
-                        <code>
-                            <pre>
-&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"&gt;&lt;/div&gt;</pre>
-                        </code>
+                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"&gt;&lt;/div&gt;</code>
                     </blockquote>
                     <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"></div>
                 </div>

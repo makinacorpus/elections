@@ -19,6 +19,12 @@ blockquote {
     font-size: 0.9rem;
 }
 
+code {
+  white-space: pre;
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
 pre {
     margin: 0;
 }
