@@ -3,7 +3,7 @@ var App = function(){
   var self = this;
   
   self.tileLayer;
-  self.contourLayer;
+  self.cantLayer;
   self.map;
   self.data;
   self.colors;
@@ -82,7 +82,7 @@ var App = function(){
       html = '<b>Département ' + dep + '</b><br><b> canton : ' + data.libelle + '</b> (canton n°<b>' + canton + '</b>)<ul>' + rows.join("") + '</ul>';
     }
     else{
-      html = '<b> Candidats par canton </b><p>Survolez un bureau de vote pour plus de détails</p>';
+      html = '<b> Candidats par canton </b><p>Survolez un canton pour plus de détails</p>';
     }
     this._div.innerHTML = html;
 
@@ -121,15 +121,13 @@ var App = function(){
       attribution: options.attribution
     });
 
-    if(options.contour.type === "topojson"){
-      var contourLayer = omnivore.topojson(options.contour.url, null, customLayer);
-      // small fix
-      contourLayer.on("dblclick", function(event){
-        self.map.fire("dblclick", event);
-      })
-    }
+    self.cantLayer = omnivore.topojson(options.contour.url, null, customLayer);
+    // small fix
+    self.cantLayer.on("dblclick", function(event){
+      self.map.fire("dblclick", event);
+    });
 
-    contourLayer.addTo(self.map);
+    self.cantLayer.addTo(self.map);
     self.tileLayer.addTo(self.map);
 
     // Remove department Layer on zoom.
