@@ -117,6 +117,13 @@ nav li {
    width: auto;
 }
 
+nav li.active a, nav li.active:hover a {
+   background: #f08a00;
+   color: #333333;
+   opacity: 1;
+   cursor: default;
+}
+
 nav a {
    display: block;
    color: inherit;
