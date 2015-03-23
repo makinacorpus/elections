@@ -1,4 +1,18 @@
-var App = function() {
+var App = function (dataset) {
+
+    var departement, pymChild, zoomOnScroll = true;
+
+    if (dataset && dataset.dpt) {
+        departement = dataset.dpt;
+    } else if (mkcMapFrame) {
+        departement = mkcMapFrame.dptFromQS() || '31';
+    } else {
+        departement = '31';
+    }
+
+    if (dataset && dataset.zoomonscroll && dataset.zoomonscroll === "false") {
+        zoomOnScroll = false;
+    }
 
     var colors = {
         "ANAR":"#000000",
@@ -40,37 +54,45 @@ var App = function() {
         "UG":"#FFC0C0"
         };
     var self = this;
-    var departement = location.search.slice(location.search.indexOf("dep=")+4, location.search.indexOf("dep=")+6);
+
     var options = {
-        tileUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+        tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
         contour: {
             url: '../../../resources/bureaux/'+departement+'.geojson',
             type: 'geojson',
         },
+        scrollWheelZoom: zoomOnScroll,
         containerId: 'map',
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }
+        attribution: 'Tuiles par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    };
 
-    var canvas = L.canvas();
+    self.setPym = function (pC) {
+        pymChild = pC;
+    };
 
-    self.init = function(){
+    self.init = function () {
+        if (mkcMapFrame && dataset) {
+            if (pymChild) {
+                mkcMapFrame.init(dataset, pymChild);
+            }
+        }
         // init map
-        self.map = L.map(options.containerId);
-
+        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14, attributionControl: false, scrollWheelZoom: options.scrollWheelZoom}).setActiveArea('activeArea');
         // add an OpenStreetMap tile layer
-        self.tileLayer =L.tileLayer(options.tileUrl, {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        self.tileLayer = L.tileLayer(options.tileUrl, {
+            attribution: options.attribution
         });
         self.tileLayer.addTo(self.map);
 
         // read result from csv
         var results = {};
-        $.getJSON('../../data/resultats/tour1/'+departement+'.json', function(data) {
-            for(var i=1;i<data.length;i++) {
+        $.getJSON('../../data/resultats/tour1/' + departement + '.json', function (data) {
+            var i = 0;
+            for (i = 1; i < data.length; i++) {
                 var bureau = data[i][1];
                 var parti = data[i][3];
                 var score = data[i][4];
-                if(!results[bureau]) {
+                if (!results[bureau]) {
                     results[bureau] = {
                         scores: {},
                         winner: {
@@ -89,8 +111,7 @@ var App = function() {
             }
             // draw bureaux
             var customLayer = L.geoJson(null, {
-                onEachFeature: onEachFeature,
-                renderer: canvas
+                onEachFeature: onEachFeature
             });
             function highlightFeature(e) {
                 var layer = e.target;
@@ -118,16 +139,42 @@ var App = function() {
             }
 
             var contourLayer = omnivore.geojson(options.contour.url, null, customLayer)
-            .on('ready', function() {
+            .on('ready', function () {
                 self.map.fitBounds(customLayer.getBounds());
             });
             // small fix
-            contourLayer.on("dblclick", function(event){
+            contourLayer.on("dblclick", function (event){
                 self.map.fire("dblclick", event);
             });
 
             contourLayer.addTo(self.map);
+
+            // button hidden in css because it's causing fllickering
+            //  !!!!!!!!!!
+            //  !!!!!!!!!!
+            var resetView = L.control({position: 'topleft'});
+            resetView.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'leaflet-control-resetview leaflet-bar');
+                this._div.innerHTML = '<a class="leaflet-control-resetview-button leaflet-bar-part" href title="Reset View"></a>';
+                jQuery(this).on('click', function (e) {
+                    e.preventDefault();
+                    self.map.fitBounds(customLayer.getBounds());
+                });
+                return this._div;
+            }
+            resetView.addTo(self.map);
         });
+
+        //optionnal logo
+        if (dataset && dataset.logo) {
+            var vendorLogo = L.control({position: 'bottomleft'});
+            vendorLogo.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'vendors-logo');
+                this._div.innerHTML = '<img id="vendor-logo" src="' + dataset.logo + '" />';
+                return this._div;
+            };
+            vendorLogo.addTo(self.map);
+        }
 
         // legend
         var legend = L.control({position: 'topright'});
@@ -139,15 +186,18 @@ var App = function() {
         legend.update = function (bureau) {
             var html = '<h3>Résultats à Toulouse</h3>';
             if(bureau && results[bureau]) {
-                html+='<ul>';
+                html += '<ul>';
                 for(var parti in results[bureau].scores) {
-                    html += '<li>'+parti+' '+ results[bureau].scores[parti]+'</li>';
+                    html += '<li>' + parti + ' ' + results[bureau].scores[parti] + '</li>';
                 }
-                html+='</ul>';
+                html += '</ul>';
             }
-            html += 'Survolez un bureau de vote pour plus de détails'
+
+            html += 'Survolez un bureau de vote pour plus de détails';
+            html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
             this._div.innerHTML = html;
         };
         legend.addTo(self.map);
-    }
-}
+        L.control.attribution({position: 'topright'}).addTo(self.map);
+    };
+};

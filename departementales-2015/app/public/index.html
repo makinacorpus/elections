@@ -1,41 +1,61 @@
 <!DOCTYPE html>
 <html>
-    <script>
-      L_PREFER_CANVAS = true; // experimental
-    </script>
     <head>
-      <title>Élections départementales</title>
+      <title>Élections départementales 2015 - Carte des cantons et liste des candidats</title>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="http://frommelt.fr/leaflet-0.8-dev/leaflet.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
       <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
       <link rel="stylesheet" href="./css/app.css" />
     </head>
 
     <body>
-      <div id="header">
-        <a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://depot.makina-corpus.org/public/logo.gif"></a>
-        <h1>Élections départementales 2015</h1>
-      </div>
-      <div id="map"></div>
-      <div id="footer">
-          <ul class="nav inline">
-            <li><a href="#">Crédits</a></li>
-            <li><a href="http://makina-corpus.com/societe/contact-toulouse">Nous contacter</a></li>
-          </ul>
+      <div id="main">
+        <div id="map">
+        </div>
       </div>
     </body>
 
-    <script src="http://frommelt.fr/leaflet-0.8-dev/leaflet.js"></script>
+    <script src="http://blog.apps.npr.org/pym.js/dist/pym.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
     <script src="./js/jquery-2.1.3.min.js"></script>
     <script src="./js/leaflet-omnivore.js"></script>
+    <script src="./js/leaflet.activearea.js"></script>
     <script src="./js/app.js"></script>
     <script>
-    $(document).ready(function(){
-      var app = new App();
-      app.init();
-      console.log("init")
-    });
+      jQuery(document).ready(function($) {
+        var dataset, pymChild, app;
+
+        /**
+         * Only if inside an iframe
+         */
+        if (self !== top && pym) {
+          pymChild = new pym.Child();
+
+          /**
+           * Inform parent we are ready
+           */
+          pymChild.sendMessage('event', 'ready');
+
+          /**
+           * Manage data sent by parent
+           */
+          pymChild.onMessage('data', function (data) {
+            try {
+              dataset = JSON.parse(data);
+              app = new App(dataset);
+              app.init();
+            } catch (e) {
+              console.error("Parsing error:", e);
+              app = new App();
+              app.init();
+            }
+          });
+        } else {
+          app = new App();
+          app.init();
+        }
+      });
     </script>
 </html>
 
