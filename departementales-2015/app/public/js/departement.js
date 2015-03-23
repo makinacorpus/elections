@@ -79,7 +79,7 @@ var App = function (dataset) {
             }
         }
         // init map
-        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14, attributionControl: false, scrollWheelZoom: options.scrollWheelZoom}).setActiveArea('activeArea');
+        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14, attributionControl: false, scrollWheelZoom: options.scrollWheelZoom}).setActiveArea('activeArea').setView([43.55, 1.45], 12);;
         // add an OpenStreetMap tile layer
         self.tileLayer = L.tileLayer(options.tileUrl, {
             attribution: options.attribution
@@ -152,7 +152,7 @@ var App = function (dataset) {
 
             var contourLayer = omnivore.geojson(options.contour.url, null, customLayer)
             .on('ready', function () {
-                self.map.fitBounds(customLayer.getBounds());
+                //self.map.fitBounds(customLayer.getBounds());
             });
             // small fix
             contourLayer.on("dblclick", function (event){
@@ -164,6 +164,7 @@ var App = function (dataset) {
             // button hidden in css because it's causing fllickering
             //  !!!!!!!!!!
             //  !!!!!!!!!!
+            /*
             var resetView = L.control({position: 'topleft'});
             resetView.onAdd = function (map) {
                 this._div = L.DomUtil.create('div', 'leaflet-control-resetview leaflet-bar');
@@ -175,6 +176,7 @@ var App = function (dataset) {
                 return this._div;
             }
             resetView.addTo(self.map);
+            */
         });
 
         //optionnal logo
