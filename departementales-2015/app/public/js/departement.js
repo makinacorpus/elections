@@ -52,7 +52,8 @@ var App = function (dataset) {
         "UC":"#74C2C3",
         "UD":"#ADC1FD",
         "UG":"#FFC0C0",
-        "egal":"white"
+        "egal":"white",
+        "BLANC":"white"
         };
     var self = this;
 
@@ -214,7 +215,15 @@ var App = function (dataset) {
                     } else {
                         var label_parti = (parti.indexOf('-') > 0 ? parti.split('-')[1] : parti);
                         var ratio = Math.round(100 * score / total);
-                        html += '<li>' + label_parti + ' '+ratio+'% (' + score + ' voix)</li><div style="display:inline-block;width:' + (2 * ratio) + 'px;height:10px;background-color:' + colors[label_parti] +';"></div></li>';
+                        html += '<li>';
+                        if (score == results[bureau].winner.score) {
+                          html += '<strong>';
+                        }
+                        html += label_parti + ' '+ratio+'% (' + score + ' voix)</li>';
+                        if (score == results[bureau].winner.score) {
+                          html += '</strong>';
+                        }
+                        html += '<div style="display:inline-block;width:' + (2 * ratio) + 'px;height:10px;background-color:' + colors[label_parti] +';"></div></li>';
                     }
                 }
                 html += '</ul>';
