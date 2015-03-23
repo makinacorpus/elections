@@ -35,16 +35,6 @@ pre {
     margin: 0;
 }
 
-#main h2 {
-  display: block;
-  background: #333333;
-  color: white;
-  margin: 0;
-  padding: 2rem;
-  text-align: center;
-  border-bottom: 0;
-}
-
 #main h3 {
   margin-top: 3rem;
 }

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Exemple d'integration des cartes Makina Corpus</title>
+        <title>Documentation et exemples - Des élections mises en cartes</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" type="text/css" href="../home-ressources/styles/main.css">
@@ -11,15 +11,32 @@
     </head>
     <body>
         <header>
-            <h1>Des élections mises en cartes</h1>
+            <span class="head-title">Des élections mises en cartes</span>
             <a href="http://www.makina-corpus.com" target="_blank">
               <img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png">
             </a>
         </header>
+        <nav>
+            <ul>
+              <li><a href="">Accueil</a></li>
+              <li>
+                <a class="dropdown-toggle">
+                  Départementales
+                </a>
+                <ul>
+                  <li><a href="departementales-2015/app/public/">Cantons et candidats</a></li>
+                  <li><a href="departementales-2015/app/public/departement.html?dep=31">Résultats - 1er tour</a></li>
+                </ul>
+              </li>
+              <li><a href="spreadsheets">Contribuer</a></li>
+              <li><a href="exemples">API</a></li>
+              <li><a href="mailto:mailto:sig@makina-corpus.com" target="_blank">Contact</a></li>
+            </ul>
+        </nav>
         <div id="main">
-            <h2>Exemple d'integration des cartes</h2>
+            <h1>Exemples d'integration des cartes</h1>
             <section>
-                <h3>Appel du SDK</h3>
+                <h2>Appel du SDK</h2>
                 <p>Chargement asynchrone du SDK javascript,<br>
                 <em>(une seule fois pour chaque page où doit être insérée une carte)</em></p>
                 <blockquote>
@@ -29,7 +46,7 @@ js.async=true; js.src = "http://makinacorpus.github.io/elections/iframe-loader/m
 fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader'));&lt;/script&gt;</code>
                 </blockquote>
 
-                <h4>OU</h4>
+                <h3>OU</h3>
 
                 <blockquote>
                     <code>&lt;script src="http://makinacorpus.github.io/elections/iframe-loader/mkc.js" id="mkc-iframe-loader" async&gt;&lt;/script&gt;</code>
@@ -37,17 +54,17 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
             </section>
 
             <section class="map-exemples">
-                <h3>Insertion d'une carte</h3>
+                <h2>Insertion d'une carte</h2>
                 <p>La carte sera insérée à l'emplacement de ces balises</p>
                 <div id="departements">
-                    <h4>Résultats des départementales : data-dpt="numéro_du_département"</h4>
+                    <h3>Résultats des départementales : data-dpt="numéro_du_département"</h3>
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" <strong>data-dpt="31"</strong>&gt;&lt;/div&gt;</code>
                     </blockquote>
                     <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"></div>
                 </div>
                 <div id="cantons-candidats">
-                    <h4>Listes des candidats par cantons</h4>
+                    <h3>Listes des candidats par cantons</h3>
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-cantons-et-candidats"&gt;&lt;/div&gt;</code>
                     </blockquote>
@@ -56,10 +73,10 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
             </section>
 
             <section class="options">
-                <h3>Options d'intégration</h3>
+                <h2>Options d'intégration</h2>
                 <p>Voici les différentes options disponibles. Pour les utiliser, il suffit d'ajouter les attributs correspondant sur la balise :</p>
                 <div id="option-height">
-                    <h4>Choix de la Hauteur : data-height="pourcentage"</h4>
+                    <h3>Choix de la Hauteur : data-height="pourcentage"</h3>
                     <p>La valeur représente la hauteur en pourcentage relative à la largeur de l'élément. Cela vous permet de définir un ratio de carte. Par défaut, la hauteur représente 75% de la largeur.</p>
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31 <strong>data-height="30"</strong>&gt;&lt;/div&gt;</code>
@@ -67,7 +84,7 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                     <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31" data-height="30"></div>
                 </div>
                 <div id="option-logo">
-                    <h4>Affichage d'un logo : data-logo="url_du_le_logo"</h4>
+                    <h3>Affichage d'un logo : data-logo="url_du_le_logo"</h3>
                     <p>Vous avez la possibilité de préciser un lien vers une image qui sera ajoutée dynamiquement au bas de la carte (par exemple, ajouter un logo)</p>
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31 <strong>data-logo="http://mydomain.com/mylogo.png"</strong>&gt;&lt;/div&gt;</code>

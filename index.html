@@ -20,11 +20,28 @@
 </head>
 <body>
   <header>
-    <h1>Des élections mises en cartes</h1>
+    <h1 class="head-title">Des élections mises en cartes</h1>
     <a href="http://www.makina-corpus.com" target="_blank">
       <img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png">
     </a>
   </header>
+  <nav>
+    <ul>
+      <li><a href="">Accueil</a></li>
+      <li>
+        <a class="dropdown-toggle">
+          Départementales
+        </a>
+        <ul>
+          <li><a href="departementales-2015/app/public/">Cantons et candidats</a></li>
+          <li><a href="departementales-2015/app/public/departement.html?dep=31">Résultats - 1er tour</a></li>
+        </ul>
+      </li>
+      <li><a href="spreadsheets">Contribuer</a></li>
+      <li><a href="exemples">API</a></li>
+      <li><a href="mailto:mailto:sig@makina-corpus.com" target="_blank">Contact</a></li>
+    </ul>
+  </nav>
   <div id="main">
     <p class="intro">Bienvenue sur le site de Makina Corpus consacré aux élections et à leurs représentations cartographiques.</p>
     <section id="elections">
@@ -34,7 +51,14 @@
         <li><a href="departementales-2015/app/public/departement.html?dep=31">Carte COLLABORATIVE des résultats par département</a></li>
       </ul>
     </section>
-    <section>
+    <section id="contribute">
+      <h2>Vous souhaitez contribuer ?</h2>
+      <p>
+        Nous avons mis en place un système de saisie via un document Google Drive. Ce dernier est régulièrement vérifié et les données de nos cartes mise à jours avec vos données !
+      </p>
+      Liste des <a href="spreadsheets">fichiers</a> de données.
+    </section>
+    <section id="use-api">
       <h2>Vous souhaitez utiliser nos cartes ?</h2>
       <p>
         L'utilisation est complètement gratuite et open-source.
