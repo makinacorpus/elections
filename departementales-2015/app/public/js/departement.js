@@ -10,9 +10,8 @@ var App = function (dataset) {
         departement = '31';
     }
 
-    console.log(dataset);
-    if (dataset && dataset.zoomOnScroll) {
-        zoomOnScroll = dataset.zoomOnScroll;
+    if (dataset && dataset.zoomonscroll && dataset.zoomonscroll === "false") {
+        zoomOnScroll = false;
     }
 
     var colors = {
@@ -47,7 +46,6 @@ var App = function (dataset) {
                 mkcMapFrame.init(dataset, pymChild);
             }
         }
-        console.log(options.scrollWheelZoom);
         // init map
         self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14, attributionControl: false, scrollWheelZoom: options.scrollWheelZoom}).setActiveArea('activeArea');
         // add an OpenStreetMap tile layer
