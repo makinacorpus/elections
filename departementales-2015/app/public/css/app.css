@@ -20,9 +20,14 @@ html, body {
 /* Carte */
 #main {
   position: relative;
+  height: 100vh;
 }
 
-#main::before {
+#main.iframe {
+  height: auto;
+}
+
+#main.iframe::before {
   content: "";
   display: block;
   padding-top: 75%;

@@ -30,6 +30,7 @@
          * Only if inside an iframe
          */
         if (self !== top && pym) {
+          document.querySelector('#main').classList.add('iframe');
           pymChild = new pym.Child();
 
           /**
