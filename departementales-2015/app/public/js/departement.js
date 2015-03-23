@@ -79,12 +79,17 @@ var App = function (dataset) {
             }
         }
         // init map
-        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14, attributionControl: false, scrollWheelZoom: options.scrollWheelZoom}).setActiveArea('activeArea').setView([43.55, 1.45], 12);;
+        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, attributionControl: false, scrollWheelZoom: options.scrollWheelZoom}).setActiveArea('activeArea').setView([43.55, 1.45], 12);
         // add an OpenStreetMap tile layer
         self.tileLayer = L.tileLayer(options.tileUrl, {
-            attribution: options.attribution
+            attribution: options.attribution,
+            maxZoom: 14
+        });
+        self.tile2Layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            minZoom: 15
         });
         self.tileLayer.addTo(self.map);
+        self.tile2Layer.addTo(self.map);
 
         // read result from csv
         var results = {};
