@@ -1,7 +1,6 @@
 module.exports = (function () {
 
   var GoogleSpreadsheet = require("google-spreadsheet");
-  var async             = require('async');
   var cb;
 
   function _parseCells (err, cells_data) {
@@ -21,10 +20,8 @@ module.exports = (function () {
 
   function _get (docKey, callback) {
     var my_sheet = new GoogleSpreadsheet(docKey);
-
     cb = callback;
     my_sheet.getCells(1, _parseCells);
-
   }
 
   return {
