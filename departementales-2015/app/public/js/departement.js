@@ -154,7 +154,8 @@ var App = function (dataset) {
 
             // Initialize empty geojson layer
             var customLayer = L.geoJson(null, {
-                onEachFeature: onEachFeature
+                onEachFeature: onEachFeature,
+                style: {color: '#293133'}
             });
             function highlightFeature(e) {
                 var layer = e.target;
@@ -174,7 +175,7 @@ var App = function (dataset) {
                     color = colors[data.winner.parti.split('-')[1]];
                     opacity = 0.6
                 }
-                layer.setStyle({ color: color, weight: 1, fillOpacity: opacity});
+                layer.setStyle({ fillColor: color, weight: 1, fillOpacity: opacity});
                 layer.on({
                     mouseover: highlightFeature,
                     mouseout: resetHighlight,
