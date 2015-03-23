@@ -26,9 +26,11 @@
         var result = [["Code du canton", "Code bureau", "Binome", "Code Parti", "Voix" ]],
             data = data.slice(1);
         data.forEach(function(item) {
-            result.push([item[0], item[2], item[4], item[5], item[6]]);
+            if(typeof item[0] !='undefined' && typeof item[2] !='undefined' && typeof item[4] !='undefined' && typeof item[5] !='undefined' && typeof item[6] !='undefined' && typeof item[0] !='undefined') {
+                result.push([item[0], item[2], item[4], item[5], item[6]]);
+            }
         });
-        console.log(result);
+        console.log(JSON.stringify(result));
     };
 
     var spreadsheets_uuids = [
