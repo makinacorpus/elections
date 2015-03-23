@@ -26,7 +26,7 @@ section > blockquote {
 }
 
 code {
-  white-space: pre;
+  white-space: pre-wrap;
   font-family: monospace, monospace;
   font-size: 1em;
 }
@@ -43,18 +43,30 @@ code {
 
 .map-exemples {
   width: 100%;
-  overflow: hidden;
 }
 
 .map-exemples > div {
   width: 100%;
-  margin: 1rem 2.5%;
+  margin: 1rem 0;
 }
 
 @media (min-width: 768px) {
-  .map-exemples > div {
+
+  .map-exemples, .options {
+    overflow: hidden;
+  }
+
+  .map-exemples > div, .options > div > div {
     float: left;
     width: 45%;
     margin: 1rem 2.5%;
+  }
+
+  .options > div {
+    clear: both;
+  }
+
+  #main .options h3 {
+    margin-top: 0;
   }
 }
