@@ -103,11 +103,21 @@ var App = function (dataset) {
         // Read result from json
         var results = {};
         $.getJSON('../../data/resultats/tour1/' + departement + '.json', function (data) {
-            var i = 0;
-            for (i = 1; i < data.length; i++) {
-                var bureau = data[i][1];
-                var parti = data[i][3];
-                var score = data[i][4];
+
+            /**
+             * Sort results by bureau
+             * identify winner of each one.
+             */
+
+            var bureau, parti, score, currentData;
+            // Start with i = 1 because of headers row
+            for (var i = 1; i < data.length; i++) {
+                currentData = data[i];
+                bureau      = currentData[1];
+                parti       = currentData[3];
+                score       = currentData[4];
+
+                // Create bureau only if not already existing
                 if (!results[bureau]) {
                     results[bureau] = {
                         scores: {},
@@ -117,7 +127,9 @@ var App = function (dataset) {
                         }
                     };
                 }
-                if(parti && parti != 'ABSTENTION' && parti != 'NUL') {
+
+                // If current score is higher than previous winner, store it as winner
+                if (parti && parti !== 'ABSTENTION' && parti !== 'NUL') {
                   if (score > results[bureau].winner.score) {
                     results[bureau].winner = {
                       parti: parti,
@@ -131,11 +143,16 @@ var App = function (dataset) {
                   }
                 }
                 if(!parti) {
-                    parti = data[i][2];
+                    parti = currentData[2];
                 }
                 results[bureau].scores[parti] = score;
             }
-            // draw bureaux
+
+            /**
+             * Draw bureaux
+             */
+
+            // Initialize empty geojson layer
             var customLayer = L.geoJson(null, {
                 onEachFeature: onEachFeature
             });
@@ -164,15 +181,19 @@ var App = function (dataset) {
                 });
             }
 
-            var contourLayer = omnivore.geojson(options.contour.url, null, customLayer)
-            .on('ready', function () {
+            // Populate geojson layer with omnivore plugin and rturn it;
+            var contourLayer = omnivore.geojson(options.contour.url, null, customLayer);
+
+            contourLayer.on('ready', function () {
                 //self.map.fitBounds(customLayer.getBounds());
             });
+
             // small fix
             contourLayer.on("dblclick", function (event){
                 self.map.fire("dblclick", event);
             });
 
+            // Attach geojson layer to map
             contourLayer.addTo(self.map);
 
             // button hidden in css because it's causing fllickering
