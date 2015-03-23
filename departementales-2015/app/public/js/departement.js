@@ -168,14 +168,25 @@ var App = function (dataset) {
             }
 
             function onEachFeature(feature, layer) {
-                var bureau = results[""+parseInt(feature.properties.BV2015)];
-                var color = 'grey';
+                // Make two type coercions to remove leading zero
+                var bureau  = results[parseInt(feature.properties.BV2015).toString()];
+                var color   = 'grey';
                 var opacity = 0;
+
+                // Select color from winner
                 if (bureau) {
-                    color = colors[bureau.winner.parti.split('-')[1]];
+                    color   = colors[bureau.winner.parti.split('-')[1]];
                     opacity = 0.6
                 }
-                layer.setStyle({ fillColor: color, weight: 1, fillOpacity: opacity});
+
+                // Set shape styles
+                layer.setStyle({
+                    fillColor: color,
+                    weight: 1,
+                    fillOpacity: opacity
+                });
+
+                // Event bindings
                 layer.on({
                     mouseover: highlightFeature,
                     mouseout: resetHighlight,
