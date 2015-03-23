@@ -255,7 +255,6 @@ var App = function (dataset) {
         legend.update = function (bureau) {
             var html = '<h3>Résultats à Toulouse</h3>';
             if (bureau && results[bureau]) {
-                html += '<ul>';
                 var total          = 0;
                 var total_exprimes = 0;
                 var votes_exprimes = [];
@@ -275,6 +274,26 @@ var App = function (dataset) {
                     return b.score - a.score;
                 });
 
+                // Build overall bar-graph
+                var sortedScores = [];
+                for (var parti in scores) {
+                    sortedScores.push({ value: scores[parti], name: parti });
+                }
+                sortedScores.sort(function (a, b) {
+                    return b.value - a.value;
+                });
+                var overall       = document.createElement('ul');
+                overall.className = 'overall';
+                sortedScores.forEach(function (element) {
+                    var li = document.createElement('li');
+                    li.className = element.name.toLowerCase();
+                    li.style.width = (element.value * 100 / total) + '%';
+                    overall.appendChild(li);
+                });
+
+                html += overall.outerHTML;
+
+                html += '<ul>';
                 for (var parti in scores) {
                     if(parti == "ABSTENTION" || parti == "NUL" || parti == "BLANC") {
                         html += '<li>' + parti + ' (' + scores[parti] + ' voix)</li>';

@@ -72,6 +72,87 @@ html, body {
   list-style: none;
 }
 
+.overall * {
+  box-sizing: border-box;
+}
+.overall li.nul { color: #000; }
+.overall li.blanc {
+  color: #fff;
+  border: 1px solid #555;
+  border-width: 1px 0;
+}
+.overall li.abstention {
+  color: transparent;
+  border: 1px solid #555;
+  border-width: 0 1px;
+  position: relative;
+}
+.overall li.abstention::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  margin-top: -1px;
+  left: 0;
+  right: 0;
+  background-color: #555;
+}
+
+.overall li.bc-anar { color: #000000; }
+.overall li.bc-blan { color:  white; }
+.overall li.bc-cap { color: #77ff77; }
+.overall li.bc-com { color: #dd0000; }
+.overall li.bc-div { color: #f0f0f0; }
+.overall li.bc-dlf { color: #ccc; }
+.overall li.bc-dlr { color: #8040c0; }
+.overall li.bc-dvd { color: #adc1fd; }
+.overall li.bc-dve { color: #77ff77; }
+.overall li.bc-dvg { color: #ffc0c0; }
+.overall li.bc-eelv { color: #00c000; }
+.overall li.bc-ega { color:  white; }
+.overall li.bc-exd { color: #404040; }
+.overall li.bc-exg { color: #bb0000; }
+.overall li.bc-fg { color: #dd0000; }
+.overall li.bc-fn { color: #c0c0c0; }
+.overall li.bc-lo { color: #bb0000; }
+.overall li.bc-mdm { color: #ff9900; }
+.overall li.bc-mpf { color: #8040c0; }
+.overall li.bc-mrc { color: #cc6666; }
+.overall li.bc-nc { color: #00ffff; }
+.overall li.bc-nd { color: #cc6666; }
+.overall li.bc-npa { color: #bb0000; }
+.overall li.bc-pcf { color: #dd0000; }
+.overall li.bc-pg { color: #dd0000; }
+.overall li.bc-pp { color: #8040c0; }
+.overall li.bc-pr { color: #0066cc; }
+.overall li.bc-prg { color: #ffd1dc; }
+.overall li.bc-ps { color: #ff8080; }
+.overall li.bc-rdg { color: #ffd1dc; }
+.overall li.bc-soc { color: #ff8080; }
+.overall li.bc-sp { color: #c0c0c0; }
+.overall li.bc-uc { color: #74c2c3; }
+.overall li.bc-uc { color: #74c2c3; }
+.overall li.bc-ud { color: #adc1fd; }
+.overall li.bc-udi { color: #00ffff; }
+.overall li.bc-ug { color: #ffc0c0; }
+.overall li.bc-ump { color: #0066cc; }
+.overall li.bc-vec { color: #00c000; }
+
+.legend .overall {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  white-space: nowrap;
+  line-height: 10px;
+}
+.legend .overall li {
+  height: 10px;
+  line-height: 10px;
+  display: inline-block;
+  background-color: currentColor;
+}
+
 #logo {
   position: absolute;
   bottom: 3rem;
