@@ -98,6 +98,7 @@ var App = function (dataset) {
         self.tile2Layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             minZoom: 15
         });
+
         self.tile2Layer.addTo(self.map);
 
         // Read result from json
@@ -129,7 +130,7 @@ var App = function (dataset) {
                 }
 
                 // If current score is higher than previous winner, store it as winner
-                if (parti && parti !== 'ABSTENTION' && parti !== 'NUL') {
+                if (parti && parti !== 'ABSTENTION' && parti !== 'NUL' && parti !== 'BLANC') {
                   if (score > results[bureauId].winner.score) {
                     results[bureauId].winner = {
                       parti: parti,
@@ -251,32 +252,49 @@ var App = function (dataset) {
             if(bureau && results[bureau]) {
                 html += '<ul>';
                 var total = 0;
+                var total_exprimes = 0;
+                var votes_exprimes = [];
                 for(var parti in results[bureau].scores) {
-                    if(parti != "ABSTENTION" && parti != "NUL") {
-                      total += results[bureau].scores[parti];
+                    if(parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
+                      var score = results[bureau].scores[parti] || 0;
+                      total_exprimes += results[bureau].scores[parti];
+                      votes_exprimes.push({ parti: parti, score: score})
+                    }
+                    total += results[bureau].scores[parti];
+                }
+                votes_exprimes = votes_exprimes.map(function(d){
+                    d.ratio = Math.round(100 * d.score / total_exprimes);
+                    return d;
+                }).sort(function(a, b){
+                    return b.score - a.score;
+                });
+
+                for(var parti in results[bureau].scores) {
+                    if(parti == "ABSTENTION" || parti == "NUL" || parti == "BLANC") {
+                        html += '<li>' + parti + ' (' + results[bureau].scores[parti] + ' voix)</li>';
                     }
                 }
-                for(var parti in results[bureau].scores) {
-                    var score = results[bureau].scores[parti];
-                    if(!score) {
-                        score = 0;
-                    }
-                    if(parti == "ABSTENTION" || parti == "NUL") {
-                        html += '<li>' + parti + ' (' + score + ' voix)</li>';
-                    } else {
-                        var label_parti = (parti.indexOf('-') > 0 ? parti.split('-')[1] : parti);
-                        var ratio = Math.round(100 * score / total);
+
+                var abstention = results[bureau].scores["ABSTENTION"];
+                if(!!abstention){
+                    var ratio = 100 - Math.round(100 * abstention / total);
+                    html += '<li style="margin-top:10px; margin-bottom:10px;"> PARTICIPATION (' + ratio + ' %)</li>';
+                }
+
+                votes_exprimes.forEach(function(vote){
+                        console.log(vote);
+                        var label_parti = (vote.parti.indexOf('-') > 0 ? vote.parti.split('-')[1] : vote.parti);
                         html += '<li>';
-                        if (score == results[bureau].winner.score) {
+                        if (vote.score == results[bureau].winner.score) {
                           html += '<strong>';
                         }
-                        html += label_parti + ' '+ratio+'% (' + score + ' voix)</li>';
-                        if (score == results[bureau].winner.score) {
+                        html += label_parti + ' '+vote.ratio+'% (' + vote.score + ' voix)</li>';
+                        if (vote.score == results[bureau].winner.score) {
                           html += '</strong>';
                         }
-                        html += '<div style="display:inline-block;width:' + (2 * ratio) + 'px;height:10px;background-color:' + colors[label_parti] +';"></div></li>';
-                    }
-                }
+                        html += '<div style="display:inline-block;width:' + (2 * vote.ratio) + 'px;height:10px;background-color:' + colors[label_parti] +';"></div></li>';
+                });
+
                 html += '</ul>';
             }
 
