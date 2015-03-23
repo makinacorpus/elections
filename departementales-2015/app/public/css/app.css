@@ -82,6 +82,10 @@ html, body {
   background: #888;
 }
 
+.leaflet-control-resetview {
+  display: none;
+}
+
 /* navigation */
 
 .nav {

@@ -118,6 +118,21 @@ var App = function (dataset) {
             });
 
             contourLayer.addTo(self.map);
+
+            // button hidden in css because it's causing fllickering
+            //  !!!!!!!!!!
+            //  !!!!!!!!!!
+            var resetView = L.control({position: 'topleft'});
+            resetView.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'leaflet-control-resetview leaflet-bar');
+                this._div.innerHTML = '<a class="leaflet-control-resetview-button leaflet-bar-part" href title="Reset View"></a>';
+                jQuery(this).on('click', function (e) {
+                    e.preventDefault();
+                    self.map.fitBounds(customLayer.getBounds());
+                });
+                return this._div;
+            }
+            resetView.addTo(self.map);
         });
 
         //optionnal logo
