@@ -161,29 +161,34 @@ var App = function (dataset) {
             function highlightFeature(e) {
                 var layer = e.target;
                 layer.setStyle({weight: 4});
+                layer.setStyle({color: layer.options.fillColor});
+                layer.setStyle({fillOpacity: 0.7});
                 legend.update(""+parseInt(layer.feature.properties.BV2015));
             }
             function resetHighlight(e) {
                 var layer = e.target;
                 layer.setStyle({weight: 1});
+                layer.setStyle({color: '#333333'});
+                layer.setStyle({fillOpacity: 0.4});
             }
 
             function onEachFeature(feature, layer) {
                 // Make two type coercions to remove leading zero
                 var bureau  = results[parseInt(feature.properties.BV2015).toString()];
-                var color   = 'grey';
-                var opacity = 0;
+                var color   = '#aaaaaa';
+                var opacity = 0.4;
 
                 // Select color from winner
                 if (bureau) {
                     color   = colors[bureau.winner.parti.split('-')[1]];
-                    opacity = 0.6
+                    opacity = 0.4
                 }
 
                 // Set shape styles
                 layer.setStyle({
                     fillColor: color,
                     weight: 1,
+                    color: '#333333',
                     fillOpacity: opacity
                 });
 
@@ -282,7 +287,6 @@ var App = function (dataset) {
                 }
 
                 votes_exprimes.forEach(function(vote){
-                        console.log(vote);
                         var label_parti = (vote.parti.indexOf('-') > 0 ? vote.parti.split('-')[1] : vote.parti);
                         html += '<li>';
                         if (vote.score == results[bureau].winner.score) {
