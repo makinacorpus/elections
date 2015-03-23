@@ -31,12 +31,14 @@ code {
   font-size: 1em;
 }
 
-pre {
-    margin: 0;
+.default-value {
+  font-size: 0.9rem;
+  color: #aaaaaa;
 }
 
 #main h3 {
   margin-top: 3rem;
+  margin-bottom: 0;
 }
 
 .map-exemples {

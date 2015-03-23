@@ -57,7 +57,8 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                 <h2>Insertion d'une carte</h2>
                 <p>La carte sera insérée à l'emplacement de ces balises</p>
                 <div id="departements">
-                    <h3>Résultats des départementales : data-dpt="numéro_du_département"</h3>
+                    <h3>Résultats des départementales :</h3>
+                    <span>option : data-dpt="numéro_du_département"</span>
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" <strong>data-dpt="31"</strong>&gt;&lt;/div&gt;</code>
                     </blockquote>
@@ -65,6 +66,7 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                 </div>
                 <div id="cantons-candidats">
                     <h3>Listes des candidats par cantons</h3>
+                    <span>pas d'options</span>
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-cantons-et-candidats"&gt;&lt;/div&gt;</code>
                     </blockquote>
@@ -77,7 +79,8 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                 <p>Voici les différentes options disponibles. Pour les utiliser, il suffit d'ajouter les attributs correspondant sur la balise :</p>
                 <div id="option-height">
                     <h3>Choix de la Hauteur : data-height="pourcentage"</h3>
-                    <p>La valeur représente la hauteur en pourcentage relative à la largeur de l'élément. Cela vous permet de définir un ratio de carte. Par défaut, la hauteur représente 75% de la largeur.</p>
+                    <span class="default-value">default: 75</span>
+                    <p>La valeur représente la hauteur en pourcentage relative à la largeur de l'élément. Cela vous permet de définir un ratio de carte.</p>
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31 <strong>data-height="30"</strong>&gt;&lt;/div&gt;</code>
                     </blockquote>
@@ -85,11 +88,21 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                 </div>
                 <div id="option-logo">
                     <h3>Affichage d'un logo : data-logo="url_du_le_logo"</h3>
+                    <span class="default-value">default: undefined</span>
                     <p>Vous avez la possibilité de préciser un lien vers une image qui sera ajoutée dynamiquement au bas de la carte (par exemple, ajouter un logo)</p>
                     <blockquote>
                         <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31 <strong>data-logo="http://mydomain.com/mylogo.png"</strong>&gt;&lt;/div&gt;</code>
                     </blockquote>
                     <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31" data-logo="http://dummyimage.com/128x96/aaa/fff.png"></div>
+                </div>
+                <div id="option-scroll">
+                    <h3>Empecher le zoom au scroll : data-zoomOnScroll="true/false"</h3>
+                    <span class="default-value">default: true</span>
+                    <p>Pour des soucis d'usabilité, vous pouvez désactiver la gestion du zoom par le scroll de la souris en passant l'attribut à false</p>
+                    <blockquote>
+                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31 <strong>data-zoomOnScroll="false"</strong>&gt;&lt;/div&gt;</code>
+                    </blockquote>
+                    <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31" data-zoomOnScroll="false"></div>
                 </div>
             </section>
         </div>
