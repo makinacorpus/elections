@@ -109,17 +109,17 @@ var App = function (dataset) {
              * identify winner of each one.
              */
 
-            var bureau, parti, score, currentData;
+            var bureauId, parti, score, currentData;
             // Start with i = 1 because of headers row
             for (var i = 1; i < data.length; i++) {
                 currentData = data[i];
-                bureau      = currentData[1];
+                bureauId    = currentData[1];
                 parti       = currentData[3];
                 score       = currentData[4];
 
                 // Create bureau only if not already existing
-                if (!results[bureau]) {
-                    results[bureau] = {
+                if (!results[bureauId]) {
+                    results[bureauId] = {
                         scores: {},
                         winner: {
                             parti: 'NUL',
@@ -130,22 +130,22 @@ var App = function (dataset) {
 
                 // If current score is higher than previous winner, store it as winner
                 if (parti && parti !== 'ABSTENTION' && parti !== 'NUL') {
-                  if (score > results[bureau].winner.score) {
-                    results[bureau].winner = {
+                  if (score > results[bureauId].winner.score) {
+                    results[bureauId].winner = {
                       parti: parti,
                       score: score
                     };
-                  } else if (score == results[bureau].winner.score) {
-                    results[bureau].winner = {
+                  } else if (score === results[bureauId].winner.score) {
+                    results[bureauId].winner = {
                       parti: "BC-egal",
                       score: score
                     };
                   }
                 }
-                if(!parti) {
+                if (!parti) {
                     parti = currentData[2];
                 }
-                results[bureau].scores[parti] = score;
+                results[bureauId].scores[parti] = score;
             }
 
             /**
@@ -168,11 +168,11 @@ var App = function (dataset) {
             }
 
             function onEachFeature(feature, layer) {
-                var data = results[""+parseInt(feature.properties.BV2015)];
+                var bureau = results[""+parseInt(feature.properties.BV2015)];
                 var color = 'grey';
                 var opacity = 0;
-                if(data) {
-                    color = colors[data.winner.parti.split('-')[1]];
+                if (bureau) {
+                    color = colors[bureau.winner.parti.split('-')[1]];
                     opacity = 0.6
                 }
                 layer.setStyle({ fillColor: color, weight: 1, fillOpacity: opacity});
