@@ -214,7 +214,7 @@ var App = function (dataset) {
                     } else {
                         var label_parti = (parti.indexOf('-') > 0 ? parti.split('-')[1] : parti);
                         var ratio = Math.round(100 * score / total);
-                        html += '<li>' + label_parti + ' '+ratio+'% (' + score + ' voix)</li>';
+                        html += '<li>' + label_parti + ' '+ratio+'% (' + score + ' voix)</li><div style="display:inline-block;width:' + (2 * ratio) + 'px;height:10px;background-color:' + colors[label_parti] +';"></div></li>';
                     }
                 }
                 html += '</ul>';
