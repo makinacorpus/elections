@@ -60,7 +60,7 @@ var App = function (dataset) {
     var options = {
         tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
         contour: {
-            url: '../../../resources/bureaux/'+departement+'.geojson',
+            url: '../../../resources/bureaux/' + departement + '.geojson',
             type: 'geojson',
         },
         scrollWheelZoom: zoomOnScroll,
@@ -78,20 +78,29 @@ var App = function (dataset) {
                 mkcMapFrame.init(dataset, pymChild);
             }
         }
+
         // init map
-        self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, attributionControl: false, scrollWheelZoom: options.scrollWheelZoom}).setActiveArea('activeArea').setView([43.55, 1.45], 12);
-        // add an OpenStreetMap tile layer
+        self.map = L.map(options.containerId, {
+            fullscreenControl: true,
+            minZoom: 6,
+            attributionControl: false,
+            scrollWheelZoom: options.scrollWheelZoom
+        }).setActiveArea('activeArea').setView([43.55, 1.45], 12);
+
+        // Default tile layer
         self.tileLayer = L.tileLayer(options.tileUrl, {
             attribution: options.attribution,
             maxZoom: 14
         });
+        self.tileLayer.addTo(self.map);
+
+        // OpenStreetMap tile layer for high zoom level
         self.tile2Layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             minZoom: 15
         });
-        self.tileLayer.addTo(self.map);
         self.tile2Layer.addTo(self.map);
 
-        // read result from csv
+        // Read result from json
         var results = {};
         $.getJSON('../../data/resultats/tour1/' + departement + '.json', function (data) {
             var i = 0;
@@ -184,7 +193,7 @@ var App = function (dataset) {
             */
         });
 
-        //optionnal logo
+        // Optionnal logo
         if (dataset && dataset.logo) {
             var vendorLogo = L.control({position: 'bottomleft'});
             vendorLogo.onAdd = function (map) {
@@ -195,13 +204,15 @@ var App = function (dataset) {
             vendorLogo.addTo(self.map);
         }
 
-        // legend
+        // Legend
         var legend = L.control({position: 'topright'});
+
         legend.onAdd = function (map) {
             this._div = L.DomUtil.create('div', 'legend info');
             this.update();
             return this._div;
         };
+
         legend.update = function (bureau) {
             var html = '<h3>Résultats à Toulouse</h3>';
             if(bureau && results[bureau]) {
