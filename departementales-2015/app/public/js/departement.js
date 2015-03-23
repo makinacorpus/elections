@@ -1,6 +1,6 @@
 var App = function (dataset) {
 
-    var departement, pymChild, zoomOnScroll;
+    var departement, pymChild, zoomOnScroll = true;
 
     if (dataset && dataset.dpt) {
         departement = dataset.dpt;
@@ -10,10 +10,9 @@ var App = function (dataset) {
         departement = '31';
     }
 
+    console.log(dataset);
     if (dataset && dataset.zoomOnScroll) {
         zoomOnScroll = dataset.zoomOnScroll;
-    } else {
-        zoomOnScroll = true;
     }
 
     var colors = {
@@ -48,7 +47,7 @@ var App = function (dataset) {
                 mkcMapFrame.init(dataset, pymChild);
             }
         }
-
+        console.log(options.scrollWheelZoom);
         // init map
         self.map = L.map(options.containerId, {fullscreenControl: true, minZoom: 6, maxZoom: 14, attributionControl: false, scrollWheelZoom: options.scrollWheelZoom}).setActiveArea('activeArea');
         // add an OpenStreetMap tile layer
@@ -126,7 +125,11 @@ var App = function (dataset) {
         //optionnal logo
         if (dataset && dataset.logo) {
             var vendorLogo = L.control({position: 'bottomleft'});
-            vendorLogo.innerHTML = '<img id="vendor-logo" src="' + dataset.logo + '" />';
+            vendorLogo.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'vendors-logo');
+                this._div.innerHTML = '<img id="vendor-logo" src="' + dataset.logo + '" />';
+                return this._div;
+            };
             vendorLogo.addTo(self.map);
         }
 
@@ -138,11 +141,10 @@ var App = function (dataset) {
             return this._div;
         };
         legend.update = function (bureau) {
-            var html = '<h3>Résultats à Toulouse</h3>',
-                parti;
+            var html = '<h3>Résultats à Toulouse</h3>';
             if(bureau && results[bureau]) {
                 html += '<ul>';
-                for(parti in results[bureau].scores) {
+                for(var parti in results[bureau].scores) {
                     html += '<li>' + parti + ' ' + results[bureau].scores[parti] + '</li>';
                 }
                 html += '</ul>';

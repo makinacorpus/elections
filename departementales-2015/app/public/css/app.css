@@ -74,7 +74,8 @@ html, body {
 
 #vendor-logo {
   position: absolute;
-  bottom: 6rem;
+  bottom: 0;
+  max-height: 50px;
 }
 
 .leaflet-bar a.leaflet-control-touchhover-toggled {
