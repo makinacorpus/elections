@@ -51,7 +51,8 @@ var App = function (dataset) {
         "DLF":"#CCC",
         "UC":"#74C2C3",
         "UD":"#ADC1FD",
-        "UG":"#FFC0C0"
+        "UG":"#FFC0C0",
+        "egal":"white"
         };
     var self = this;
 
@@ -95,24 +96,27 @@ var App = function (dataset) {
                 if (!results[bureau]) {
                     results[bureau] = {
                         scores: {},
-                        total: 0,
                         winner: {
                             parti: 'NUL',
                             score: 0
                         }
                     };
                 }
-                if(parti && score > results[bureau].winner.score) {
+                if(parti && parti != 'ABSTENTION' && parti != 'NUL') {
+                  if (score > results[bureau].winner.score) {
                     results[bureau].winner = {
-                        parti: parti,
-                        score: score
+                      parti: parti,
+                      score: score
                     };
+                  } else if (score == results[bureau].winner.score) {
+                    results[bureau].winner = {
+                      parti: "BC-egal",
+                      score: score
+                    };
+                  }
                 }
                 if(!parti) {
                     parti = data[i][2];
-                }
-                if(parti != 'ABSTENTION' || parti != 'NUL') {
-                    results[bureau].total += score;
                 }
                 results[bureau].scores[parti] = score;
             }
@@ -136,7 +140,7 @@ var App = function (dataset) {
                 var opacity = 0;
                 if(data) {
                     color = colors[data.winner.parti.split('-')[1]];
-                    opacity = 0.5
+                    opacity = 0.6
                 }
                 layer.setStyle({ color: color, weight: 1, fillOpacity: opacity});
                 layer.on({
@@ -194,6 +198,12 @@ var App = function (dataset) {
             var html = '<h3>Résultats à Toulouse</h3>';
             if(bureau && results[bureau]) {
                 html += '<ul>';
+                var total = 0;
+                for(var parti in results[bureau].scores) {
+                    if(parti != "ABSTENTION" && parti != "NUL") {
+                      total += results[bureau].scores[parti];
+                    }
+                }
                 for(var parti in results[bureau].scores) {
                     var score = results[bureau].scores[parti];
                     if(!score) {
@@ -203,7 +213,7 @@ var App = function (dataset) {
                         html += '<li>' + parti + ' (' + score + ' voix)</li>';
                     } else {
                         var label_parti = (parti.indexOf('-') > 0 ? parti.split('-')[1] : parti);
-                        var ratio = Math.round(100 * score / results[bureau].total);
+                        var ratio = Math.round(100 * score / total);
                         html += '<li>' + label_parti + ' '+ratio+'% (' + score + ' voix)</li>';
                     }
                 }
