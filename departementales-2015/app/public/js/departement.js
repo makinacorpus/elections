@@ -1,20 +1,50 @@
 var App = function() {
 
     var colors = {
-        // TO BE COMPLETED
-        'PS': '#BF47A1',
-        'UMP-UDI': '#0C8FFA',
-        'UMP': '#0C8FFA',
-        'FN': 'black',
-        'NUL': 'white',
-        'ABS': 'grey',
-    };
+        "ANAR":"#000000",
+        "EXG":"#BB0000",
+        "LO":"#BB0000",
+        "NPA":"#BB0000",
+        "FG":"#DD0000",
+        "PCF":"#DD0000",
+        "PG":"#DD0000",
+        "MRC":"#CC6666",
+        "ND":"#CC6666",
+        "VEC":"#00C000",
+        "EELV":"#00C000",
+        "CAP":"#77FF77",
+        "DVE":"#77FF77",
+        "PS":"#FF8080",
+        "SOC":"#FF8080",
+        "PRG":"#FFD1DC",
+        "RDG":"#FFD1DC",
+        "DVG":"#FFC0C0",
+        "MDM":"#FF9900",
+        "UC":"#74C2C3",
+        "NC":"#00FFFF",
+        "UDI":"#00FFFF",
+        "DVD":"#ADC1FD",
+        "UMP":"#0066CC",
+        "PR":"#0066CC",
+        "DLR":"#8040C0",
+        "MPF":"#8040C0",
+        "PP":"#8040C0",
+        "FN":"#C0C0C0",
+        "SP":"#C0C0C0",
+        "EXD":"#404040",
+        "DIV":"#F0F0F0",
+        "COM":"#CCC",
+        "DLF":"#CCC",
+        "UC":"#74C2C3",
+        "UD":"#ADC1FD",
+        "UG":"#FFC0C0"
+        };
     var self = this;
     var departement = location.search.slice(location.search.indexOf("dep=")+4, location.search.indexOf("dep=")+6);
     var options = {
         tileUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
         contour: {
-            url: '../../../resources/carte_elec/carte_elec_dept_'+departement+'.geojson',
+            url: '../../../resources/bureaux/'+departement+'.geojson',
             type: 'geojson',
         },
         containerId: 'map',
@@ -50,7 +80,7 @@ var App = function() {
                     };
                 }
                 results[bureau].scores[parti] = score;
-                if(parti != 'ABS' && parti != 'NUL' && score > results[bureau].winner.score) {
+                if(parti && score > results[bureau].winner.score) {
                     results[bureau].winner = {
                         parti: parti,
                         score: score
@@ -65,7 +95,7 @@ var App = function() {
             function highlightFeature(e) {
                 var layer = e.target;
                 layer.setStyle({weight: 4});
-                legend.update(layer.feature.properties.BUREAU);
+                legend.update(""+parseInt(layer.feature.properties.BV2015));
             }
             function resetHighlight(e) {
                 var layer = e.target;
@@ -73,11 +103,11 @@ var App = function() {
             }
 
             function onEachFeature(feature, layer) {
-                var data = results[feature.properties.BUREAU];
+                var data = results[""+parseInt(feature.properties.BV2015)];
                 var color = 'grey';
                 var opacity = 0;
                 if(data) {
-                    color = colors[data.winner.parti];
+                    color = colors[data.winner.parti.split('-')[1]];
                     opacity = 0.5
                 }
                 layer.setStyle({ color: color, weight: 1, fillOpacity: opacity});
