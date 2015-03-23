@@ -254,18 +254,19 @@ var App = function (dataset) {
 
         legend.update = function (bureau) {
             var html = '<h3>Résultats à Toulouse</h3>';
-            if(bureau && results[bureau]) {
+            if (bureau && results[bureau]) {
                 html += '<ul>';
-                var total = 0;
+                var total          = 0;
                 var total_exprimes = 0;
                 var votes_exprimes = [];
-                for(var parti in results[bureau].scores) {
-                    if(parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
-                      var score = results[bureau].scores[parti] || 0;
-                      total_exprimes += results[bureau].scores[parti];
-                      votes_exprimes.push({ parti: parti, score: score})
+                var scores         = results[bureau].scores;
+                for (var parti in scores) {
+                    if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
+                        var score = scores[parti] || 0;
+                        total_exprimes += scores[parti];
+                        votes_exprimes.push({ parti: parti, score: score})
                     }
-                    total += results[bureau].scores[parti];
+                    total += scores[parti];
                 }
                 votes_exprimes = votes_exprimes.map(function(d){
                     d.ratio = Math.round(100 * d.score / total_exprimes);
@@ -274,29 +275,26 @@ var App = function (dataset) {
                     return b.score - a.score;
                 });
 
-                for(var parti in results[bureau].scores) {
+                for (var parti in scores) {
                     if(parti == "ABSTENTION" || parti == "NUL" || parti == "BLANC") {
-                        html += '<li>' + parti + ' (' + results[bureau].scores[parti] + ' voix)</li>';
+                        html += '<li>' + parti + ' (' + scores[parti] + ' voix)</li>';
                     }
                 }
 
-                var abstention = results[bureau].scores["ABSTENTION"];
-                if(!!abstention){
+                var abstention = scores["ABSTENTION"];
+                if (!!abstention) {
                     var ratio = 100 - Math.round(100 * abstention / total);
                     html += '<li style="margin-top:10px; margin-bottom:10px;"> PARTICIPATION (' + ratio + ' %)</li>';
                 }
 
                 votes_exprimes.forEach(function(vote){
-                        var label_parti = (vote.parti.indexOf('-') > 0 ? vote.parti.split('-')[1] : vote.parti);
-                        html += '<li>';
-                        if (vote.score == results[bureau].winner.score) {
-                          html += '<strong>';
-                        }
-                        html += label_parti + ' '+vote.ratio+'% (' + vote.score + ' voix)</li>';
-                        if (vote.score == results[bureau].winner.score) {
-                          html += '</strong>';
-                        }
-                        html += '<div style="display:inline-block;width:' + (2 * vote.ratio) + 'px;height:10px;background-color:' + colors[label_parti] +';"></div></li>';
+                    var label_parti = (vote.parti.indexOf('-') > 0 ? vote.parti.split('-')[1] : vote.parti);
+                    var isWinner    = (vote.score === results[bureau].winner.score);
+                    html += '<li>';
+                    html += isWinner ? '<strong>' : '';
+                    html += label_parti + ' ' + vote.ratio + '% (' + vote.score + ' voix)</li>';
+                    html += isWinner ? '</strong>' : '';
+                    html += '<div style="display:inline-block;width:' + (2 * vote.ratio) + 'px;height:10px;background-color:' + colors[label_parti] +';"></div></li>';
                 });
 
                 html += '</ul>';
