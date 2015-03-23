@@ -84,6 +84,7 @@ var App = function(){
     else{
       html = '<b> Candidats par canton </b><p>Survolez un canton pour plus de détails</p>';
     }
+    html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
     this._div.innerHTML = html;
 
   };
