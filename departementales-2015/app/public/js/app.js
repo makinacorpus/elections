@@ -109,13 +109,16 @@ var App = function(){
       }
       self.depLayer = L.geoJson(data, {style: style});
       self.depLayer.addTo(self.map);
+      self.map.fitBounds(self.depLayer.getBounds());
     });
     $.getJSON("../../../resources/nuances.json", function(data) {
       self.colors = data;
     });
 
     // center on France
-    self.map.setView(new L.LatLng(44,0), 6);
+    if (!self.depLayer) {
+      self.map.setView(new L.LatLng(44,0), 6);
+    }
       
     // add an OpenStreetMap tile layer
     self.tileLayer = L.tileLayer(options.tileUrl, {
