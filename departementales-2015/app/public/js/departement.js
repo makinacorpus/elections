@@ -1,6 +1,6 @@
 var App = function (dataset) {
 
-    var departement, pymChild;
+    var departement, pymChild, zoomOnScroll;
 
     if (dataset && dataset.dpt) {
         departement = dataset.dpt;
@@ -8,6 +8,12 @@ var App = function (dataset) {
         departement = mkcMapFrame.dptFromQS() || '31';
     } else {
         departement = '31';
+    }
+
+    if (dataset && dataset.zoomOnScroll) {
+        zoomOnScroll = dataset.zoomOnScroll;
+    } else {
+        zoomOnScroll = true;
     }
 
     var colors = {
@@ -27,7 +33,7 @@ var App = function (dataset) {
             url: '../../../resources/carte_elec/carte_elec_dept_' + departement + '.geojson',
             type: 'geojson',
         },
-        scrollWheelZoom: dataset.zoomOnScroll || true,
+        scrollWheelZoom: zoomOnScroll,
         containerId: 'map',
         attribution: 'Tuiles par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     };
