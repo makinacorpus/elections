@@ -95,19 +95,26 @@ var App = function (dataset) {
                 if (!results[bureau]) {
                     results[bureau] = {
                         scores: {},
+                        total: 0,
                         winner: {
                             parti: 'NUL',
                             score: 0
                         }
                     };
                 }
-                results[bureau].scores[parti] = score;
                 if(parti && score > results[bureau].winner.score) {
                     results[bureau].winner = {
                         parti: parti,
                         score: score
                     };
                 }
+                if(!parti) {
+                    parti = data[i][2];
+                }
+                if(parti != 'ABSTENTION' || parti != 'NUL') {
+                    results[bureau].total += score;
+                }
+                results[bureau].scores[parti] = score;
             }
             // draw bureaux
             var customLayer = L.geoJson(null, {
@@ -188,7 +195,17 @@ var App = function (dataset) {
             if(bureau && results[bureau]) {
                 html += '<ul>';
                 for(var parti in results[bureau].scores) {
-                    html += '<li>' + parti + ' ' + results[bureau].scores[parti] + '</li>';
+                    var score = results[bureau].scores[parti];
+                    if(!score) {
+                        score = 0;
+                    }
+                    if(parti == "ABSTENTION" || parti == "NUL") {
+                        html += '<li>' + parti + ' (' + score + ' voix)</li>';
+                    } else {
+                        var label_parti = (parti.indexOf('-') > 0 ? parti.split('-')[1] : parti);
+                        var ratio = Math.round(100 * score / results[bureau].total);
+                        html += '<li>' + label_parti + ' '+ratio+'% (' + score + ' voix)</li>';
+                    }
                 }
                 html += '</ul>';
             }
