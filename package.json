@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "async": "^0.9.0",
-    "google-spreadsheet": "^0.2.8"
+    "google-spreadsheet": "^0.2.8",
+    "jsonfile": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {
