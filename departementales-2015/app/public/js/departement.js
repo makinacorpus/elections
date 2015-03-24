@@ -15,6 +15,9 @@ var App = function (dataset) {
     } else if (mkcMapFrame) {
         analyse_parti = mkcMapFrame.partiFromQS();
     }
+    if(analyse_parti) {
+        analyse_parti = analyse_parti.split('|')
+    }
 
     if (dataset && dataset.zoomonscroll && dataset.zoomonscroll === "false") {
         zoomOnScroll = false;
@@ -228,16 +231,15 @@ var App = function (dataset) {
                     // else we just darken/enlight the analysed parti color
                     if (bureau) {
                         var rate, light;
-                        if (analyse_parti != "ABSTENTION" && analyse_parti != "NUL" && analyse_parti != "BLANC") {
-                            rate = bureau.scores["BC-"+analyse_parti]/bureau.total;
-                            if(rate > 0.5) {
-                                rate = 0.5;
+                        var score = 0;
+                        analyse_parti.forEach(function(p) {
+                            if (p != "ABSTENTION" && p != "NUL" && p != "BLANC") {
+                                p = "BC-"+p;
                             }
-                            light = 1 - rate * 4;
-                        } else {
-                            rate = bureau.scores[analyse_parti] / (bureau.total + bureau.scores["ABSTENTION"] + bureau.scores["NUL"] + bureau.scores["BLANC"]);
-                            light = 1 - rate * 2;
-                        }
+                            score += bureau.scores[p] || 0;
+                        });
+                        rate = score/bureau.total;
+                        light = 1 - rate * 2;
                         color   = ColorLuminance('#999', light);
                     }
                 }
@@ -406,19 +408,16 @@ var App = function (dataset) {
 
             html += '<p>Les contours blancs correspondent aux cantons.</p>';
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
-            html += '<p>Analyser les scores d\'un parti (en cours d\'amélioration) : <select onchange="location.href=this.value;"></p>';
+            html += '<br/>Analyser les scores d\'un parti: <br/>';
             var current = location.href.split('?')[0];
-            var param = {'dep': departement};
-            html += '<option value="'+current+mkcMapFrame.buildQueryString(param)+'">(Aucun)</option>';
             for(parti in existing_partis) {
-                param['parti'] = parti;
-                html += '<option value="'+current+mkcMapFrame.buildQueryString(param)+'"';
-                if(parti == analyse_parti) {
-                    html += ' selected';
+                html += '<input type="checkbox" value="'+parti+'"';
+                if(analyse_parti && analyse_parti.indexOf(parti) > -1) {
+                    html += ' checked';
                 }
-                html += '>'+parti+'</option>';
+                html += '>'+parti+'<br/>';
             }
-            html += '</select>';
+            html += '<button onclick="location.href=\''+current+'?dep='+departement+'&parti=\'+$(\'input:checkbox:checked\').map(function() {return this.value;}).get().join(\'|\');">Analyser</button>';
             this._div.innerHTML = html;
         };
         legend.addTo(self.map);
