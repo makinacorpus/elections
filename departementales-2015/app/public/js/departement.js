@@ -266,6 +266,7 @@ var App = function (dataset) {
 
         legend.update = function (bureau) {
             var html = '<h3>Résultats à Toulouse</h3>';
+            html += '<big><strong>Nous vérifions actuellement la construction de la carte, il semble que des résultats soient mélangés, nous mettons à jour le plus vite possible.</strong></big>';
             if (bureau && results[bureau]) {
                 var total          = 0;
                 var total_exprimes = 0;
