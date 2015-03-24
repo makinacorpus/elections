@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Lectoure (Gers) - comparaison électorale</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="Comparaison des résultats aux élections de Lectoure (Gers) par bureau de vote" />
+      <meta property="og:title" content="Lectoure (Gers) - comparaison électorale" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://cartes-elections.makina-corpus/lectoure" />
+      <meta property="og:image" content="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png" />
+      <meta property="og:description" content="Comparaison des résultats aux élections de Lectoure (Gers) par bureau de vote" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+      <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="lectoure.css" />
+    </head>
+
+    <body>
+      <div id="main">
+        <div id="municipales2014">&nbsp;</div>
+        <div id="europeennes2014">&nbsp;</div>
+        <div id="departementales2015">&nbsp;</div>
+      </div>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src="../departementales-2015/app/public/js/jquery-2.1.3.min.js"></script>
+    <script src="lectoure.js"></script>
+    <script>
+      jQuery(document).ready(function($) {
+        app = new App();
+        app.init();
+      });
+    </script>
+   <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-49309002-1', 'makinacorpus.github.io');
+  ga('send', 'pageview');
+   </script>
+</html>
