@@ -40,10 +40,19 @@
 			return _getQueryString().parti || false;
 		}
 
+		function _buildQueryString(obj) {
+			var items = [];
+			for(var key in obj) {
+				items.push(key + '=' + obj[key]);
+			}
+			return '?' + items.join('&');
+		}
+
 		return {
 			init: _init,
 			dptFromQS: _dptFromQueryString,
-			partiFromQS: _partiFromQueryString
+			partiFromQS: _partiFromQueryString,
+			buildQueryString: _buildQueryString
 		}
 	}();
 

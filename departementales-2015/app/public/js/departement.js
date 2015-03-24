@@ -402,10 +402,12 @@ var App = function (dataset) {
             html += 'Les contours blancs correspondent aux cantons.<br/>Survolez un bureau de vote pour plus de détails';
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
             html += '<br/>Analyser les scores d\'un parti: <select onchange="location.href=this.value;">';
-            var current = location.href.split('&parti=')[0];
-            html += '<option value="'+current+'">(Aucun)</option>';
+            var current = location.href.split('?')[0];
+            var param = {'dep': departement};
+            html += '<option value="'+current+mkcMapFrame.buildQueryString(param)+'">(Aucun)</option>';
             for(parti in existing_partis) {
-                html += '<option value="'+current+'&parti='+parti+'"';
+                param['parti'] = parti;
+                html += '<option value="'+current+mkcMapFrame.buildQueryString(param)+'"';
                 if(parti == analyse_parti) {
                     html += ' selected';
                 }
