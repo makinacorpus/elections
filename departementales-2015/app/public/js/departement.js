@@ -204,6 +204,18 @@ var App = function (dataset) {
 
             contourLayer.on('ready', function () {
                 //self.map.fitBounds(customLayer.getBounds());
+                // Add Canton border
+                $.getJSON('./data/canton_toulouse.geojson', function (data) {
+                  var style = {
+                    color: '#FFF',
+                    weight: 2,
+                    opacity: 1,
+                    clickable: false,
+                  };
+                  var toulouseLayer = L.geoJson(data, {style: style});
+                  toulouseLayer.addTo(self.map);
+                  // self.map.fitBounds(toulouseLayer.getBounds());
+                });
             });
 
             // small fix
