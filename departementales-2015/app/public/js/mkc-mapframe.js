@@ -20,7 +20,7 @@
 			pymChild.sendHeight();
 		}
 
-		function _dptFromQueryString () {
+		function _getQueryString () {
 			var qs = {}, qsa = [];
 			if (location.search.length) {
 				qsa = location.search.substr(1).split('&');
@@ -29,12 +29,21 @@
 					qs[array[0]] = array[1];
 				});
 			}
-			return qs.dep || false;
+			return qs;
+		}
+
+		function _dptFromQueryString () {
+			return _getQueryString().dep || false;
+		}
+
+		function _partiFromQueryString () {
+			return _getQueryString().parti || false;
 		}
 
 		return {
 			init: _init,
-			dptFromQS: _dptFromQueryString
+			dptFromQS: _dptFromQueryString,
+			partiFromQS: _partiFromQueryString
 		}
 	}();
 

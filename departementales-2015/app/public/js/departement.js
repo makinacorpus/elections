@@ -1,6 +1,6 @@
 var App = function (dataset) {
 
-    var departement, pymChild, zoomOnScroll = true;
+    var departement, analyse_parti, pymChild, zoomOnScroll = true;
 
     if (dataset && dataset.dpt) {
         departement = dataset.dpt;
@@ -8,6 +8,12 @@ var App = function (dataset) {
         departement = mkcMapFrame.dptFromQS() || '31';
     } else {
         departement = '31';
+    }
+
+    if (dataset && dataset.parti) {
+        analyse_parti = dataset.parti;
+    } else if (mkcMapFrame) {
+        analyse_parti = mkcMapFrame.partiFromQS();
     }
 
     if (dataset && dataset.zoomonscroll && dataset.zoomonscroll === "false") {
@@ -52,9 +58,29 @@ var App = function (dataset) {
         "UC":"#74C2C3",
         "UD":"#ADC1FD",
         "UG":"#FFC0C0",
-        "egal":"white",
-        "BLANC":"white"
+        "egal":"#fff",
+        "BLANC":"#fff"
         };
+
+    function ColorLuminance(hex, lum) {
+        // validate hex string
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+            hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        }
+        lum = lum || 0;
+
+        // convert to decimal and change luminosity
+        var rgb = "#", c, i;
+        for (i = 0; i < 3; i++) {
+            c = parseInt(hex.substr(i*2,2), 16);
+            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+            rgb += ("00"+c).substr(c.length);
+        }
+
+        return rgb;
+    }
+
     var self = this;
 
     var options = {
@@ -103,6 +129,7 @@ var App = function (dataset) {
 
         // Read result from json
         var results = {};
+        var existing_partis = {};
         $.getJSON('../../data/resultats/tour1/' + departement + '.json', function (data) {
 
             /**
@@ -149,6 +176,17 @@ var App = function (dataset) {
                 results[bureauId].scores[parti] = score;
             }
 
+            for(bureau in results) {
+                var total = 0;
+                for(parti in results[bureau].scores) {
+                    if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
+                        total += results[bureau].scores[parti];
+                    }
+                    existing_partis[(parti.indexOf('BC-') > -1 ? parti.split('BC-')[1] : parti)] = true;
+                }
+                results[bureau].total = total;
+            }
+
             /**
              * Draw bureaux
              */
@@ -162,26 +200,43 @@ var App = function (dataset) {
                 var layer = e.target;
                 layer.setStyle({weight: 4});
                 layer.setStyle({color: layer.options.fillColor});
-                layer.setStyle({fillOpacity: 0.7});
+                layer.setStyle({fillOpacity: 0.7 + (analyse_parti ? 0.3 : 0.0)});
                 legend.update(""+parseInt(layer.feature.properties.BV2015));
             }
             function resetHighlight(e) {
                 var layer = e.target;
                 layer.setStyle({weight: 1});
                 layer.setStyle({color: '#333333'});
-                layer.setStyle({fillOpacity: 0.4});
+                layer.setStyle({fillOpacity: 0.4 + (analyse_parti ? 0.3 : 0.0)});
             }
 
             function onEachFeature(feature, layer) {
                 // Make two type coercions to remove leading zero
                 var bureau  = results[parseInt(feature.properties.BV2015).toString()];
                 var color   = '#aaaaaa';
-                var opacity = 0.4;
+                var opacity = 0.4 + (analyse_parti ? 0.3 : 0.0);
 
-                // Select color from winner
-                if (bureau) {
-                    color   = colors[bureau.winner.parti.split('-')[1]];
-                    opacity = 0.4
+                if(!analyse_parti) {
+                    // if no analyse, select color from winner
+                    if (bureau) {
+                        color   = colors[bureau.winner.parti.split('-')[1]];
+                    }
+                } else {
+                    // else we just darken/enlight the analysed parti color
+                    if (bureau) {
+                        var rate, light;
+                        if (analyse_parti != "ABSTENTION" && analyse_parti != "NUL" && analyse_parti != "BLANC") {
+                            rate = bureau.scores["BC-"+analyse_parti]/bureau.total;
+                            if(rate > 0.5) {
+                                rate = 0.5;
+                            }
+                            light = 1 - rate * 4;
+                        } else {
+                            rate = bureau.scores[analyse_parti] / (bureau.total + bureau.scores["ABSTENTION"] + bureau.scores["NUL"] + bureau.scores["BLANC"]);
+                            light = 1 - rate * 2;
+                        }
+                        color   = ColorLuminance('#999', light);
+                    }
                 }
 
                 // Set shape styles
@@ -346,6 +401,17 @@ var App = function (dataset) {
 
             html += 'Les contours blancs correspondent aux cantons.<br/>Survolez un bureau de vote pour plus de détails';
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
+            html += '<br/>Analyser les score d\'un parti: <select onchange="location.href=this.value;">';
+            var current = location.href.split('&parti=')[0];
+            html += '<option value="'+current+'">(Aucun)</option>';
+            for(parti in existing_partis) {
+                html += '<option value="'+current+'&parti='+parti+'"';
+                if(parti == analyse_parti) {
+                    html += ' selected';
+                }
+                html += '>'+parti+'</option>';
+            }
+            html += '</select>';
             this._div.innerHTML = html;
         };
         legend.addTo(self.map);
