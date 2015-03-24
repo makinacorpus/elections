@@ -141,13 +141,15 @@ var App = function (dataset) {
             // Start with i = 1 because of headers row
             for (var i = 1; i < data.length; i++) {
                 currentData = data[i];
+                cantonId    = currentData[0];
                 bureauId    = currentData[1];
                 parti       = currentData[3];
                 score       = currentData[4];
+                resultId = cantonId + '-' + bureauId;
 
                 // Create bureau only if not already existing
-                if (!results[bureauId]) {
-                    results[bureauId] = {
+                if (!results[resultId]) {
+                    results[resultId] = {
                         scores: {},
                         winner: {
                             parti: 'NUL',
@@ -158,13 +160,13 @@ var App = function (dataset) {
 
                 // If current score is higher than previous winner, store it as winner
                 if (parti && parti !== 'ABSTENTION' && parti !== 'NUL' && parti !== 'BLANC') {
-                  if (score > results[bureauId].winner.score) {
-                    results[bureauId].winner = {
+                  if (score > results[resultId].winner.score) {
+                    results[resultId].winner = {
                       parti: parti,
                       score: score
                     };
-                  } else if (score === results[bureauId].winner.score) {
-                    results[bureauId].winner = {
+                  } else if (score === results[resultId].winner.score) {
+                    results[resultId].winner = {
                       parti: "BC-egal",
                       score: score
                     };
@@ -173,10 +175,11 @@ var App = function (dataset) {
                 if (!parti) {
                     parti = currentData[2];
                 }
-                results[bureauId].scores[parti] = score;
+                results[resultId].scores[parti] = score;
             }
 
             for(bureau in results) {
+              // bureau is not a bureau.
                 var total = 0;
                 for(parti in results[bureau].scores) {
                     if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
@@ -201,7 +204,7 @@ var App = function (dataset) {
                 layer.setStyle({weight: 4});
                 layer.setStyle({color: layer.options.fillColor});
                 layer.setStyle({fillOpacity: 0.7 + (analyse_parti ? 0.3 : 0.0)});
-                legend.update(""+parseInt(layer.feature.properties.BV2015));
+                legend.update(layer.feature.properties.CODECANT + "-"+ parseInt(layer.feature.properties.BV2015));
             }
             function resetHighlight(e) {
                 var layer = e.target;
@@ -212,7 +215,7 @@ var App = function (dataset) {
 
             function onEachFeature(feature, layer) {
                 // Make two type coercions to remove leading zero
-                var bureau  = results[parseInt(feature.properties.BV2015).toString()];
+                var bureau  = results[feature.properties.CODECANT + "-" + parseInt(feature.properties.BV2015)];
                 var color   = '#aaaaaa';
                 var opacity = 0.4 + (analyse_parti ? 0.3 : 0.0);
 
@@ -361,7 +364,7 @@ var App = function (dataset) {
                 sortedScores.sort(function (a, b) {
                     return b.value - a.value;
                 });
-                html += '<p>Bureau n°' + bureau + '</p>';
+                html += '<p>Canton n°' + bureau.split('-')[0] +' - Bureau n°' + bureau.split('-')[1] + '</p>';
                 var overall       = document.createElement('ul');
                 overall.className = 'overall';
                 sortedScores.forEach(function (element) {
