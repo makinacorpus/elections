@@ -216,6 +216,18 @@ var App = function (dataset) {
                   toulouseLayer.addTo(self.map);
                   // self.map.fitBounds(toulouseLayer.getBounds());
                 });
+                $.getJSON('./fougeres.geojson', function (data) {
+                  var style = function (feature) {
+                    var color = 'black';
+                    if (feature.properties.BV2015 == '6') {
+                      color = 'red';
+                    }
+                    return { color: color, weight: 3, clickable: true }
+                  };
+                  var fougeresLayer = L.geoJson(data, {style: style});
+                  fougeresLayer.addTo(self.map);
+                  // self.map.fitBounds(toulouseLayer.getBounds());
+                });
             });
 
             // small fix
