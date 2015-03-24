@@ -400,11 +400,13 @@ var App = function (dataset) {
                 });
 
                 html += '</ul>';
+            } else {
+              html += '<p><big><strong>Survolez un bureau de vote pour plus de détails.</strong></big></p>';
             }
 
-            html += 'Les contours blancs correspondent aux cantons.<br/>Survolez un bureau de vote pour plus de détails';
+            html += '<p>Les contours blancs correspondent aux cantons.</p>';
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
-            html += '<br/>Analyser les scores d\'un parti: <select onchange="location.href=this.value;">';
+            html += '<p>Analyser les scores d\'un parti (en cours d\'amélioration) : <select onchange="location.href=this.value;"></p>';
             var current = location.href.split('?')[0];
             var param = {'dep': departement};
             html += '<option value="'+current+mkcMapFrame.buildQueryString(param)+'">(Aucun)</option>';
