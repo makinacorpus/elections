@@ -332,7 +332,7 @@ var App = function (dataset) {
                 html += '</ul>';
             }
 
-            html += 'Survolez un bureau de vote pour plus de détails';
+            html += 'Les contours blancs correspondent aux cantons.<br/>Survolez un bureau de vote pour plus de détails';
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
             this._div.innerHTML = html;
         };
