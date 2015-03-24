@@ -156,6 +156,7 @@ html, body {
 #logo {
   position: absolute;
   bottom: 3rem;
+  height: 2rem;
   right: 1rem;
 }
 
@@ -171,21 +172,4 @@ html, body {
 
 .leaflet-control-resetview {
   display: none;
-}
-
-/* navigation */
-
-.nav {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0.5em;
-}
-
-.nav li {
-  padding: 2px 5px;
-  border-right: #CCC solid 1px;
-}
-
-.inline li {
-  float: left;
 }
