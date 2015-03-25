@@ -353,7 +353,7 @@ var App = function (dataset) {
                     total += scores[parti];
                 }
                 votes_exprimes = votes_exprimes.map(function(d){
-                    d.ratio = Math.round(100 * d.score / total_exprimes);
+                    d.ratio = (100 * d.score / total_exprimes).toFixed(1);
                     return d;
                 }).sort(function(a, b){
                     return b.score - a.score;
