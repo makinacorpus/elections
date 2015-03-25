@@ -131,7 +131,7 @@ var App = function (dataset) {
         self.tile2Layer.addTo(self.map);
 
         // Read result from json
-        var results = {};
+        var results         = {};
         var existing_partis = {};
         $.getJSON('../../data/resultats/tour1/' + departement + '.json', function (data) {
 
@@ -141,6 +141,7 @@ var App = function (dataset) {
              */
 
             var bureauId, parti, score, currentData;
+
             // Start with i = 1 because of headers row
             for (var i = 1; i < data.length; i++) {
                 currentData = data[i];
@@ -148,7 +149,7 @@ var App = function (dataset) {
                 bureauId    = currentData[1];
                 parti       = currentData[3];
                 score       = currentData[4];
-                resultId = cantonId + '-' + bureauId;
+                resultId    = [cantonId, bureauId].join('-');
 
                 // Create bureau only if not already existing
                 if (!results[resultId]) {
@@ -181,16 +182,16 @@ var App = function (dataset) {
                 results[resultId].scores[parti] = score;
             }
 
-            for(bureau in results) {
-              // bureau is not a bureau.
-                var total = 0;
-                for(parti in results[bureau].scores) {
-                    if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
-                        total += results[bureau].scores[parti];
+            var total;
+            for (var r in results) {
+                total = 0;
+                for (var part in results[r].scores) {
+                    if (part != "ABSTENTION" && part != "NUL" && part != "BLANC") {
+                        total += results[r].scores[part];
                     }
-                    existing_partis[(parti.indexOf('BC-') > -1 ? parti.split('BC-')[1] : parti)] = true;
+                    existing_partis[(part.indexOf('BC-') > -1 ? part.split('BC-')[1] : part)] = true;
                 }
-                results[bureau].total = total;
+                results[r].total = total;
             }
 
             /**
