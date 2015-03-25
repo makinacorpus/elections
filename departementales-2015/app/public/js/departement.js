@@ -382,14 +382,14 @@ var App = function (dataset) {
                 html += '<ul>';
                 for (var parti in scores) {
                     if(parti == "ABSTENTION" || parti == "NUL" || parti == "BLANC") {
-                        html += '<li>' + parti + ' (' + scores[parti] + ' voix)</li>';
+                        html += '<li>' + parti.charAt(0) + parti.slice(1).toLowerCase() + 's (' + scores[parti] + ' voix)</li>';
                     }
                 }
 
                 var abstention = scores["ABSTENTION"];
                 if (!!abstention) {
                     var ratio = 100 - Math.round(100 * abstention / total);
-                    html += '<li style="margin-top:10px; margin-bottom:10px;"> PARTICIPATION (' + ratio + ' %)</li>';
+                    html += '<li style="margin-top:10px; margin-bottom:10px;"> Participation (' + ratio + ' %)</li>';
                 }
 
                 votes_exprimes.forEach(function(vote){
@@ -416,7 +416,11 @@ var App = function (dataset) {
                 if(analyse_parti && analyse_parti.indexOf(parti) > -1) {
                     html += ' checked';
                 }
-                html += '>'+parti+'<br/>';
+                if(parti == "ABSTENTION" || parti == "NUL" || parti == "BLANC") {
+                  html += '>' + parti.charAt(0) + parti.slice(1).toLowerCase() + 's<br/>';
+                } else {
+                  html += '>'+parti+'<br/>';
+                }
             }
             html += '<button onclick="location.href=\''+current+'?dep='+departement+'&parti=\'+$(\'input:checkbox:checked\').map(function() {return this.value;}).get().join(\'|\');">Analyser</button>';
             this._div.innerHTML = html;
