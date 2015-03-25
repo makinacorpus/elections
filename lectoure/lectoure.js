@@ -132,12 +132,12 @@ var App = function () {
           $.getJSON('data/bv_32_lectoure_2014.json', function(data) {
             function highlightFeature(e) {
               var layer = e.target;
-              layer.setStyle({weight: 15});
+              layer.setStyle({weight: 4});
               legend.update(layer.feature.properties.BV2015);
             }
             function resetHighlight(e) {
               var layer = e.target;
-              layer.setStyle({weight: 10});
+              layer.setStyle({weight: 1});
             }
             function onEachFeature(feature, layer) {
               var bureau  = results[""+parseInt(feature.properties.BV2015)];
@@ -146,10 +146,10 @@ var App = function () {
               if (bureau) color   = colors[bureau.winner.parti.split('-')[1]];
               layer.setStyle({
                 fillColor: color,
-                weight: 10,
+                weight: 1,
                 fillOpacity: opacity,
-                color: color,
-                opacity: 1
+                color: '#293133',
+                opacity: 1,
               });
 
               // Event bindings
