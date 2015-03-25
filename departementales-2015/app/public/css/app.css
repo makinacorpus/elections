@@ -156,6 +156,7 @@ html, body {
 #logo {
   position: absolute;
   bottom: 3rem;
+  right: 1rem;
 }
 
 #vendor-logo {
