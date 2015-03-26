@@ -297,7 +297,7 @@ var App = function (dataset) {
 
                 html += '</ul>';
             } else {
-              html += '<p><big><strong>Survolez un département pour plus de détails.</strong></big></p>';
+              html += '<p><big><strong>Survolez un canton pour plus de détails.</strong></big></p>';
             }
 
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
