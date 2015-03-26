@@ -92,7 +92,7 @@ var App = function (dataset) {
              * Sort results by entity
              * identify winner of each one.
              */
-            var entityId, parti, score, currentData;
+            var entityId, parti, score, currentData, depId;
             // Start with i = 1 because of headers row
             for (var i = 1; i < data.length; i++) {
                 currentData = data[i];
@@ -103,6 +103,10 @@ var App = function (dataset) {
                 entityId    = currentData.FIELD3;
                 entityName  = currentData.FIELD4;
                 resultId    = entityId;
+                depId = currentData.FIELD1;
+                if(depId !== departement){
+                    continue;
+                }
                 // Init.
                 results[resultId] = {
                   name: entityName,
