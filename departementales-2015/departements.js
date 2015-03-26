@@ -297,5 +297,17 @@ var App = function (dataset) {
         };
         legend.addTo(self.map);
         L.control.attribution({position: 'topright'}).addTo(self.map);
+
+        // Add Region layer.
+        $.getJSON('data/regions_2015.geojson', function (data) {
+          var style = {
+            clickable: false,
+            color: '#FFF',
+            opacity: 1,
+            weight: 2
+          };
+          var cantonLayer = L.geoJson(data, {style: style});
+          cantonLayer.addTo(self.map);
+        });
     };
 };
