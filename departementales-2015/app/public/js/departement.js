@@ -114,7 +114,7 @@ var App = function (dataset) {
             minZoom: 6,
             attributionControl: false,
             scrollWheelZoom: options.scrollWheelZoom
-        }).setActiveArea('activeArea').setView([43.55, 1.45], 12);
+        }).setActiveArea('activeArea').setView([43.60, 1.45], 12);
 
         // Default tile layer
         self.tileLayer = L.tileLayer(options.tileUrl, {
