@@ -180,6 +180,6 @@ html, body {
   -ms-filter: grayscale(80%);
   -o-filter: grayscale(80%);
   filter: grayscale(80%);
-  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'saturate\' values=\'0.8\'/></filter></svg>#grayscale");
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'saturate\' values=\'0.2\'/></filter></svg>#grayscale");
   filter: gray alpha(opacity=50);
 }
