@@ -43,6 +43,7 @@ var App = function () {
         };
 
     var self = this;
+    var legend, legend2, legend3;
 
     self.init = function () {
         // init map
@@ -134,6 +135,7 @@ var App = function () {
               var layer = e.target;
               layer.setStyle({weight: 4});
               legend3.update(layer.feature.properties.BV2015);
+              legend.update(layer.feature.properties.BV2015);
             }
             function resetHighlight(e) {
               var layer = e.target;
@@ -237,7 +239,7 @@ var App = function () {
               this._div.innerHTML = html;
             };
 
-              var legend3 = L.control({position: 'topright'});
+              legend3 = L.control({position: 'topright'});
               legend3.onAdd = addLegend;
               legend3.update = updateLegend;
               legend3.addTo(self.map3);
@@ -302,6 +304,7 @@ var App = function () {
               var layer = e.target;
               layer.setStyle({weight: 4});
               legend.update(layer.feature.properties.BV2015);
+              legend3.update(layer.feature.properties.BV2015);
             }
             function resetHighlight(e) {
               var layer = e.target;
@@ -405,7 +408,7 @@ var App = function () {
               this._div.innerHTML = html;
             };
 
-              var legend = L.control({position: 'topright'});
+              legend = L.control({position: 'topright'});
               legend.onAdd = addLegend;
               legend.update = updateLegend;
               legend.addTo(self.map);
