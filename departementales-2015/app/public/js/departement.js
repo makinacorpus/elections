@@ -315,6 +315,7 @@ var App = function (dataset) {
             }
             resetView.addTo(self.map);
             */
+            legend.update();
         });
 
         // Optionnal logo
@@ -416,10 +417,11 @@ var App = function (dataset) {
                     html += ' checked';
                 }
                 if(parti == "ABSTENTION" || parti == "NUL" || parti == "BLANC") {
-                  html += '>' + parti.charAt(0) + parti.slice(1).toLowerCase() + 's<br/>';
+                  html += '>' + parti.charAt(0) + parti.slice(1).toLowerCase() + 's';
                 } else {
-                  html += '>'+parti+'</label><br/>';
+                  html += '>'+parti;
                 }
+                html += '</label><br/>';
             }
             html += '<button onclick="var param=mkcMapFrame.getQueryString();param.parti=$(\'input:checkbox:checked\').map(function() {return this.value;}).get().join(\'|\'); location.href=location.href.split(\'?\')[0]+mkcMapFrame.buildQueryString(param);">Analyser</button>';
             this._div.innerHTML = html;
