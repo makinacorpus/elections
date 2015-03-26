@@ -3,19 +3,19 @@ var options = {
   fullscreenControl: true,
   mapDivId: 'map',
   minZoom: 6,
-  maxZoom: 6,
+  maxZoom: 7,
   startZoom: 6,
   center: [46.50, 1.45],
   // Data options
-  resultFile: 'data/resultats/tour1/regions.json',
-  entityFile: 'data/regions_2015.geojson',
-  neutralColor: '#AAAAAA',
+  resultFile: 'data/resultats/tour1/departements.json',
+  entityFile: '../resources/departements.geojson',
+  neutralColor: '#FFFFFF',
   // Legend options
-  legendTitle: 'Résultats par région',
-  entityName: 'Région :',
-  legendHelp: 'Survolez une région pour plus de détails.',
+  legendTitle: 'Résultats par département',
+  entityName: 'Département : ',
+  legendHelp: 'Survolez un département pour plus de détails.',
   // Additionnal layer ?
-  // additionalLayer:
+  additionalLayer: 'data/regions_2015.geojson',
 };
 
 /* This function computes the results from the data and
@@ -52,7 +52,7 @@ function computeResults(data) {
     results[resultId].scores['BLANC'] = parseInt(currentData.FIELD8);
     results[resultId].scores['NUL'] = parseInt(currentData.FIELD11);
     var j = 17;
-    while (j < 107) {
+    while (j < 102) {
       parti       = currentData['FIELD'+j];
       if (parti === "") {
         break;
@@ -83,7 +83,12 @@ function computeResults(data) {
  * This function retrieve the id of the geometrical layer.
  */
 function getBorderId(layer) {
-  return parseInt(layer.feature.properties.code_insee);
+  entityCode = layer.feature.properties.code;
+  if (entityCode === '2A' || entityCode === '2B') {
+    return entityCode;
+  } else {
+    return ""+parseInt(entityCode);
+  }
 }
 
 /**
@@ -91,5 +96,10 @@ function getBorderId(layer) {
  * of the geometrical layer.
  */
 function getResultId(feature) {
-  return ""+parseInt(feature.properties.code_insee);
+  entityCode = feature.properties.code;
+  if (entityCode === '2A' || entityCode === '2B') {
+    return entityCode;
+  } else {
+    return ""+parseInt(entityCode);
+  }
 }

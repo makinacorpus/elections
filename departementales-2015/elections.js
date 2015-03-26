@@ -151,6 +151,20 @@ var App = function (dataset) {
 
             // Attach geojson layer to map
             customLayer.addTo(self.map);
+
+            // Eventually add additional layer.
+            if (options.additionalLayer) {
+              $.getJSON(options.additionalLayer, function (additionalData) {
+                var style = {
+                  clickable: false,
+                  color: '#291333',
+                  opacity: 1,
+                  weight: 2
+                };
+                var additionalLayer = L.geoJson(additionalData, {style: style});
+                additionalLayer.addTo(self.map);
+              });
+            }
           });
         });
 
