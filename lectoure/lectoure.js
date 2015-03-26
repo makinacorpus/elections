@@ -133,7 +133,7 @@ var App = function () {
             function highlightFeature(e) {
               var layer = e.target;
               layer.setStyle({weight: 4});
-              legend.update(layer.feature.properties.BV2015);
+              legend3.update(layer.feature.properties.BV2015);
             }
             function resetHighlight(e) {
               var layer = e.target;
@@ -158,15 +158,15 @@ var App = function () {
                 mouseout: resetHighlight,
               });
             };
-            var boundsLayer = L.geoJson(data, {
+            var boundsLayer3 = L.geoJson(data, {
               style: null,
               onEachFeature: onEachFeature
             });
-            boundsLayer.addTo(self.map);
+            boundsLayer3.addTo(self.map3);
 
             updateLegend = function(bureau) {
               var html = '';
-              html += '<h3>Municipales 2014</h3>';
+              html += '<h3>Départementales 2015</h3>';
               if (bureau && results[bureau]) {
                 var total          = 0;
                 var total_exprimes = 0;
@@ -237,13 +237,12 @@ var App = function () {
               this._div.innerHTML = html;
             };
 
-              var legend = L.control({position: 'topright'});
-              legend.onAdd = addLegend;
-              legend.update = updateLegend;
-              legend.addTo(self.map);
+              var legend3 = L.control({position: 'topright'});
+              legend3.onAdd = addLegend;
+              legend3.update = updateLegend;
+              legend3.addTo(self.map3);
 
-              boundsLayer.addTo(self.map);
-              self.map.fitBounds(boundsLayer.getBounds());
+              self.map3.fitBounds(boundsLayer3.getBounds());
             });
         });
 
@@ -260,11 +259,11 @@ var App = function () {
           });
           boundsLayer2.addTo(self.map2);
           self.map2.fitBounds(boundsLayer2.getBounds());
-          var boundsLayer3 = L.geoJson(data, {
+          var boundsLayer = L.geoJson(data, {
             style: style
           });
-          boundsLayer3.addTo(self.map3);
-          self.map3.fitBounds(boundsLayer3.getBounds());
+          boundsLayer.addTo(self.map);
+          self.map.fitBounds(boundsLayer.getBounds());
         });
 
         // Legend
@@ -279,9 +278,9 @@ var App = function () {
           html += '<p>Survolez un bureau de vote pour plus de détails.</p>';
           this._div.innerHTML = html;
         };
-        updateLegend3 = function() {
+        updateLegend = function() {
           var html = '';
-          html += '<h3>Départementales 2015</h3>';
+          html += '<h3>Municipales 2014</h3>';
           html += '<p>Survolez un bureau de vote pour plus de détails.</p>';
           this._div.innerHTML = html;
         };
@@ -290,9 +289,9 @@ var App = function () {
         legend2.onAdd = addLegend;
         legend2.update = updateLegend2;
         legend2.addTo(self.map2);
-        var legend3 = L.control({position: 'topright'});
-        legend3.onAdd = addLegend;
-        legend3.update = updateLegend3;
-        legend3.addTo(self.map3);
+        var legend = L.control({position: 'topright'});
+        legend.onAdd = addLegend;
+        legend.update = updateLegend;
+        legend.addTo(self.map);
     };
 };
