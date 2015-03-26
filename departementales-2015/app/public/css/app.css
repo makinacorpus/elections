@@ -173,3 +173,13 @@ html, body {
 .leaflet-control-resetview {
   display: none;
 }
+
+.leaflet-tile-container img {
+  -webkit-filter: grayscale(80%);
+  -moz-filter: grayscale(80%);
+  -ms-filter: grayscale(80%);
+  -o-filter: grayscale(80%);
+  filter: grayscale(80%);
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'saturate\' values=\'0.8\'/></filter></svg>#grayscale");
+  filter: gray alpha(opacity=50);
+}
