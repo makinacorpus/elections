@@ -1,0 +1,62 @@
+[
+{
+  "FIELD1":"BV2014",
+  "FIELD2":"Inscrits",
+  "FIELD3":"Abstentions",
+  "FIELD4":"Votants",
+  "FIELD5":"Nuls",
+  "FIELD6":"Exprimés",
+  "FIELD7":"Nuance",
+  "FIELD8":"Voix",
+  "FIELD9":"Nuance",
+  "FIELD10":"Voix"
+},
+{
+  "FIELD1":"1",
+  "FIELD2":"826",
+  "FIELD3":"272",
+  "FIELD4":"554",
+  "FIELD5":"69",
+  "FIELD6":"485",
+  "FIELD7":"SOC",
+  "FIELD8":"283",
+  "FIELD9":"DVG",
+  "FIELD10":"202"
+},
+{
+  "FIELD1":"2",
+  "FIELD2":"745",
+  "FIELD3":"217",
+  "FIELD4":"528",
+  "FIELD5":"73",
+  "FIELD6":"455",
+  "FIELD7":"SOC",
+  "FIELD8":"262",
+  "FIELD9":"DVG",
+  "FIELD10":"193"
+},
+{
+  "FIELD1":"3",
+  "FIELD2":"726",
+  "FIELD3":"234",
+  "FIELD4":"492",
+  "FIELD5":"62",
+  "FIELD6":"430",
+  "FIELD7":"SOC",
+  "FIELD8":"249",
+  "FIELD9":"DVG",
+  "FIELD10":"181"
+},
+{
+  "FIELD1":"4",
+  "FIELD2":"508",
+  "FIELD3":"167",
+  "FIELD4":"341",
+  "FIELD5":"46",
+  "FIELD6":"295",
+  "FIELD7":"SOC",
+  "FIELD8":"171",
+  "FIELD9":"DVG",
+  "FIELD10":"124"
+}
+]
