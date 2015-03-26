@@ -96,6 +96,10 @@ var App = function (dataset) {
             // Start with i = 1 because of headers row
             for (var i = 1; i < data.length; i++) {
                 currentData = data[i];
+                console.log(currentData);
+                if (currentData.FIELD1 != departement) {
+                  continue;
+                }
                 entityId    = currentData.FIELD3;
                 entityName  = currentData.FIELD4;
                 resultId    = entityId;
