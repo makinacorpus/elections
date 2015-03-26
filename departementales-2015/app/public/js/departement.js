@@ -410,7 +410,7 @@ var App = function (dataset) {
 
             html += '<p>Les contours blancs correspondent aux cantons.</p>';
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
-            html += '<br/>Analyser les scores d\'un parti: <br/>';
+            html += '<br/>Analyser les scores d\'un parti ou plusieurs partis (si plusieurs, on se base sur la somme des votes): <br/>';
             for(parti in existing_partis) {
                 html += '<label><input type="checkbox" value="'+parti+'"';
                 if(analyse_parti && analyse_parti.indexOf(parti) > -1) {
