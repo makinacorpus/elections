@@ -302,7 +302,7 @@ var App = function (dataset) {
         $.getJSON('data/regions_2015.geojson', function (data) {
           var style = {
             clickable: false,
-            color: '#FFF',
+            color: '#291333',
             opacity: 1,
             weight: 2
           };
