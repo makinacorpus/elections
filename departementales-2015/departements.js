@@ -142,7 +142,7 @@ var App = function (dataset) {
             }
 
             /**
-             * Draw entityx
+             * Draw entitys
              */
             // Initialize empty geojson layer
             $.getJSON('../resources/departements.geojson', function(geojson) {
