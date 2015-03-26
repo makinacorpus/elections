@@ -65,7 +65,7 @@ var App = function (dataset) {
         self.map = L.map('map', {
             fullscreenControl: true,
             minZoom: 6,
-            maxZoom: 6,
+            maxZoom: 7,
             zoomControl: false,
             attributionControl: false,
             scrollWheelZoom: zoomOnScroll
@@ -175,7 +175,7 @@ var App = function (dataset) {
                 } else {
                   entity  = results[""+parseInt(entityCode)];
                 }
-                var color   = '#aaaaaa';
+                var color   = '#FFF';
                 var opacity = 0.8;
 
                 if (entity) {
