@@ -82,19 +82,19 @@ var App = function (dataset) {
         var existing_partis = {};
         $.getJSON('data/resultats/tour1/regions.json', function (data) {
             /**
-             * Sort results by region
+             * Sort results by entity
              * identify winner of each one.
              */
-            var regionId, parti, score, currentData;
+            var entityId, parti, score, currentData;
             // Start with i = 1 because of headers row
             for (var i = 1; i < data.length; i++) {
                 currentData = data[i];
-                regionId    = currentData.FIELD1;
-                regionName  = currentData.FIELD2;
-                resultId    = regionId;
+                entityId    = currentData.FIELD1;
+                entityName  = currentData.FIELD2;
+                resultId    = entityId;
                 // Init.
                 results[resultId] = {
-                  name: regionName,
+                  name: entityName,
                   scores: {},
                   winner: {
                     parti: 'NUL',
@@ -142,7 +142,7 @@ var App = function (dataset) {
             }
 
             /**
-             * Draw regionx
+             * Draw entitys
              */
             // Initialize empty geojson layer
             $.getJSON('./data/regions_2015.geojson', function(geojson) {
@@ -164,12 +164,12 @@ var App = function (dataset) {
 
             function onEachFeature(feature, layer) {
                 // Make two type coercions to remove leading zero
-                var region  = results[""+parseInt(feature.properties.code_insee)];
+                var entity  = results[""+parseInt(feature.properties.code_insee)];
                 var color   = '#aaaaaa';
                 var opacity = 0.8;
 
-                if (region) {
-                  color   = colors[region.winner.parti.split('-')[1]];
+                if (entity) {
+                  color   = colors[entity.winner.parti.split('-')[1]];
                 }
 
                 // Set shape styles
@@ -212,13 +212,13 @@ var App = function (dataset) {
             return this._div;
         };
 
-        legend.update = function (region) {
+        legend.update = function (entity) {
             var html = '<h3>Résultats par région</h3>';
-            if (region && results[region]) {
+            if (entity && results[entity]) {
                 var total          = 0;
                 var total_exprimes = 0;
                 var votes_exprimes = [];
-                var scores         = results[region].scores;
+                var scores         = results[entity].scores;
                 for (var parti in scores) {
                     if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
                         var score = scores[parti] || 0;
@@ -242,7 +242,7 @@ var App = function (dataset) {
                 sortedScores.sort(function (a, b) {
                     return b.value - a.value;
                 });
-                html += '<p>Region ' + results[region].name + '</p>';
+                html += '<p>Region ' + results[entity].name + '</p>';
                 var overall       = document.createElement('ul');
                 overall.className = 'overall';
                 sortedScores.forEach(function (element) {
@@ -269,7 +269,7 @@ var App = function (dataset) {
 
                 votes_exprimes.forEach(function(vote){
                     var label_parti = (vote.parti.indexOf('-') > 0 ? vote.parti.split('-')[1] : vote.parti);
-                    var isWinner    = (vote.score === results[region].winner.score);
+                    var isWinner    = (vote.score === results[entity].winner.score);
                     html += '<li>';
                     html += isWinner ? '<strong>' : '';
                     html += label_parti + ' ' + vote.ratio + '% (' + vote.score + ' voix)</li>';

@@ -156,6 +156,7 @@ html, body {
 #logo {
   position: absolute;
   bottom: 3rem;
+  height: 2rem;
   right: 1rem;
 }
 
@@ -173,19 +174,12 @@ html, body {
   display: none;
 }
 
-/* navigation */
-
-.nav {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0.5em;
-}
-
-.nav li {
-  padding: 2px 5px;
-  border-right: #CCC solid 1px;
-}
-
-.inline li {
-  float: left;
+.leaflet-tile-container img {
+  -webkit-filter: grayscale(80%);
+  -moz-filter: grayscale(80%);
+  -ms-filter: grayscale(80%);
+  -o-filter: grayscale(80%);
+  filter: grayscale(80%);
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'saturate\' values=\'0.2\'/></filter></svg>#grayscale");
+  filter: gray alpha(opacity=50);
 }
