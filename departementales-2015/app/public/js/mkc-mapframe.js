@@ -69,7 +69,8 @@
 			init: _init,
 			dptFromQS: _dptFromQueryString,
 			partiFromQS: _partiFromQueryString,
-			buildQueryString: _buildQueryString
+			buildQueryString: _buildQueryString,
+			getQueryString: _getQueryString
 		}
 	}();
 
