@@ -57,7 +57,24 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
             <section class="map-exemples">
                 <h2>Insertion d'une carte</h2>
                 <p>La carte sera insérée à l'emplacement de ces balises</p>
-                <div id="departements">
+                <div id="resultats-regions">
+                    <h3>Résultats des départementales par régions :</h3>
+                    <blockquote>
+                        <code>&lt;div class="mkc-placeholder" data-source="departementales-2015_cantons"&gt;&lt;/div&gt;</code>
+                    </blockquote>
+                    <div class="mkc-placeholder" data-source="departementales-2015_regions"></div>
+                </div>
+                
+                <div id="resultats-bureau">
+                    <h3>Résultats des départementales pour Toulouse, par bureau de vote :</h3>
+                    <!-- <span>option : data-dpt="numéro_du_département"</span> -->
+                    <blockquote>
+                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"&gt;&lt;/div&gt;</code>
+                    </blockquote>
+                    <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"></div>
+                </div>
+
+                 <div id="resultats-cantons">
                     <h3>Résultats des départementales pour chaque département, par canton :</h3>
                     <span>Option : data-dpt="numéro_du_département"</span> 
                     <blockquote>
@@ -65,15 +82,6 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                     </blockquote>
                     <p>Remplacer le "31" par un autre département si besoin.</p>
                     <div class="mkc-placeholder" data-source="departementales-2015_cantons" data-dpt="31"></div>
-                </div>
-                
-                <div id="departements">
-                    <h3>Résultats des départementales pour Toulouse, par bureau de vote :</h3>
-                    <!-- <span>option : data-dpt="numéro_du_département"</span> -->
-                    <blockquote>
-                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"&gt;&lt;/div&gt;</code>
-                    </blockquote>
-                    <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"></div>
                 </div>
 
                 <div id="cantons-candidats">
