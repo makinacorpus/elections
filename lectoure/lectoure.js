@@ -66,7 +66,36 @@ var App = function () {
             minZoom: 10,
             attributionControl: false,
         }).setView([43.94, 0.65], 13);
-
+        
+        // sync maps
+        self.map.on('move', follow).on('zoomend', follow);
+        self.map2.on('move', follow).on('zoomend', follow);
+        self.map3.on('move', follow).on('zoomend', follow);
+        var quiet = false;
+        function follow(e) {
+          if (quiet) return;
+          quiet = true;
+          if (e.target === self.map) {
+            sync(self.map2, e);
+            sync(self.map3, e);
+          }
+          if (e.target === self.map2) {
+            sync(self.map, e);
+            sync(self.map3, e);
+          }
+          if (e.target === self.map3) {
+            sync(self.map, e);
+            sync(self.map2, e);
+          }
+          quiet = false;
+        }
+        function sync(map, e) {
+          map.setView(e.target.getCenter(), e.target.getZoom(), {
+              animate: false,
+              reset: true
+          });
+        }
+        
         // Add base layers to the 3 maps.
         var tileLayer = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
             maxZoom: 14
