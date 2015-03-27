@@ -58,13 +58,24 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                 <h2>Insertion d'une carte</h2>
                 <p>La carte sera insérée à l'emplacement de ces balises</p>
                 <div id="departements">
-                    <h3>Résultats des départementales :</h3>
-                    <span>option : data-dpt="numéro_du_département"</span>
+                    <h3>Résultats des départementales pour chaque département, par canton :</h3>
+                    <span>Option : data-dpt="numéro_du_département"</span> 
                     <blockquote>
-                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" <strong>data-dpt="31"</strong>&gt;&lt;/div&gt;</code>
+                        <code>&lt;div class="mkc-placeholder" data-source="departementales-2015_cantons" <strong>data-dpt="31"</strong>&gt;&lt;/div&gt;</code>
+                    </blockquote>
+                    <p>Remplacer le "31" par un autre département si besoin.</p>
+                    <div class="mkc-placeholder" data-source="departementales-2015_cantons" data-dpt="31"></div>
+                </div>
+                
+                <div id="departements">
+                    <h3>Résultats des départementales pour Toulouse, par bureau de vote :</h3>
+                    <!-- <span>option : data-dpt="numéro_du_département"</span> -->
+                    <blockquote>
+                        <code>&lt;div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"&gt;&lt;/div&gt;</code>
                     </blockquote>
                     <div class="mkc-placeholder" data-source="2015-resultats-departementales" data-dpt="31"></div>
                 </div>
+
                 <div id="cantons-candidats">
                     <h3>Listes des candidats par cantons</h3>
                     <span>pas d'options</span>
@@ -119,7 +130,7 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
 
         <script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
-        js.async=true; js.src = "http://cartes-elections.makina-corpus.net/iframe-loader/mkc.js";
+        js.async=true; js.src = "http://makinacorpus.github.io/iframe-loader/dist/scripts/mkc.js";
         fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader'));</script>
     </body>
 </html>

@@ -315,6 +315,7 @@ var App = function (dataset) {
             }
             resetView.addTo(self.map);
             */
+            legend.update();
         });
 
         // Optionnal logo
@@ -409,17 +410,18 @@ var App = function (dataset) {
 
             html += '<p>Les contours blancs correspondent aux cantons.</p>';
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
-            html += '<br/>Analyser les scores d\'un parti: <br/>';
+            html += '<br/>Analyser les scores d\'un parti ou plusieurs partis (si plusieurs, on se base sur la somme des votes): <br/>';
             for(parti in existing_partis) {
                 html += '<label><input type="checkbox" value="'+parti+'"';
                 if(analyse_parti && analyse_parti.indexOf(parti) > -1) {
                     html += ' checked';
                 }
                 if(parti == "ABSTENTION" || parti == "NUL" || parti == "BLANC") {
-                  html += '>' + parti.charAt(0) + parti.slice(1).toLowerCase() + 's<br/>';
+                  html += '>' + parti.charAt(0) + parti.slice(1).toLowerCase() + 's';
                 } else {
-                  html += '>'+parti+'</label><br/>';
+                  html += '>'+parti;
                 }
+                html += '</label><br/>';
             }
             html += '<button onclick="var param=mkcMapFrame.getQueryString();param.parti=$(\'input:checkbox:checked\').map(function() {return this.value;}).get().join(\'|\'); location.href=location.href.split(\'?\')[0]+mkcMapFrame.buildQueryString(param);">Analyser</button>';
             this._div.innerHTML = html;

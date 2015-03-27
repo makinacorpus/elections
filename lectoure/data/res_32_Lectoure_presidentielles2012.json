@@ -25,7 +25,7 @@
 "FIELD23":"Nuance",
 "FIELD24":"Voix",
 "FIELD25":"Nuance",
-"FIELD26":"Voix",
+"FIELD26":"Voix"
 },
 {
 "FIELD1":"1",
@@ -53,7 +53,7 @@
 "FIELD23":"ARTHAUD",
 "FIELD24":"6",
 "FIELD25":"CHEMINADE",
-"FIELD26":"1",
+"FIELD26":"1"
 },
 {
 "FIELD1":"2",
@@ -81,7 +81,7 @@
 "FIELD23":"ARTHAUD",
 "FIELD24":"3",
 "FIELD25":"CHEMINADE",
-"FIELD26":"0",
+"FIELD26":"0"
 },
 {
 "FIELD1":"3",
@@ -109,7 +109,7 @@
 "FIELD23":"ARTHAUD",
 "FIELD24":"1",
 "FIELD25":"CHEMINADE",
-"FIELD26":"1",
+"FIELD26":"1"
 },
 {
 "FIELD1":"4",
@@ -137,6 +137,6 @@
 "FIELD23":"ARTHAUD",
 "FIELD24":"3",
 "FIELD25":"CHEMINADE",
-"FIELD26":"2",
+"FIELD26":"2"
 }
 ]

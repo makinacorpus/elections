@@ -1,9 +1,17 @@
 var App = function (dataset) {
 
-    var pymChild, zoomOnScroll = true;
+    var departement, pymChild, zoomOnScroll = true;
 
     if (dataset && dataset.zoomonscroll && dataset.zoomonscroll === "false") {
         zoomOnScroll = false;
+    }
+
+    if (dataset && dataset.dpt) {
+        departement = dataset.dpt;
+    } else if (mkcMapFrame) {
+        departement = mkcMapFrame.dptFromQS() || '31';
+    } else {
+        departement = '31';
     }
 
     var colors = {
@@ -65,7 +73,6 @@ var App = function (dataset) {
         self.map = L.map('map', {
             fullscreenControl: true,
             minZoom: 6,
-            maxZoom: 7,
             zoomControl: false,
             attributionControl: false,
             scrollWheelZoom: zoomOnScroll
@@ -80,18 +87,26 @@ var App = function (dataset) {
         // Read result from json
         var results         = {};
         var existing_partis = {};
-        $.getJSON('data/resultats/tour1/departements.json', function (data) {
+        $.getJSON('data/resultats/tour1/cantons.json', function (data) {
             /**
              * Sort results by entity
              * identify winner of each one.
              */
-            var entityId, parti, score, currentData;
+            var entityId, parti, score, currentData, depId;
             // Start with i = 1 because of headers row
             for (var i = 1; i < data.length; i++) {
                 currentData = data[i];
-                entityId    = currentData.FIELD1;
-                entityName  = currentData.FIELD2;
+                entityId    = currentData.FIELD3;
+                entityName  = currentData.FIELD4;
                 resultId    = entityId;
+                depId       = currentData.FIELD1;
+
+                if(depId !== departement){
+                  if ("0"+depId !== departement) {
+                    continue;
+                  }
+                }
+
                 // Init.
                 results[resultId] = {
                   name: entityName,
@@ -102,16 +117,16 @@ var App = function (dataset) {
                   }
                 }
                 // Not partis.
-                results[resultId].scores['ABSTENTION'] = parseInt(currentData.FIELD4);
+                results[resultId].scores['ABSTENTION'] = parseInt(currentData.FIELD6);
                 results[resultId].scores['BLANC'] = parseInt(currentData.FIELD8);
-                results[resultId].scores['NUL'] = parseInt(currentData.FIELD11);
-                var j = 17;
+                results[resultId].scores['NUL'] = parseInt(currentData.FIELD9);
+                var j = 11;
                 while (j < 102) {
                   parti       = currentData['FIELD'+j];
                   if (parti === "") {
                     break;
                   } else {
-                    score       = parseInt(currentData['FIELD'+(j+2)]);
+                    score       = parseInt(currentData['FIELD'+(j+1)]);
                     if (score > results[resultId].winner.score) {
                       results[resultId].winner = {
                         parti: parti,
@@ -126,7 +141,7 @@ var App = function (dataset) {
                     results[resultId].scores[parti] = score;
                   }
                   // Iterate.
-                  j += 5;
+                  j += 2;
                 }
             }
 
@@ -145,7 +160,7 @@ var App = function (dataset) {
              * Draw entitys
              */
             // Initialize empty geojson layer
-            $.getJSON('../resources/departements.geojson', function(geojson) {
+            $.getJSON('data/cantons/cantons_' + departement + '_2015.geojson', function(geojson) {
             var customLayer = L.geoJson(geojson, {
                 onEachFeature: onEachFeature,
                 style: {color: '#293133'}
@@ -154,7 +169,7 @@ var App = function (dataset) {
                 var layer = e.target;
                 layer.setStyle({weight: 4});
                 layer.setStyle({fillOpacity: 1});
-                entityCode = layer.feature.properties.code;
+                entityCode = layer.feature.properties.CT;
                 if (entityCode === '2A' || entityCode === '2B') {
                   legend.update(entityCode);
                 } else {
@@ -168,7 +183,7 @@ var App = function (dataset) {
             }
 
             function onEachFeature(feature, layer) {
-                entityCode = feature.properties.code;
+                entityCode = feature.properties.CT;
                 var entity;
                 if (entityCode === '2A' || entityCode === '2B') {
                   entity  = results[entityCode];
@@ -199,6 +214,7 @@ var App = function (dataset) {
 
             // Attach geojson layer to map
             customLayer.addTo(self.map);
+            self.map.fitBounds(customLayer.getBounds());
           });
         });
 
@@ -223,7 +239,7 @@ var App = function (dataset) {
         };
 
         legend.update = function (entity) {
-            var html = '<h3>Résultats par département</h3>';
+            var html = '<h3>Résultats par canton</h3>';
             if (entity && results[entity]) {
                 var total          = 0;
                 var total_exprimes = 0;
@@ -252,7 +268,7 @@ var App = function (dataset) {
                 sortedScores.sort(function (a, b) {
                     return b.value - a.value;
                 });
-                html += '<p>Département : ' + results[entity].name + '</p>';
+                html += '<p>Canton : ' + results[entity].name + '</p>';
                 var overall       = document.createElement('ul');
                 overall.className = 'overall';
                 sortedScores.forEach(function (element) {
@@ -289,7 +305,7 @@ var App = function (dataset) {
 
                 html += '</ul>';
             } else {
-              html += '<p><big><strong>Survolez un département pour plus de détails.</strong></big></p>';
+              html += '<p><big><strong>Survolez un canton pour plus de détails.</strong></big></p>';
             }
 
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
