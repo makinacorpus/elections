@@ -49,6 +49,7 @@ var App = function (dataset) {
         "SP":"#C0C0C0",
         "EXD":"#404040",
         "DIV":"#F0F0F0",
+        "DIV2":"#F0F0F0",
         "DLF":"#CCC",
         "UC":"#74C2C3",
         "UD":"#ADC1FD",
