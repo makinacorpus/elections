@@ -58,6 +58,15 @@ fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'mkc-iframe-loader')
                 <h2>Insertion d'une carte</h2>
                 <p>La carte sera insérée à l'emplacement de ces balises</p>
                 <div id="departements">
+                    <h3>Résultats des départementales pour chaque département, par canton :</h3>
+                    <span>option : data-dpt="numéro_du_département"</span> 
+                    <blockquote>
+                        <code>&lt;div class="mkc-placeholder" data-source="departementales-2015_cantons" <strong>data-dpt="31"</strong>&gt;&lt;/div&gt;</code>
+                    </blockquote>
+                    <p>Remplacer le "31" par d'autres départements si besoin.</p>
+                    <div class="mkc-placeholder" data-source="departementales-2015_cantons" data-dpt="31"></div>
+                </div>
+                <div id="villes">
                     <h3>Résultats des départementales pour Toulouse, par canton :</h3>
                     <!-- <span>option : data-dpt="numéro_du_département"</span> -->
                     <blockquote>
