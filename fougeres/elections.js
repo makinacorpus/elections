@@ -89,11 +89,11 @@ var App = function (dataset) {
             maxZoom: 14
         });
         self.tileLayer.addTo(self.map);
-
         // OpenStreetMap tile layer for high zoom level
         self.tile2Layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             minZoom: 15
         });
+
         self.tile2Layer.addTo(self.map);
 
         // Read result from json
@@ -116,9 +116,12 @@ var App = function (dataset) {
              * Draw entitys
              */
             $.getJSON(options.entityFile, function(geojson) {
-            var customLayer = L.geoJson(geojson, {
-                onEachFeature: onEachFeature
-            });
+              var customLayer = L.geoJson(geojson, {
+                onEachFeature: onEachFeature,
+                filter: function(feature, layer) {
+                  return (feature.properties.BV2015 !== null);
+                }
+              });
             function highlightFeature(e) {
                 var layer = e.target;
                 layer.setStyle({weight: 4});
