@@ -34,6 +34,7 @@ var App = function (dataset) {
         "PRG":"#FFD1DC",
         "RDG":"#FFD1DC",
         "DVG":"#FFC0C0",
+        "DVG2":"#FFC0C0",
         "MDM":"#FF9900",
         "UC":"#74C2C3",
         "NC":"#00FFFF",
