@@ -287,22 +287,32 @@ var App = function (dataset) {
             // Attach geojson layer to map
             contourLayer.addTo(self.map);
 
-            // button hidden in css because it's causing fllickering
-            //  !!!!!!!!!!
-            //  !!!!!!!!!!
-            /*
-            var resetView = L.control({position: 'topleft'});
-            resetView.onAdd = function (map) {
-                this._div = L.DomUtil.create('div', 'leaflet-control-resetview leaflet-bar');
-                this._div.innerHTML = '<a class="leaflet-control-resetview-button leaflet-bar-part" href title="Reset View"></a>';
-                jQuery(this).on('click', function (e) {
-                    e.preventDefault();
-                    self.map.fitBounds(customLayer.getBounds());
-                });
-                return this._div;
-            }
-            resetView.addTo(self.map);
-            */
+            L.Control.Resetview = L.Control.extend({
+                options: {
+                    position: 'topleft'
+                },
+                onAdd: function (map) {
+                    var controlContainer = L.DomUtil.create('div', 'leaflet-control-resetview leaflet-bar');
+                    var controlButton = L.DomUtil.create('a', 'leaflet-control-resetview-button', controlContainer);
+                    controlButton.title = 'Reset view';
+
+                    L.DomEvent.disableClickPropagation(controlButton);
+                    L.DomEvent.on(controlButton, 'click', function () {
+                        var globalBounds = customLayer.getBounds();
+                        /* If you need to add other layers to expand the zone !
+                        if (myLayer) {
+                            globalBounds.extend(myLayer.getBounds());
+                        }*/
+
+                        map.fitBounds(globalBounds);
+                    }, this);
+                    return controlContainer;
+                }
+            });
+
+            self.resetViewControl = new L.Control.Resetview();
+            self.map.addControl(self.resetViewControl);
+
             legend.update();
         });
 

@@ -171,8 +171,13 @@ html, body {
   background: #888;
 }
 
-.leaflet-control-resetview {
-  display: none;
+.leaflet-control-resetview-button {
+  background: url('./images/leaflet-resetview/icon-resetview.png') no-repeat center center;
+}
+
+.leaflet-retina .leaflet-control-resetview-button {
+  background: url('./images/leaflet-resetview/icon-resetview-2x.png') no-repeat center center;
+  background-size: 26px 26px;
 }
 
 .leaflet-tile-container img {
