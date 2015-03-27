@@ -117,7 +117,10 @@ var App = function (dataset) {
              */
             $.getJSON(options.entityFile, function(geojson) {
             var customLayer = L.geoJson(geojson, {
-                onEachFeature: onEachFeature
+                onEachFeature: onEachFeature,
+                pointToLayer: function (feature, latlng) {
+                  return L.circleMarker(latlng);
+                }
             });
             function highlightFeature(e) {
                 var layer = e.target;
