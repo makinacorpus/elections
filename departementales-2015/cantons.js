@@ -158,7 +158,7 @@ var App = function (dataset) {
              * Draw entitys
              */
             // Initialize empty geojson layer
-            $.getJSON('data/cantons/contours cantons ' + departement + '.geojson', function(geojson) {
+            $.getJSON('data/cantons/cantons_' + departement + '_2015.geojson', function(geojson) {
             var customLayer = L.geoJson(geojson, {
                 onEachFeature: onEachFeature,
                 style: {color: '#293133'}
@@ -167,7 +167,7 @@ var App = function (dataset) {
                 var layer = e.target;
                 layer.setStyle({weight: 4});
                 layer.setStyle({fillOpacity: 1});
-                entityCode = layer.feature.properties.canton;
+                entityCode = layer.feature.properties.CT;
                 if (entityCode === '2A' || entityCode === '2B') {
                   legend.update(entityCode);
                 } else {
@@ -181,7 +181,7 @@ var App = function (dataset) {
             }
 
             function onEachFeature(feature, layer) {
-                entityCode = feature.properties.canton;
+                entityCode = feature.properties.CT;
                 var entity;
                 if (entityCode === '2A' || entityCode === '2B') {
                   entity  = results[entityCode];
