@@ -409,7 +409,7 @@ var App = function () {
 
             updateLegend2 = function(bureau) {
               var html = '';
-              html += '<h3>Présidentielle 2012</h3>';
+              html += '<h3>Présidentielle 2012 1er tour</h3>';
               if (bureau && results[bureau]) {
                 var total          = 0;
                 var total_exprimes = 0;
