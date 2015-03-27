@@ -35,7 +35,6 @@ function computeResults(data) {
   // Start with i = 1 because of headers row
   for (var i = 1; i < data.length; i++) {
     currentData = data[i];
-    console.log(currentData);
     entityId    = currentData.FIELD5;
     entityName  = currentData.FIELD5;
     resultId    = entityId;
