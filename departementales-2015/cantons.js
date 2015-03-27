@@ -102,7 +102,9 @@ var App = function (dataset) {
                 depId       = currentData.FIELD1;
 
                 if(depId !== departement){
+                  if ("0"+depId !== departement) {
                     continue;
+                  }
                 }
 
                 // Init.
