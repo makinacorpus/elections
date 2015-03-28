@@ -95,9 +95,13 @@ var App = function (dataset) {
             minZoom: 15
         });
         self.tile2Layer.addTo(self.map);
+        // Layer switcher
+        var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
+        var tour1Layer, tour2Layer;
 
         // Read result from json
         var results         = {};
+        var results2        = {};
         $.getJSON(options.resultFile, function (data) {
             results = computeResults(data);
             // Add additionnal data.
@@ -116,7 +120,7 @@ var App = function (dataset) {
              * Draw entitys
              */
             $.getJSON(options.entityFile, function(geojson) {
-            var customLayer = L.geoJson(geojson, {
+              tour1Layer = L.geoJson(geojson, {
                 onEachFeature: onEachFeature,
                 pointToLayer: function (feature, latlng) {
                   return L.circleMarker(latlng);
@@ -129,7 +133,7 @@ var App = function (dataset) {
                 if (layer.feature.geometry.type == 'MultiLineString') {
                   layer.setStyle({weight: 8});
                 }
-                legend.update(getBorderId(layer));
+                legend.update(getBorderId(layer), results);
             }
             function resetHighlight(e) {
                 var layer = e.target;
@@ -169,7 +173,9 @@ var App = function (dataset) {
             }
 
             // Attach geojson layer to map
-            customLayer.addTo(self.map);
+            tour1Layer.addTo(self.map);
+            // Add the layer to the layerSwitcher.
+            layers.addBaseLayer(tour1Layer, '1er tour');
 
             // Eventually add additional layer.
             if (options.additionalLayer) {
@@ -178,12 +184,95 @@ var App = function (dataset) {
                   clickable: false,
                   color: '#291333',
                   opacity: 1,
+                  fillOpacity: 0,
                   weight: 2
                 };
                 var additionalLayer = L.geoJson(additionalData, {style: style});
                 additionalLayer.addTo(self.map);
+                self.map.on('baselayerchange', function(e) {
+                  additionalLayer.bringToFront();
+                });
               });
             }
+          });
+        });
+        $.getJSON(options.resultFileTour2, function (data) {
+            results2 = computeResults(data);
+            // Add additionnal data.
+            var total;
+            for (var r in results2) {
+                total = 0;
+                for (var part in results2[r].scores) {
+                    if (part != "ABSTENTION" && part != "NUL" && part != "BLANC") {
+                        total += results2[r].scores[part];
+                    }
+                }
+                results2[r].total = total;
+            }
+
+            /**
+             * Draw entitys
+             */
+            $.getJSON(options.entityFile, function(geojson) {
+              tour2Layer = L.geoJson(geojson, {
+                onEachFeature: onEachFeature,
+                pointToLayer: function (feature, latlng) {
+                  return L.circleMarker(latlng);
+                }
+            });
+            function highlightFeature(e) {
+                var layer = e.target;
+                layer.setStyle({weight: 4});
+                layer.setStyle({fillOpacity: 1});
+                if (layer.feature.geometry.type == 'MultiLineString') {
+                  layer.setStyle({weight: 8});
+                }
+                legend.update(getBorderId(layer), results2);
+            }
+            function resetHighlight(e) {
+                var layer = e.target;
+                layer.setStyle({weight: 1});
+                layer.setStyle({fillOpacity: 0.8});
+                if (layer.feature.geometry.type == 'MultiLineString') {
+                  layer.setStyle({weight: 4});
+                }
+            }
+
+            function onEachFeature(feature, layer) {
+                // Make two type coercions to remove leading zero
+                var entity  = results2[getResultId(feature)];
+                var color   = options.neutralColor;
+                var opacity = 0.8;
+
+                if (entity) {
+                  color   = colors[entity.winner.parti];
+                }
+
+                // Set shape styles
+                layer.setStyle({
+                    fillColor: color,
+                    weight: 1,
+                    fillOpacity: opacity,
+                    color: '#291333',
+                });
+                if (feature.geometry.type == 'MultiLineString') {
+                  layer.setStyle({color: color, weight: 4, opacity: 1});
+                }
+
+                // Event bindings
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight,
+                });
+            }
+
+            // Attach geojson layer to map
+            tour2Layer.addTo(self.map);
+            // Remove tour1 so tour2 is automatically selected.
+            self.map.removeLayer(tour1Layer);
+            // Add the layer to the layerSwitcher.
+            layers.addBaseLayer(tour2Layer, '2ème tour');
+            layers.addTo(self.map);
           });
         });
 
@@ -207,13 +296,13 @@ var App = function (dataset) {
             return this._div;
         };
 
-        legend.update = function (entity) {
+        legend.update = function (entity, currentResults) {
             var html = '<h3>' + options.legendTitle + '</h3>';
-            if (entity && results[entity]) {
+            if (entity && currentResults[entity]) {
                 var total          = 0;
                 var total_exprimes = 0;
                 var votes_exprimes = [];
-                var scores         = results[entity].scores;
+                var scores         = currentResults[entity].scores;
                 for (var parti in scores) {
                     if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
                         var score = scores[parti] || 0;
@@ -237,7 +326,7 @@ var App = function (dataset) {
                 sortedScores.sort(function (a, b) {
                     return b.value - a.value;
                 });
-                html += '<p>' + options.entityName + ' ' + results[entity].name + '</p>';
+                html += '<p>' + options.entityName + ' ' + currentResults[entity].name + '</p>';
                 var overall       = document.createElement('ul');
                 overall.className = 'overall';
                 sortedScores.forEach(function (element) {
@@ -264,7 +353,7 @@ var App = function (dataset) {
 
                 votes_exprimes.forEach(function(vote){
                     var label_parti = vote.parti;
-                    var isWinner    = (vote.score === results[entity].winner.score);
+                    var isWinner    = (vote.score === currentResults[entity].winner.score);
                     html += '<li>';
                     html += isWinner ? '<strong>' : '';
                     html += label_parti + ' ' + vote.ratio + '% (' + vote.score + ' voix)</li>';

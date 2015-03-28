@@ -8,6 +8,7 @@ var options = {
   center: [46.50, 1.45],
   // Data options
   resultFile: 'data/resultats/tour1/regions.json',
+  resultFileTour2: 'data/resultats/tour2/regions.json',
   entityFile: 'data/regions_2015.geojson',
   neutralColor: '#AAAAAA',
   // Legend options
