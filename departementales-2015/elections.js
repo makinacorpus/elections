@@ -95,8 +95,7 @@ var App = function (dataset) {
             minZoom: 15
         });
         self.tile2Layer.addTo(self.map);
-        // Layer switcher
-        var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
+        // So layers can be accessed from one another.
         var tour1Layer, tour2Layer;
 
         // Read result from json
@@ -174,8 +173,6 @@ var App = function (dataset) {
 
             // Attach geojson layer to map
             tour1Layer.addTo(self.map);
-            // Add the layer to the layerSwitcher.
-            layers.addBaseLayer(tour1Layer, '1er tour');
 
             // Eventually add additional layer.
             if (options.additionalLayer) {
@@ -268,6 +265,10 @@ var App = function (dataset) {
 
             // Attach geojson layer to map
             tour2Layer.addTo(self.map);
+            // Handle layers.
+            var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
+            // Add the first layer to the layerSwitcher.
+            layers.addBaseLayer(tour1Layer, '1er tour');
             // Remove tour1 so tour2 is automatically selected.
             self.map.removeLayer(tour1Layer);
             // Add the layer to the layerSwitcher.
