@@ -2,7 +2,7 @@ var options = {
   // Map options
   fullscreenControl: false,
   mapDivId: 'map',
-  minZoom: 14,
+  minZoom: 13,
   maxZoom: 16,
   startZoom: 14,
   center: [48.355, -1.20],
@@ -15,7 +15,7 @@ var options = {
   entityName: 'Bureau de vote :',
   legendHelp: 'Survolez une zone pour plus de détails.',
   // Additionnal layer ?
-  // additionalLayer:
+  additionalLayer: 'data/35515.geojson',
 };
 
 /* This function computes the results from the data and

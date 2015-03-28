@@ -178,6 +178,7 @@ var App = function (dataset) {
                   clickable: false,
                   color: '#291333',
                   opacity: 1,
+                  fillOpacity: 0,
                   weight: 2
                 };
                 var additionalLayer = L.geoJson(additionalData, {style: style});
