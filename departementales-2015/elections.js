@@ -1,6 +1,6 @@
 var App = function (dataset) {
 
-    var pymChild, zoomOnScroll = true;
+    var departement, pymChild, zoomOnScroll = true;
 
     if (dataset && dataset.zoomonscroll && dataset.zoomonscroll === "false") {
         zoomOnScroll = false;
@@ -59,29 +59,41 @@ var App = function (dataset) {
     };
 
     self.init = function () {
+        var currentOptions = options;
         if (mkcMapFrame && dataset) {
             if (pymChild) {
                 mkcMapFrame.init(dataset, pymChild);
             }
         }
 
+        if (typeof getParamOptions !== 'undefined' && typeof getParamOptions === 'function') {
+          if (dataset && dataset.dpt) {
+            departement = dataset.dpt;
+          } else if (mkcMapFrame) {
+            departement = mkcMapFrame.dptFromQS() || '31';
+          } else {
+            departement = '31';
+          }
+          currentOptions = getParamOptions(departement);
+        }
+
         // Provide sensible defaults
-        options.fullscreenControl = (typeof options.fullscreenControl === 'undefined') ? true : options.fullscreenControl;
-        options.minZoom = (typeof options.minZoom === 'undefined') ? 6 : options.minZoom;
-        options.maxZoom = (typeof options.maxZoom === 'undefined') ? 18 : options.maxZoom;
-        options.startZoom = (typeof options.startZoom === 'undefined') ? 6 : options.startZoom;
-        options.center = (typeof options.center === 'undefined') ? [46.50, 1.45] : options.center;
-        options.neutralColor = (typeof options.neutralColor === 'undefined') ? '#AAA' : options.neutralColor;
+        currentOptions.fullscreenControl = (typeof currentOptions.fullscreenControl === 'undefined') ? true : currentOptions.fullscreenControl;
+        currentOptions.minZoom = (typeof currentOptions.minZoom === 'undefined') ? 6 : currentOptions.minZoom;
+        currentOptions.maxZoom = (typeof currentOptions.maxZoom === 'undefined') ? 18 : currentOptions.maxZoom;
+        currentOptions.startZoom = (typeof currentOptions.startZoom === 'undefined') ? 6 : currentOptions.startZoom;
+        currentOptions.center = (typeof currentOptions.center === 'undefined') ? [46.50, 1.45] : currentOptions.center;
+        currentOptions.neutralColor = (typeof currentOptions.neutralColor === 'undefined') ? '#AAA' : currentOptions.neutralColor;
 
         // init map
         self.map = L.map('map', {
-            fullscreenControl: options.fullscreenControl,
-            minZoom: options.minZoom,
-            maxZoom: options.maxZoom,
-            zoomControl: (options.minZoom != options.maxZoom),
+            fullscreenControl: currentOptions.fullscreenControl,
+            minZoom: currentOptions.minZoom,
+            maxZoom: currentOptions.maxZoom,
+            zoomControl: (currentOptions.minZoom != currentOptions.maxZoom),
             attributionControl: false,
             scrollWheelZoom: zoomOnScroll
-        }).setActiveArea('activeArea').setView(options.center, options.startZoom);
+        }).setActiveArea('activeArea').setView(currentOptions.center, currentOptions.startZoom);
 
         // Default tile layer
         self.tileLayer = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
@@ -101,7 +113,7 @@ var App = function (dataset) {
         // Read result from json
         var results         = {};
         var results2        = {};
-        $.getJSON(options.resultFile, function (data) {
+        $.getJSON(currentOptions.resultFile, function (data) {
             results = computeResults(data);
             // Add additionnal data.
             var total;
@@ -118,7 +130,7 @@ var App = function (dataset) {
             /**
              * Draw entitys
              */
-            $.getJSON(options.entityFile, function(geojson) {
+            $.getJSON(currentOptions.entityFile, function(geojson) {
               tour1Layer = L.geoJson(geojson, {
                 onEachFeature: onEachFeature,
                 pointToLayer: function (feature, latlng) {
@@ -146,7 +158,7 @@ var App = function (dataset) {
             function onEachFeature(feature, layer) {
                 // Make two type coercions to remove leading zero
                 var entity  = results[getResultId(feature)];
-                var color   = options.neutralColor;
+                var color   = currentOptions.neutralColor;
                 var opacity = 0.8;
 
                 if (entity) {
@@ -173,10 +185,13 @@ var App = function (dataset) {
 
             // Attach geojson layer to map
             tour1Layer.addTo(self.map);
+            if (typeof departement !== 'undefined') {
+              self.map.fitBounds(tour1Layer.getBounds());
+            }
 
             // Eventually add additional layer.
-            if (options.additionalLayer) {
-              $.getJSON(options.additionalLayer, function (additionalData) {
+            if (currentOptions.additionalLayer) {
+              $.getJSON(currentOptions.additionalLayer, function (additionalData) {
                 var style = {
                   clickable: false,
                   color: '#291333',
@@ -193,7 +208,7 @@ var App = function (dataset) {
             }
           });
         });
-        $.getJSON(options.resultFileTour2, function (data) {
+        $.getJSON(currentOptions.resultFileTour2, function (data) {
             results2 = computeResults(data);
             // Add additionnal data.
             var total;
@@ -210,7 +225,7 @@ var App = function (dataset) {
             /**
              * Draw entitys
              */
-            $.getJSON(options.entityFile, function(geojson) {
+            $.getJSON(currentOptions.entityFile, function(geojson) {
               tour2Layer = L.geoJson(geojson, {
                 onEachFeature: onEachFeature,
                 pointToLayer: function (feature, latlng) {
@@ -238,7 +253,7 @@ var App = function (dataset) {
             function onEachFeature(feature, layer) {
                 // Make two type coercions to remove leading zero
                 var entity  = results2[getResultId(feature)];
-                var color   = options.neutralColor;
+                var color   = currentOptions.neutralColor;
                 var opacity = 0.8;
 
                 if (entity) {
@@ -298,7 +313,7 @@ var App = function (dataset) {
         };
 
         legend.update = function (entity, currentResults) {
-            var html = '<h3>' + options.legendTitle + '</h3>';
+            var html = '<h3>' + currentOptions.legendTitle + '</h3>';
             if (entity && currentResults[entity]) {
                 var total          = 0;
                 var total_exprimes = 0;
@@ -327,7 +342,7 @@ var App = function (dataset) {
                 sortedScores.sort(function (a, b) {
                     return b.value - a.value;
                 });
-                html += '<p>' + options.entityName + ' ' + currentResults[entity].name + '</p>';
+                html += '<p>' + currentOptions.entityName + ' ' + currentResults[entity].name + '</p>';
                 var overall       = document.createElement('ul');
                 overall.className = 'overall';
                 sortedScores.forEach(function (element) {
@@ -364,7 +379,7 @@ var App = function (dataset) {
 
                 html += '</ul>';
             } else {
-              html += '<p><big><strong>' + options.legendHelp + '</strong></big></p>';
+              html += '<p><big><strong>' + currentOptions.legendHelp + '</strong></big></p>';
             }
 
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
