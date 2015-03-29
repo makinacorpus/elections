@@ -136,6 +136,11 @@ var App = function (dataset) {
                 }
             });
         }
+        function _layerClick (event) {
+            var id     = getResultId(event.target.feature);
+            var target = currentOptions.link.replace('feature', id);
+            window.open(target, "_blank");
+        }
 
         // So layers can be accessed from one another.
         var tour1Layer, tour2Layer;
@@ -196,11 +201,7 @@ var App = function (dataset) {
                         mouseout: _resetHighlight,
                     });
                     if (currentOptions.link) {
-                      layer.on('click', function(event) {
-                        var id = getResultId(event.target.feature);
-                        var target = currentOptions.link.replace('feature', id);
-                        window.open(target, "_blank");
-                      });
+                        layer.on('click', _layerClick);
                     }
                 }
 
@@ -280,11 +281,7 @@ var App = function (dataset) {
                             mouseout: _resetHighlight,
                         });
                         if (currentOptions.link) {
-                          layer.on('click', function(event) {
-                            var id = getResultId(event.target.feature);
-                            var target = currentOptions.link.replace('feature', id);
-                            window.open(target, "_blank");
-                          });
+                            layer.on('click', _layerClick);
                         }
                     }
 
