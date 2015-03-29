@@ -94,7 +94,7 @@ var App = function (dataset) {
         },
         scrollWheelZoom: zoomOnScroll,
         containerId: 'map',
-        attribution: 'Tuiles par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     };
 
     self.setPym = function (pC) {
