@@ -17,6 +17,7 @@ var options = {
   legendHelp: 'Survolez un département pour plus de détails.',
   // Additionnal layer ?
   additionalLayer: 'data/regions_2015.geojson',
+  link: 'http://cartes-elections.makina-corpus.net/departementales-2015/resultats-cantons.html?dep=feature'
 };
 
 /* This function computes the results from the data and

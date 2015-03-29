@@ -184,6 +184,13 @@ var App = function (dataset) {
                     mouseover: highlightFeature,
                     mouseout: resetHighlight,
                 });
+                if (currentOptions.link) {
+                  layer.on('click', function(event) {
+                    var id = getResultId(event.target.feature);
+                    var target = currentOptions.link.replace('feature', id);
+                    window.open(target, "_blank");
+                  });
+                }
             }
 
             // Attach geojson layer to map
@@ -279,6 +286,13 @@ var App = function (dataset) {
                     mouseover: highlightFeature,
                     mouseout: resetHighlight,
                 });
+                if (currentOptions.link) {
+                  layer.on('click', function(event) {
+                    var id = getResultId(event.target.feature);
+                    var target = currentOptions.link.replace('feature', id);
+                    window.open(target, "_blank");
+                  });
+                }
             }
 
             // Attach geojson layer to map
