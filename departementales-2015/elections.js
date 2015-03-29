@@ -71,7 +71,7 @@ var App = function (dataset) {
             }
         }
 
-        if (typeof getParamOptions !== 'undefined' && typeof getParamOptions === 'function') {
+        if (typeof getParamOptions === 'function') {
           if (dataset && dataset.dpt) {
             departement = dataset.dpt;
           } else if (mkcMapFrame) {
