@@ -118,7 +118,9 @@ var App = function (dataset) {
         }
 
 
-
+        /**
+         * Factorized methods
+         */
         function _resetHighlight(e) {
             var layer = e.target;
             var w     = (layer.feature.geometry.type === 'MultiLineString') ? 4 : 1;
@@ -153,6 +155,10 @@ var App = function (dataset) {
             };
             return ret;
         }
+        /**
+         * End
+         */
+
 
         // So layers can be accessed from one another.
         var tour1Layer, tour2Layer;
