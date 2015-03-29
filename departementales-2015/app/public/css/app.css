@@ -67,6 +67,16 @@ html, body {
   text-align: right;
 }
 
+@media screen and (max-width: 740px) {
+  #map .legend {
+    font-size: .8em;
+    width: 9.6rem;
+  }
+  #map .leaflet-control-attribution {
+    font-size: .8em;
+  }
+}
+
 .legend ul {
   padding-left: 0px;
   list-style: none;
