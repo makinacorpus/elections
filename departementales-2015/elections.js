@@ -141,6 +141,18 @@ var App = function (dataset) {
             var target = currentOptions.link.replace('feature', id);
             window.open(target, "_blank");
         }
+        function _highlightFeature(l, r) {
+            var ret = function (e) {
+                var layer = e.target;
+                var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
+                layer.setStyle({
+                    weight: w,
+                    fillOpacity: 1
+                });
+                l.update(getBorderId(layer), r);
+            };
+            return ret;
+        }
 
         // So layers can be accessed from one another.
         var tour1Layer, tour2Layer;
@@ -168,17 +180,6 @@ var App = function (dataset) {
             $.getJSON(currentOptions.entityFile, function(geojson) {
                 tour1Layer = _layerFromGeojson(geojson, onEachFeature);
 
-                function highlightFeature(e) {
-                    var layer = e.target;
-                    var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
-                    layer.setStyle({
-                        weight: w,
-                        fillOpacity: 1
-                    });
-
-                    legend.update(getBorderId(layer), results);
-                }
-
                 function onEachFeature(feature, layer) {
                     var entity  = results[getResultId(feature)];
                     var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
@@ -197,7 +198,7 @@ var App = function (dataset) {
 
                     // Event bindings
                     layer.on({
-                        mouseover: highlightFeature,
+                        mouseover: _highlightFeature(legend, results),
                         mouseout: _resetHighlight,
                     });
                     if (currentOptions.link) {
@@ -248,16 +249,6 @@ var App = function (dataset) {
                  */
                 $.getJSON(currentOptions.entityFile, function(geojson) {
                     tour2Layer = _layerFromGeojson(geojson, onEachFeature);
-                    function highlightFeature(e) {
-                        var layer = e.target;
-                        var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
-                        layer.setStyle({
-                            weight: w,
-                            fillOpacity: 1
-                        });
-
-                        legend.update(getBorderId(layer), results2);
-                    }
 
                     function onEachFeature(feature, layer) {
                         var entity  = results2[getResultId(feature)];
@@ -277,7 +268,7 @@ var App = function (dataset) {
 
                         // Event bindings
                         layer.on({
-                            mouseover: highlightFeature,
+                            mouseover: _highlightFeature(legend, results2),
                             mouseout: _resetHighlight,
                         });
                         if (currentOptions.link) {
