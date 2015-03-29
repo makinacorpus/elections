@@ -95,7 +95,7 @@ var App = function(){
     // init map
     self.map = L.map(options.containerId, {minZoom: options.minZoom, maxZoom: options.maxZoom, attributionControl: false}).setActiveArea('activeArea');
     self.legend.addTo(self.map);
-    L.control.attribution({position: 'topright'}).addTo(self.map);
+    L.control.attribution({position: 'topright'}).setPrefix('').addTo(self.map);
 
     $.getJSON("./data/candidatures.json", function(data){
       self.data = data;

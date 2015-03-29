@@ -281,7 +281,7 @@ var App = function (dataset) {
             this._div.innerHTML = html;
         };
         legend.addTo(self.map);
-        L.control.attribution({position: 'topright'}).addTo(self.map);
+        L.control.attribution({position: 'topright'}).setPrefix('').addTo(self.map);
     };
 };
 
