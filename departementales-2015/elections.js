@@ -155,6 +155,38 @@ var App = function (dataset) {
             };
             return ret;
         }
+        function _onEachFeature (l, resultsSet) {
+            var ret = function (feature, layer) {
+                var entity  = resultsSet[getResultId(feature)];
+                var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
+                var opacity = 0.8;
+
+                // Set shape styles
+                layer.setStyle({
+                    fillColor: color,
+                    weight: 1,
+                    fillOpacity: opacity,
+                    color: '#291333',
+                });
+                if (feature.geometry.type == 'MultiLineString') {
+                    layer.setStyle({
+                        color: color,
+                        weight: 4,
+                        opacity: 1
+                    });
+                }
+
+                // Event bindings
+                layer.on({
+                    mouseover: _highlightFeature(l, resultsSet),
+                    mouseout: _resetHighlight,
+                });
+                if (currentOptions.link) {
+                    layer.on('click', _layerClick);
+                }
+            };
+            return ret;
+        }
         /**
          * End
          */
@@ -184,33 +216,7 @@ var App = function (dataset) {
              * Draw entitys
              */
             $.getJSON(currentOptions.entityFile, function(geojson) {
-                tour1Layer = _layerFromGeojson(geojson, onEachFeature);
-
-                function onEachFeature(feature, layer) {
-                    var entity  = results[getResultId(feature)];
-                    var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
-                    var opacity = 0.8;
-
-                    // Set shape styles
-                    layer.setStyle({
-                        fillColor: color,
-                        weight: 1,
-                        fillOpacity: opacity,
-                        color: '#291333',
-                    });
-                    if (feature.geometry.type == 'MultiLineString') {
-                      layer.setStyle({color: color, weight: 4, opacity: 1});
-                    }
-
-                    // Event bindings
-                    layer.on({
-                        mouseover: _highlightFeature(legend, results),
-                        mouseout: _resetHighlight,
-                    });
-                    if (currentOptions.link) {
-                        layer.on('click', _layerClick);
-                    }
-                }
+                tour1Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results));
 
                 // Attach geojson layer to map
                 tour1Layer.addTo(_map);
@@ -254,33 +260,7 @@ var App = function (dataset) {
                  * Draw entitys
                  */
                 $.getJSON(currentOptions.entityFile, function(geojson) {
-                    tour2Layer = _layerFromGeojson(geojson, onEachFeature);
-
-                    function onEachFeature(feature, layer) {
-                        var entity  = results2[getResultId(feature)];
-                        var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
-                        var opacity = 0.8;
-
-                        // Set shape styles
-                        layer.setStyle({
-                            fillColor: color,
-                            weight: 1,
-                            fillOpacity: opacity,
-                            color: '#291333',
-                        });
-                        if (feature.geometry.type == 'MultiLineString') {
-                          layer.setStyle({color: color, weight: 4, opacity: 1});
-                        }
-
-                        // Event bindings
-                        layer.on({
-                            mouseover: _highlightFeature(legend, results2),
-                            mouseout: _resetHighlight,
-                        });
-                        if (currentOptions.link) {
-                            layer.on('click', _layerClick);
-                        }
-                    }
+                    tour2Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results2));
 
                     // Attach geojson layer to map
                     tour2Layer.addTo(_map);
