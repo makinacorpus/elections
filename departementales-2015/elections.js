@@ -115,6 +115,18 @@ var App = function (dataset) {
             _tileLayers[i].addTo(_map);
         }
 
+
+
+        function _resetHighlight(e) {
+            var layer = e.target;
+            var w     = (layer.feature.geometry.type === 'MultiLineString') ? 4 : 1;
+
+            layer.setStyle({
+                weight: w,
+                fillOpacity: 0.8
+            });
+        }
+
         // So layers can be accessed from one another.
         var tour1Layer, tour2Layer;
 
@@ -154,14 +166,6 @@ var App = function (dataset) {
                     }
                     legend.update(getBorderId(layer), results);
                 }
-                function resetHighlight(e) {
-                    var layer = e.target;
-                    layer.setStyle({weight: 1});
-                    layer.setStyle({fillOpacity: 0.8});
-                    if (layer.feature.geometry.type == 'MultiLineString') {
-                      layer.setStyle({weight: 4});
-                    }
-                }
 
                 function onEachFeature(feature, layer) {
                     // Make two type coercions to remove leading zero
@@ -187,7 +191,7 @@ var App = function (dataset) {
                     // Event bindings
                     layer.on({
                         mouseover: highlightFeature,
-                        mouseout: resetHighlight,
+                        mouseout: _resetHighlight,
                     });
                     if (currentOptions.link) {
                       layer.on('click', function(event) {
@@ -255,14 +259,6 @@ var App = function (dataset) {
                         }
                         legend.update(getBorderId(layer), results2);
                     }
-                    function resetHighlight(e) {
-                        var layer = e.target;
-                        layer.setStyle({weight: 1});
-                        layer.setStyle({fillOpacity: 0.8});
-                        if (layer.feature.geometry.type == 'MultiLineString') {
-                          layer.setStyle({weight: 4});
-                        }
-                    }
 
                     function onEachFeature(feature, layer) {
                         // Make two type coercions to remove leading zero
@@ -288,7 +284,7 @@ var App = function (dataset) {
                         // Event bindings
                         layer.on({
                             mouseover: highlightFeature,
-                            mouseout: resetHighlight,
+                            mouseout: _resetHighlight,
                         });
                         if (currentOptions.link) {
                           layer.on('click', function(event) {
