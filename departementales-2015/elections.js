@@ -217,7 +217,6 @@ var App = function (dataset) {
               });
             }
           });
-        });
         $.getJSON(currentOptions.resultFileTour2, function (data) {
             results2 = computeResults(data);
             // Add additionnal data.
@@ -307,6 +306,7 @@ var App = function (dataset) {
             layers.addBaseLayer(tour2Layer, '2ème tour');
             layers.addTo(self.map);
           });
+        });
         });
 
         // Optionnal logo
