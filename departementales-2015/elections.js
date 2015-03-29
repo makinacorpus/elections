@@ -72,14 +72,14 @@ var App = function (dataset) {
         }
 
         if (typeof getParamOptions === 'function') {
-          if (dataset && dataset.dpt) {
-            departement = dataset.dpt;
-          } else if (mkcMapFrame) {
-            departement = mkcMapFrame.dptFromQS() || '31';
-          } else {
-            departement = '31';
-          }
-          currentOptions = getParamOptions(departement);
+            if (dataset && dataset.dpt) {
+                departement = dataset.dpt;
+            } else if (mkcMapFrame) {
+                departement = mkcMapFrame.dptFromQS() || '31';
+            } else {
+                departement = '31';
+            }
+            currentOptions = getParamOptions(departement);
         }
 
         // Provide sensible defaults
