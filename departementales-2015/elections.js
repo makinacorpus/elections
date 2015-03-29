@@ -62,8 +62,8 @@ var App = function (dataset) {
     };
 
     self.init = function () {
-        var map;
-        var tileLayers = {};
+        var _map;
+        var _tileLayers = {};
         var currentOptions = options;
         if (mkcMapFrame && dataset) {
             if (pymChild) {
@@ -91,7 +91,7 @@ var App = function (dataset) {
         currentOptions.neutralColor = (typeof currentOptions.neutralColor === 'undefined') ? '#AAA' : currentOptions.neutralColor;
 
         // init map
-        map = L.map('map', {
+        _map = L.map('map', {
             fullscreenControl: currentOptions.fullscreenControl,
             minZoom: currentOptions.minZoom,
             maxZoom: currentOptions.maxZoom,
@@ -101,18 +101,18 @@ var App = function (dataset) {
         }).setActiveArea('activeArea').setView(currentOptions.center, currentOptions.startZoom);
 
         // Default tile layer
-        tileLayers.makina = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
+        _tileLayers.makina = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
             attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 14
         });
 
         // OpenStreetMap tile layer for high zoom level
-        tileLayers.osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        _tileLayers.osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             minZoom: 15
         });
 
-        for (var i in tileLayers) {
-            tileLayers[i].addTo(map);
+        for (var i in _tileLayers) {
+            _tileLayers[i].addTo(_map);
         }
 
         // So layers can be accessed from one another.
@@ -199,9 +199,9 @@ var App = function (dataset) {
             }
 
             // Attach geojson layer to map
-            tour1Layer.addTo(map);
+            tour1Layer.addTo(_map);
             if (typeof departement !== 'undefined') {
-              map.fitBounds(tour1Layer.getBounds());
+              _map.fitBounds(tour1Layer.getBounds());
             }
 
             // Eventually add additional layer.
@@ -215,8 +215,8 @@ var App = function (dataset) {
                   weight: 2
                 };
                 var additionalLayer = L.geoJson(additionalData, {style: style});
-                additionalLayer.addTo(map);
-                map.on('baselayerchange', function(e) {
+                additionalLayer.addTo(_map);
+                _map.on('baselayerchange', function(e) {
                   additionalLayer.bringToFront();
                 });
               });
@@ -301,16 +301,16 @@ var App = function (dataset) {
             }
 
             // Attach geojson layer to map
-            tour2Layer.addTo(map);
+            tour2Layer.addTo(_map);
             // Handle layers.
             var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
             // Add the first layer to the layerSwitcher.
             layers.addBaseLayer(tour1Layer, '1er tour');
             // Remove tour1 so tour2 is automatically selected.
-            map.removeLayer(tour1Layer);
+            _map.removeLayer(tour1Layer);
             // Add the layer to the layerSwitcher.
             layers.addBaseLayer(tour2Layer, '2ème tour');
-            layers.addTo(map);
+            layers.addTo(_map);
           });
         });
 
@@ -425,8 +425,8 @@ var App = function (dataset) {
             html += '<a href="http://www.makina-corpus.com" target="_blank"><img id="logo" src="http://makina-corpus.com/++theme++plonetheme.makinacorpuscom/images/logo.png"></a>';
             this._div.innerHTML = html;
         };
-        legend.addTo(map);
-        L.control.attribution({position: 'topright'}).setPrefix('').addTo(map);
+        legend.addTo(_map);
+        L.control.attribution({position: 'topright'}).setPrefix('').addTo(_map);
     };
 };
 
