@@ -2,7 +2,7 @@ var options = {
   // Map options
   fullscreenControl: true,
   mapDivId: 'map',
-  minZoom: 6,
+  minZoom: 5,
   maxZoom: 6,
   startZoom: 6,
   center: [46.50, 1.45],
