@@ -66,10 +66,15 @@ function computeResults(data) {
     results[resultId].scores['BLANC'] = parseInt(currentData.Mentions.Blancs.Nombre);
     results[resultId].scores['NUL'] = parseInt(currentData.Mentions.Nuls.Nombre);
     var resultats = currentData.Resultats;
+    var currentPartis = [];
     for (var j = 0; j < resultats.length; j++) {
       var temp = resultats[j];
       parti       = temp.CodNuaBin;
       parti = parti.split('-')[1];
+      if (currentPartis.indexOf(parti) > -1) {
+        parti = parti + "2";
+      }
+      currentPartis.push(parti);
       score = parseInt(temp.NbVoix);
       if (score > results[resultId].winner.score) {
         results[resultId].winner = {

@@ -29,44 +29,8 @@
     <script src="./app/public/js/leaflet.activearea.js"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
     <script src="./app/public/js/mkc-mapframe.js"></script>
-    <script src="cantons.js"></script>
-    <script>
-      jQuery(document).ready(function($) {
-        var dataset, pymChild, app;
-
-        /**
-         * Only if inside an iframe
-         */
-        if (self !== top && pym) {
-          document.querySelector('#main').classList.add('iframe');
-          pymChild = new pym.Child({ polling: 1000 });
-
-          /**
-           * Inform parent we are ready
-           */
-          pymChild.sendMessage('event', 'ready');
-
-          /**
-           * Manage data sent by parent
-           */
-          pymChild.onMessage('data', function (data) {
-            try {
-              dataset = JSON.parse(data);
-              app = new App(dataset);
-              app.setPym(pymChild);
-              app.init();
-            } catch (e) {
-              console.error("Parsing error:", e);
-              app = new App();
-              app.init();
-            }
-          });
-        } else {
-          app = new App();
-          app.init();
-        }
-      });
-    </script>
+    <script src="./data/param_cantons.js"></script>
+    <script src="elections.js"></script>
    <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
