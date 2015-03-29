@@ -100,16 +100,18 @@ var App = function (dataset) {
             scrollWheelZoom: zoomOnScroll
         }).setActiveArea('activeArea').setView(currentOptions.center, currentOptions.startZoom);
 
-        // Default tile layer
-        _tileLayers.makina = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
-            attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom: 14
-        });
-
-        // OpenStreetMap tile layer for high zoom level
-        _tileLayers.osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            minZoom: 15
-        });
+        // Create tiles layers
+        _tileLayers = {
+            // Default tile layer
+            makina: L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
+                attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 14
+            }),
+            // OpenStreetMap tile layer for high zoom level
+            osm: L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                minZoom: 15
+            })
+        };
 
         for (var i in _tileLayers) {
             _tileLayers[i].addTo(_map);
