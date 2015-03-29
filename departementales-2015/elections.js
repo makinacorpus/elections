@@ -187,6 +187,19 @@ var App = function (dataset) {
             };
             return ret;
         }
+        function _computeTotals (resultsSet) {
+            var total;
+            for (var r in resultsSet) {
+                total = 0;
+                for (var part in resultsSet[r].scores) {
+                    if (part != "ABSTENTION" && part != "NUL" && part != "BLANC") {
+                        total += resultsSet[r].scores[part];
+                    }
+                }
+                resultsSet[r].total = total;
+            }
+            return resultsSet;
+        }
         /**
          * End
          */
@@ -200,17 +213,9 @@ var App = function (dataset) {
         var results2        = {};
         $.getJSON(currentOptions.resultFile, function (data) {
             results = computeResults(data);
+
             // Add additionnal data.
-            var total;
-            for (var r in results) {
-                total = 0;
-                for (var part in results[r].scores) {
-                    if (part != "ABSTENTION" && part != "NUL" && part != "BLANC") {
-                        total += results[r].scores[part];
-                    }
-                }
-                results[r].total = total;
-            }
+            results = _computeTotals(results);
 
             /**
              * Draw entitys
@@ -244,17 +249,9 @@ var App = function (dataset) {
             });
             $.getJSON(currentOptions.resultFileTour2, function (data) {
                 results2 = computeResults(data);
+
                 // Add additionnal data.
-                var total;
-                for (var r in results2) {
-                    total = 0;
-                    for (var part in results2[r].scores) {
-                        if (part != "ABSTENTION" && part != "NUL" && part != "BLANC") {
-                            total += results2[r].scores[part];
-                        }
-                    }
-                    results2[r].total = total;
-                }
+                results2 = _computeTotals(results2);
 
                 /**
                  * Draw entitys
