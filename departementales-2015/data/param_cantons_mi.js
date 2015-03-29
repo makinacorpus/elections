@@ -56,6 +56,7 @@ function computeResults(data) {
     results[resultId] = {
       name: entityName,
       scores: {},
+      elus: {},
       winner: {
         parti: 'NUL',
         score: 0
@@ -88,6 +89,9 @@ function computeResults(data) {
         };
       }
       results[resultId].scores[parti] = score;
+      if (temp.Elu === 'oui') {
+        results[resultId].elus[parti] = 2;
+      }
     }
   }
   return results;
