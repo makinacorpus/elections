@@ -82,11 +82,11 @@ var App = function (dataset) {
             attributionControl: false,
             scrollWheelZoom: zoomOnScroll
         }).setActiveArea('activeArea').setView(options.center, options.startZoom);
-
+        // Removes default attribution
+	map.attributionControl.setPrefix('');
         // Default tile layer
         self.tileLayer = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
-            prefix: false,
-	    attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+            attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 14
         });
         self.tileLayer.addTo(self.map);
