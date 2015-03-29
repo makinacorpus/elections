@@ -312,6 +312,12 @@ var App = function (dataset) {
         legend.onAdd = function (map) {
             this._div = L.DomUtil.create('div', 'legend info');
             this.update();
+
+            // Prevent zooming when over legend
+            $(legend._div).on('click dblclick mousewheel DOMMouseScroll', function (e) {
+                e.stopPropagation();
+            });
+
             return this._div;
         };
 
