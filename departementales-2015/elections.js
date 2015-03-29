@@ -105,13 +105,15 @@ var App = function (dataset) {
             attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 14
         });
-        tileLayers.makina.addTo(map);
 
         // OpenStreetMap tile layer for high zoom level
         tileLayers.osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             minZoom: 15
         });
-        tileLayers.osm.addTo(map);
+
+        for (var i in tileLayers) {
+            tileLayers[i].addTo(map);
+        }
 
         // So layers can be accessed from one another.
         var tour1Layer, tour2Layer;
