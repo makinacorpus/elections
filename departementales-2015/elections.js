@@ -128,6 +128,14 @@ var App = function (dataset) {
                 fillOpacity: 0.8
             });
         }
+        function _layerFromGeojson (geojson, onEach) {
+            return L.geoJson(geojson, {
+                onEachFeature: onEach,
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng);
+                }
+            });
+        }
 
         // So layers can be accessed from one another.
         var tour1Layer, tour2Layer;
@@ -153,12 +161,8 @@ var App = function (dataset) {
              * Draw entitys
              */
             $.getJSON(currentOptions.entityFile, function(geojson) {
-                tour1Layer = L.geoJson(geojson, {
-                    onEachFeature: onEachFeature,
-                    pointToLayer: function (feature, latlng) {
-                        return L.circleMarker(latlng);
-                    }
-                });
+                tour1Layer = _layerFromGeojson(geojson, onEachFeature);
+
                 function highlightFeature(e) {
                     var layer = e.target;
                     layer.setStyle({weight: 4});
@@ -246,12 +250,7 @@ var App = function (dataset) {
                  * Draw entitys
                  */
                 $.getJSON(currentOptions.entityFile, function(geojson) {
-                    tour2Layer = L.geoJson(geojson, {
-                        onEachFeature: onEachFeature,
-                        pointToLayer: function (feature, latlng) {
-                            return L.circleMarker(latlng);
-                        }
-                    });
+                    tour2Layer = _layerFromGeojson(geojson, onEachFeature);
                     function highlightFeature(e) {
                         var layer = e.target;
                         layer.setStyle({weight: 4});
