@@ -176,12 +176,8 @@ var App = function (dataset) {
 
                 function onEachFeature(feature, layer) {
                     var entity  = results[getResultId(feature)];
-                    var color   = currentOptions.neutralColor;
+                    var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
                     var opacity = 0.8;
-
-                    if (entity) {
-                      color   = colors[entity.winner.parti];
-                    }
 
                     // Set shape styles
                     layer.setStyle({
@@ -264,12 +260,8 @@ var App = function (dataset) {
 
                     function onEachFeature(feature, layer) {
                         var entity  = results2[getResultId(feature)];
-                        var color   = currentOptions.neutralColor;
+                        var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
                         var opacity = 0.8;
-
-                        if (entity) {
-                          color   = colors[entity.winner.parti];
-                        }
 
                         // Set shape styles
                         layer.setStyle({
