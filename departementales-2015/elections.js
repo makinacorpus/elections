@@ -165,11 +165,12 @@ var App = function (dataset) {
 
                 function highlightFeature(e) {
                     var layer = e.target;
-                    layer.setStyle({weight: 4});
-                    layer.setStyle({fillOpacity: 1});
-                    if (layer.feature.geometry.type == 'MultiLineString') {
-                      layer.setStyle({weight: 8});
-                    }
+                    var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
+                    layer.setStyle({
+                        weight: w,
+                        fillOpacity: 1
+                    });
+
                     legend.update(getBorderId(layer), results);
                 }
 
@@ -253,11 +254,12 @@ var App = function (dataset) {
                     tour2Layer = _layerFromGeojson(geojson, onEachFeature);
                     function highlightFeature(e) {
                         var layer = e.target;
-                        layer.setStyle({weight: 4});
-                        layer.setStyle({fillOpacity: 1});
-                        if (layer.feature.geometry.type == 'MultiLineString') {
-                          layer.setStyle({weight: 8});
-                        }
+                        var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
+                        layer.setStyle({
+                            weight: w,
+                            fillOpacity: 1
+                        });
+
                         legend.update(getBorderId(layer), results2);
                     }
 
