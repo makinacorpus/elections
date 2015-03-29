@@ -328,6 +328,10 @@ var App = function (dataset) {
                 var total_exprimes = 0;
                 var votes_exprimes = [];
                 var scores         = currentResults[entity].scores;
+                var elus           = [];
+                if (currentResults[entity].elus) {
+                  elus           = currentResults[entity].elus;
+                }
                 for (var parti in scores) {
                     if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
                         var score = scores[parti] || 0;
@@ -381,7 +385,15 @@ var App = function (dataset) {
                     var isWinner    = (vote.score === currentResults[entity].winner.score);
                     html += '<li>';
                     html += isWinner ? '<strong>' : '';
-                    html += label_parti + ' ' + vote.ratio + '% (' + vote.score + ' voix)</li>';
+                    var nbElus = '';
+                    if (elus[label_parti] > 0) {
+                      nbElus = ' (' + elus[label_parti] + ' élu';
+                      if (elus[label_parti] > 1) {
+                        nbElus += 's';
+                      }
+                      nbElus += ')';
+                    }
+                    html += label_parti + ' ' + vote.ratio + '% (' + vote.score + ' voix)' + nbElus + '</li>';
                     html += isWinner ? '</strong>' : '';
                     html += '<div style="display:inline-block;width:' + (2 * vote.ratio) + 'px;height:10px;background-color:' + colors[label_parti] +';"></div></li>';
                 });
