@@ -175,7 +175,6 @@ var App = function (dataset) {
                 }
 
                 function onEachFeature(feature, layer) {
-                    // Make two type coercions to remove leading zero
                     var entity  = results[getResultId(feature)];
                     var color   = currentOptions.neutralColor;
                     var opacity = 0.8;
@@ -264,7 +263,6 @@ var App = function (dataset) {
                     }
 
                     function onEachFeature(feature, layer) {
-                        // Make two type coercions to remove leading zero
                         var entity  = results2[getResultId(feature)];
                         var color   = currentOptions.neutralColor;
                         var opacity = 0.8;
