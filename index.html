@@ -16,7 +16,8 @@
   <meta property="og:url" content="http://cartes-elections.makina-corpus.net" />
   <meta property="og:image" content="http://cartes-elections.makina-corpus/departementales-2015/cartes-elections.png" />
   <meta property="og:description" content="Des expériences cartographiques de Makina Corpus sur les scrutins électoraux" />
-<link rel="stylesheet" type="text/css" href="home-ressources/styles/main.css">
+  <link rel="stylesheet" type="text/css" href="home-ressources/styles/main.css">
+  <link rel="stylesheet" type="text/css" href="exemples/exemples.css">
 </head>
 <body>
   <header>
@@ -48,7 +49,6 @@
       <h2>L'actualité du jour : les élections départementales 2015 !</h2>
       <h3>Premier tour</h3>
       <ul>
-        <!--<li><a href="departementales-2015/app/public/">Carte des cantons et liste des candidats</a></li>-->
         <li><big><a href="departementales-2015/app/public/departement.html?dep=31"><strong>Carte des résultats à Toulouse, par bureau de vote</strong></a></big></li>
         <li><big><a href="fougeres/">Carte des résultats à Fougères, par bureau de vote</a></big></li>
         <li><a href="departementales-2015/regions.html">Carte des résultats en France, par région</a></li>
@@ -58,10 +58,19 @@
         <li><a href="lectoure/">Comparaison du premier tour de trois élections à Lectoure, par bureau de vote</a></li>
       </ul>
       <h3>Deuxième tour</h3>
-      <ul>
-
-        <li><big>Rendez-vous dimanche 29 mars après 21h00 !</big></li>
-      </ul>
+      <p><big>Rendez-vous dimanche 29 mars après 21h00 !</big></p>
+      <p>Pour embarquer nos cartes des résultats sur votre site, vous pouvez utiliser le code suivant :</p>
+      <blockquote>
+        Pour la carte par canton (faites varier le paramètre data-dpt pour changer de département) :<br/> 
+        <code>&lt;div class="mkc-placeholder" data-source="departementales-2015_resultats-cantons" data-dpt="76"&gt;&lt;/div&gt;
+&lt;script src="http://makinacorpus.github.io/iframe-loader/dist/scripts/mkc.js" id="mkc-iframe-loader" async="async"&gt;&lt;/script&gt;</code>
+      </blockquote>
+      <h3>ET</h3>
+      <blockquote>
+        Pour la carte de France avec tous les départements :<br/> 
+        <code>&lt;div class="mkc-placeholder" data-source="departementales-2015_resultats-departements"&gt;&lt;/div&gt;
+&lt;script src="http://makinacorpus.github.io/iframe-loader/dist/scripts/mkc.js" id="mkc-iframe-loader" async="async"&gt;&lt;/script&gt;</code>
+      </blockquote>
     </section>
     <section id="contribute">
       <h2>Vous souhaitez contribuer ?</h2>
