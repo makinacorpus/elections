@@ -121,7 +121,7 @@ var App = function (dataset) {
         /**
          * Factorized methods
          */
-        function _resetHighlight(e) {
+        function _resetHighlight (e) {
             var layer = e.target;
             var w     = (layer.feature.geometry.type === 'MultiLineString') ? 4 : 1;
 
@@ -138,12 +138,12 @@ var App = function (dataset) {
                 }
             });
         }
-        function _layerClick (event) {
-            var id     = getResultId(event.target.feature);
+        function _layerClick (e) {
+            var id     = getResultId(e.target.feature);
             var target = currentOptions.link.replace('feature', id);
             window.open(target, "_blank");
         }
-        function _highlightFeature(l, r) {
+        function _highlightFeature (legend, resultsSet) {
             var ret = function (e) {
                 var layer = e.target;
                 var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
@@ -151,11 +151,11 @@ var App = function (dataset) {
                     weight: w,
                     fillOpacity: 1
                 });
-                l.update(getBorderId(layer), r);
+                legend.update(getBorderId(layer), resultsSet);
             };
             return ret;
         }
-        function _onEachFeature (l, resultsSet) {
+        function _onEachFeature (legend, resultsSet) {
             var ret = function (feature, layer) {
                 var entity  = resultsSet[getResultId(feature)];
                 var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
@@ -178,7 +178,7 @@ var App = function (dataset) {
 
                 // Event bindings
                 layer.on({
-                    mouseover: _highlightFeature(l, resultsSet),
+                    mouseover: _highlightFeature(legend, resultsSet),
                     mouseout: _resetHighlight,
                 });
                 if (currentOptions.link) {
