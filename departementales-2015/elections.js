@@ -139,179 +139,179 @@ var App = function (dataset) {
              * Draw entitys
              */
             $.getJSON(currentOptions.entityFile, function(geojson) {
-              tour1Layer = L.geoJson(geojson, {
-                onEachFeature: onEachFeature,
-                pointToLayer: function (feature, latlng) {
-                  return L.circleMarker(latlng);
-                }
-            });
-            function highlightFeature(e) {
-                var layer = e.target;
-                layer.setStyle({weight: 4});
-                layer.setStyle({fillOpacity: 1});
-                if (layer.feature.geometry.type == 'MultiLineString') {
-                  layer.setStyle({weight: 8});
-                }
-                legend.update(getBorderId(layer), results);
-            }
-            function resetHighlight(e) {
-                var layer = e.target;
-                layer.setStyle({weight: 1});
-                layer.setStyle({fillOpacity: 0.8});
-                if (layer.feature.geometry.type == 'MultiLineString') {
-                  layer.setStyle({weight: 4});
-                }
-            }
-
-            function onEachFeature(feature, layer) {
-                // Make two type coercions to remove leading zero
-                var entity  = results[getResultId(feature)];
-                var color   = currentOptions.neutralColor;
-                var opacity = 0.8;
-
-                if (entity) {
-                  color   = colors[entity.winner.parti];
-                }
-
-                // Set shape styles
-                layer.setStyle({
-                    fillColor: color,
-                    weight: 1,
-                    fillOpacity: opacity,
-                    color: '#291333',
+                tour1Layer = L.geoJson(geojson, {
+                    onEachFeature: onEachFeature,
+                    pointToLayer: function (feature, latlng) {
+                        return L.circleMarker(latlng);
+                    }
                 });
-                if (feature.geometry.type == 'MultiLineString') {
-                  layer.setStyle({color: color, weight: 4, opacity: 1});
+                function highlightFeature(e) {
+                    var layer = e.target;
+                    layer.setStyle({weight: 4});
+                    layer.setStyle({fillOpacity: 1});
+                    if (layer.feature.geometry.type == 'MultiLineString') {
+                      layer.setStyle({weight: 8});
+                    }
+                    legend.update(getBorderId(layer), results);
                 }
-
-                // Event bindings
-                layer.on({
-                    mouseover: highlightFeature,
-                    mouseout: resetHighlight,
-                });
-                if (currentOptions.link) {
-                  layer.on('click', function(event) {
-                    var id = getResultId(event.target.feature);
-                    var target = currentOptions.link.replace('feature', id);
-                    window.open(target, "_blank");
-                  });
-                }
-            }
-
-            // Attach geojson layer to map
-            tour1Layer.addTo(_map);
-            if (typeof departement !== 'undefined') {
-              _map.fitBounds(tour1Layer.getBounds());
-            }
-
-            // Eventually add additional layer.
-            if (currentOptions.additionalLayer) {
-              $.getJSON(currentOptions.additionalLayer, function (additionalData) {
-                var style = {
-                  clickable: false,
-                  color: '#291333',
-                  opacity: 1,
-                  fillOpacity: 0,
-                  weight: 2
-                };
-                var additionalLayer = L.geoJson(additionalData, {style: style});
-                additionalLayer.addTo(_map);
-                _map.on('baselayerchange', function(e) {
-                  additionalLayer.bringToFront();
-                });
-              });
-            }
-          });
-        $.getJSON(currentOptions.resultFileTour2, function (data) {
-            results2 = computeResults(data);
-            // Add additionnal data.
-            var total;
-            for (var r in results2) {
-                total = 0;
-                for (var part in results2[r].scores) {
-                    if (part != "ABSTENTION" && part != "NUL" && part != "BLANC") {
-                        total += results2[r].scores[part];
+                function resetHighlight(e) {
+                    var layer = e.target;
+                    layer.setStyle({weight: 1});
+                    layer.setStyle({fillOpacity: 0.8});
+                    if (layer.feature.geometry.type == 'MultiLineString') {
+                      layer.setStyle({weight: 4});
                     }
                 }
-                results2[r].total = total;
-            }
 
-            /**
-             * Draw entitys
-             */
-            $.getJSON(currentOptions.entityFile, function(geojson) {
-              tour2Layer = L.geoJson(geojson, {
-                onEachFeature: onEachFeature,
-                pointToLayer: function (feature, latlng) {
-                  return L.circleMarker(latlng);
-                }
-            });
-            function highlightFeature(e) {
-                var layer = e.target;
-                layer.setStyle({weight: 4});
-                layer.setStyle({fillOpacity: 1});
-                if (layer.feature.geometry.type == 'MultiLineString') {
-                  layer.setStyle({weight: 8});
-                }
-                legend.update(getBorderId(layer), results2);
-            }
-            function resetHighlight(e) {
-                var layer = e.target;
-                layer.setStyle({weight: 1});
-                layer.setStyle({fillOpacity: 0.8});
-                if (layer.feature.geometry.type == 'MultiLineString') {
-                  layer.setStyle({weight: 4});
-                }
-            }
+                function onEachFeature(feature, layer) {
+                    // Make two type coercions to remove leading zero
+                    var entity  = results[getResultId(feature)];
+                    var color   = currentOptions.neutralColor;
+                    var opacity = 0.8;
 
-            function onEachFeature(feature, layer) {
-                // Make two type coercions to remove leading zero
-                var entity  = results2[getResultId(feature)];
-                var color   = currentOptions.neutralColor;
-                var opacity = 0.8;
+                    if (entity) {
+                      color   = colors[entity.winner.parti];
+                    }
 
-                if (entity) {
-                  color   = colors[entity.winner.parti];
+                    // Set shape styles
+                    layer.setStyle({
+                        fillColor: color,
+                        weight: 1,
+                        fillOpacity: opacity,
+                        color: '#291333',
+                    });
+                    if (feature.geometry.type == 'MultiLineString') {
+                      layer.setStyle({color: color, weight: 4, opacity: 1});
+                    }
+
+                    // Event bindings
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                    });
+                    if (currentOptions.link) {
+                      layer.on('click', function(event) {
+                        var id = getResultId(event.target.feature);
+                        var target = currentOptions.link.replace('feature', id);
+                        window.open(target, "_blank");
+                      });
+                    }
                 }
 
-                // Set shape styles
-                layer.setStyle({
-                    fillColor: color,
-                    weight: 1,
-                    fillOpacity: opacity,
-                    color: '#291333',
-                });
-                if (feature.geometry.type == 'MultiLineString') {
-                  layer.setStyle({color: color, weight: 4, opacity: 1});
+                // Attach geojson layer to map
+                tour1Layer.addTo(_map);
+                if (typeof departement !== 'undefined') {
+                  _map.fitBounds(tour1Layer.getBounds());
                 }
 
-                // Event bindings
-                layer.on({
-                    mouseover: highlightFeature,
-                    mouseout: resetHighlight,
-                });
-                if (currentOptions.link) {
-                  layer.on('click', function(event) {
-                    var id = getResultId(event.target.feature);
-                    var target = currentOptions.link.replace('feature', id);
-                    window.open(target, "_blank");
+                // Eventually add additional layer.
+                if (currentOptions.additionalLayer) {
+                  $.getJSON(currentOptions.additionalLayer, function (additionalData) {
+                    var style = {
+                      clickable: false,
+                      color: '#291333',
+                      opacity: 1,
+                      fillOpacity: 0,
+                      weight: 2
+                    };
+                    var additionalLayer = L.geoJson(additionalData, {style: style});
+                    additionalLayer.addTo(_map);
+                    _map.on('baselayerchange', function(e) {
+                      additionalLayer.bringToFront();
+                    });
                   });
                 }
-            }
+            });
+            $.getJSON(currentOptions.resultFileTour2, function (data) {
+                results2 = computeResults(data);
+                // Add additionnal data.
+                var total;
+                for (var r in results2) {
+                    total = 0;
+                    for (var part in results2[r].scores) {
+                        if (part != "ABSTENTION" && part != "NUL" && part != "BLANC") {
+                            total += results2[r].scores[part];
+                        }
+                    }
+                    results2[r].total = total;
+                }
 
-            // Attach geojson layer to map
-            tour2Layer.addTo(_map);
-            // Handle layers.
-            var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
-            // Add the first layer to the layerSwitcher.
-            layers.addBaseLayer(tour1Layer, '1er tour');
-            // Remove tour1 so tour2 is automatically selected.
-            _map.removeLayer(tour1Layer);
-            // Add the layer to the layerSwitcher.
-            layers.addBaseLayer(tour2Layer, '2ème tour');
-            layers.addTo(_map);
-          });
-        });
+                /**
+                 * Draw entitys
+                 */
+                $.getJSON(currentOptions.entityFile, function(geojson) {
+                    tour2Layer = L.geoJson(geojson, {
+                        onEachFeature: onEachFeature,
+                        pointToLayer: function (feature, latlng) {
+                            return L.circleMarker(latlng);
+                        }
+                    });
+                    function highlightFeature(e) {
+                        var layer = e.target;
+                        layer.setStyle({weight: 4});
+                        layer.setStyle({fillOpacity: 1});
+                        if (layer.feature.geometry.type == 'MultiLineString') {
+                          layer.setStyle({weight: 8});
+                        }
+                        legend.update(getBorderId(layer), results2);
+                    }
+                    function resetHighlight(e) {
+                        var layer = e.target;
+                        layer.setStyle({weight: 1});
+                        layer.setStyle({fillOpacity: 0.8});
+                        if (layer.feature.geometry.type == 'MultiLineString') {
+                          layer.setStyle({weight: 4});
+                        }
+                    }
+
+                    function onEachFeature(feature, layer) {
+                        // Make two type coercions to remove leading zero
+                        var entity  = results2[getResultId(feature)];
+                        var color   = currentOptions.neutralColor;
+                        var opacity = 0.8;
+
+                        if (entity) {
+                          color   = colors[entity.winner.parti];
+                        }
+
+                        // Set shape styles
+                        layer.setStyle({
+                            fillColor: color,
+                            weight: 1,
+                            fillOpacity: opacity,
+                            color: '#291333',
+                        });
+                        if (feature.geometry.type == 'MultiLineString') {
+                          layer.setStyle({color: color, weight: 4, opacity: 1});
+                        }
+
+                        // Event bindings
+                        layer.on({
+                            mouseover: highlightFeature,
+                            mouseout: resetHighlight,
+                        });
+                        if (currentOptions.link) {
+                          layer.on('click', function(event) {
+                            var id = getResultId(event.target.feature);
+                            var target = currentOptions.link.replace('feature', id);
+                            window.open(target, "_blank");
+                          });
+                        }
+                    }
+
+                    // Attach geojson layer to map
+                    tour2Layer.addTo(_map);
+                    // Handle layers.
+                    var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
+                    // Add the first layer to the layerSwitcher.
+                    layers.addBaseLayer(tour1Layer, '1er tour');
+                    // Remove tour1 so tour2 is automatically selected.
+                    _map.removeLayer(tour1Layer);
+                    // Add the layer to the layerSwitcher.
+                    layers.addBaseLayer(tour2Layer, '2ème tour');
+                    layers.addTo(_map);
+                });
+            });
         });
 
         // Optionnal logo
