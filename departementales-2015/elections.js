@@ -329,7 +329,7 @@ var App = function (dataset) {
             this.update();
 
             // Prevent zooming when over legend
-            $(legend._div).on('click dblclick mousewheel DOMMouseScroll', function (e) {
+            $(this._div).on('click dblclick mousewheel DOMMouseScroll', function (e) {
                 e.stopPropagation();
             });
 
