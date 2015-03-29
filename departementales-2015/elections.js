@@ -63,6 +63,7 @@ var App = function (dataset) {
 
     self.init = function () {
         var map;
+        var tileLayers = {};
         var currentOptions = options;
         if (mkcMapFrame && dataset) {
             if (pymChild) {
@@ -100,17 +101,18 @@ var App = function (dataset) {
         }).setActiveArea('activeArea').setView(currentOptions.center, currentOptions.startZoom);
 
         // Default tile layer
-        self.tileLayer = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
+        tileLayers.makina = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
             attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 14
         });
-        self.tileLayer.addTo(map);
+        tileLayers.makina.addTo(map);
 
         // OpenStreetMap tile layer for high zoom level
-        self.tile2Layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        tileLayers.osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             minZoom: 15
         });
-        self.tile2Layer.addTo(map);
+        tileLayers.osm.addTo(map);
+
         // So layers can be accessed from one another.
         var tour1Layer, tour2Layer;
 
