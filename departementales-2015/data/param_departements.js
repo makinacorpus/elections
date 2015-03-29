@@ -12,7 +12,7 @@ var options = {
   entityFile: '../resources/departements.geojson',
   neutralColor: '#FFFFFF',
   // Legend options
-  legendTitle: 'Résultats par département<BR /><small> (couleur = nuance ayant recueilli le plus de voix)'</small>,
+  legendTitle: 'Résultats par département<BR /><small> (couleur = nuance ayant recueilli le plus de voix)'</small>',
   entityName: 'Département : ',
   legendHelp: 'Survolez un département pour plus de détails.',
   // Additionnal layer ?
