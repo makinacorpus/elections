@@ -246,10 +246,12 @@ var App = function (dataset) {
              * Draw entitys
              */
             $.getJSON(currentOptions.entityFile, function(geojson) {
-                tour1Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results));
 
                 // Attach geojson layer to map
+                tour1Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results));
                 tour1Layer.addTo(_map);
+
+                // Set the map view to fit layer
                 if (typeof departement !== 'undefined') {
                   _map.fitBounds(tour1Layer.getBounds());
                 }
@@ -259,6 +261,7 @@ var App = function (dataset) {
                     _loadAdditionalLayer(currentOptions.additionalLayer);
                 }
             });
+
             $.getJSON(currentOptions.resultFileTour2, function (data) {
                 results2 = computeResults(data);
 
@@ -269,10 +272,11 @@ var App = function (dataset) {
                  * Draw entitys
                  */
                 $.getJSON(currentOptions.entityFile, function(geojson) {
-                    tour2Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results2));
 
                     // Attach geojson layer to map
+                    tour2Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results2));
                     tour2Layer.addTo(_map);
+
                     // Handle layers.
                     var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
                     // Add the first layer to the layerSwitcher.
