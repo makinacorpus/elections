@@ -13,7 +13,7 @@ var options = {
   // Legend options
   legendTitle: '<h3>Résultats par canton</h3>',
   entityName: 'Canton :',
-  legendHelp: 'Survolez un canton pour plus de détails.',
+  legendHelp: 'Survolez un canton pour plus de détails. Les cantons en blanc indiquent un candidat élu au premier tour.',
   // Additionnal layer ?
   // additionalLayer:
 };
