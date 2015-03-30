@@ -9,7 +9,7 @@ var options = {
   resultFile: 'data/resultats/cantons/1/001.json',
   resultFileTour2: 'data/resultats/cantons/2/001.json',
   entityFile: 'data/cantons/cantons_01_2015.geojson',
-  neutralColor: '#AAAAAA',
+  neutralColor: '#FFFFFF',
   // Legend options
   legendTitle: '<h3>Résultats par canton</h3>',
   entityName: 'Canton :',
