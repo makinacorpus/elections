@@ -236,18 +236,21 @@ var App = function (dataset) {
          */
         var dataSources = [
             {
-                type: 'entities',
-                url: currentOptions.entityFile
+                url:    currentOptions.entityFile,
+                type:   'entities',
+                name:   'dpt'
             },
             {
-                type: 'data',
-                url: currentOptions.resultFile,
-                name: '1er tour'
+                url:    currentOptions.resultFile,
+                type:   'data',
+                name:   '1er tour',
+                target: 'dpt'
             },
             {
-                type: 'data',
-                url: currentOptions.resultFileTour2,
-                name: '2ème tour'
+                url:    currentOptions.resultFileTour2,
+                type:   'data',
+                name:   '2ème tour',
+                target: 'dpt'
             }
         ];
         var dataSourcesDeferred = [];
@@ -298,18 +301,20 @@ var App = function (dataset) {
             var layer, geojson;
             if (dataSource.type === 'data') {
 
-                geojson = _getEntitiesData(dataSources);
+                geojson = _getEntitiesData(dataSources, dataSource.target);
                 layer   = _layerFromGeojson(geojson, _onEachFeature(legend, dataSource.results))
                 layer.addTo(_map);
             }
         }
 
-        function _getEntitiesData (sources, name) {
-            if (!sources) return;
+        function _getEntitiesData (sources, target) {
             var source;
+            if (!sources) return;
+
+            // Select entities matching target name
             for (var s in sources) {
                 source = sources[s];
-                if (source.type === 'entities' && (source.name === name || !source.name)) {
+                if (source.type === 'entities' && (source.name === target || !target)) {
                     return source.geojson;
                 }
             }
