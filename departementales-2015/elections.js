@@ -286,6 +286,7 @@ var App = function (dataset) {
                     // Add the layer to the layerSwitcher.
                     layers.addBaseLayer(tour2Layer, '2ème tour');
                     layers.addTo(_map);
+                    _map.fire('baselayerchange');
                 });
             });
         });
