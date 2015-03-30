@@ -328,6 +328,39 @@ var App = function (dataset) {
 
             layer && layer.addTo(_map);
 
+            /**
+             * TODO :
+             *     Data layer selector (L.control.layers)
+             *     "Stay on top" for additional layers
+             *     Fitbound on current selected data
+             */
+
+
+/*
+
+                    // Set the map view to fit layer
+                    if (typeof departement !== 'undefined') {
+                      _map.fitBounds(tour1Layer.getBounds());
+                    }
+
+                    // Eventually add additional layer.
+                    if (currentOptions.additionalLayer) {
+                        _loadAdditionalLayer(currentOptions.additionalLayer);
+                    }
+
+                    // Handle layers.
+                    var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
+                    // Add the first layer to the layerSwitcher.
+                    layers.addBaseLayer(tour1Layer, '1er tour');
+                    // Remove tour1 so tour2 is automatically selected.
+                    _map.removeLayer(tour1Layer);
+                    // Add the layer to the layerSwitcher.
+                    layers.addBaseLayer(tour2Layer, '2ème tour');
+                    layers.addTo(_map);
+                    _map.fire('baselayerchange');
+
+ */
+
         }
 
         // Return matching target/name dataSource or forst if target is undefined
@@ -343,64 +376,6 @@ var App = function (dataset) {
                 }
             }
         }
-
-
-
-/*
-
-                    $.getJSON(currentOptions.resultFile, function (data) {
-                        results = computeResults(data);
-                        // Add additionnal data.
-                        results = _computeTotals(results);
-                    });
-
-                    $.getJSON(currentOptions.resultFileTour2, function (data) {
-                        results2 = computeResults(data);
-
-                        // Add additionnal data.
-                        results2 = _computeTotals(results2);
-                    });
-
-
-                    $.getJSON(currentOptions.entityFile, function(geojson) {
-                        // Attach geojson layer to map
-                        tour1Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results));
-                        tour1Layer.addTo(_map);
-                    });
-
-                    $.getJSON(currentOptions.entityFile, function(geojson) {
-                        // Attach geojson layer to map
-                        tour2Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results2));
-                        tour2Layer.addTo(_map);
-                    });
-
-                    // Set the map view to fit layer
-                    if (typeof departement !== 'undefined') {
-                      _map.fitBounds(tour1Layer.getBounds());
-                    }
-
-                    // Eventually add additional layer.
-                    if (currentOptions.additionalLayer) {
-                        _loadAdditionalLayer(currentOptions.additionalLayer);
-                    }
-
-
-
-
-                    // Handle layers.
-                    var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
-                    // Add the first layer to the layerSwitcher.
-                    layers.addBaseLayer(tour1Layer, '1er tour');
-                    // Remove tour1 so tour2 is automatically selected.
-                    _map.removeLayer(tour1Layer);
-                    // Add the layer to the layerSwitcher.
-                    layers.addBaseLayer(tour2Layer, '2ème tour');
-                    layers.addTo(_map);
-                    _map.fire('baselayerchange');
-
-
-
-*/
 
         // Optionnal logo
         if (dataset && dataset.logo) {
