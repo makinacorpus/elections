@@ -207,6 +207,24 @@ var App = function (dataset) {
             }
             return resultsSet;
         }
+        function _loadAdditionalLayer (jsonURL) {
+            $.getJSON(jsonURL, function(additionalData) {
+                var additionalLayer = L.geoJson(additionalData, {
+                    style: {
+                        clickable: false,
+                        color: '#291333',
+                        opacity: 1,
+                        fillOpacity: 0,
+                        weight: 2
+                    }
+                });
+                additionalLayer.addTo(_map);
+
+                _map.on('baselayerchange', function(e) {
+                    additionalLayer.bringToFront();
+                });
+            });
+        }
         /**
          * End
          */
@@ -238,20 +256,7 @@ var App = function (dataset) {
 
                 // Eventually add additional layer.
                 if (currentOptions.additionalLayer) {
-                  $.getJSON(currentOptions.additionalLayer, function (additionalData) {
-                    var style = {
-                      clickable: false,
-                      color: '#291333',
-                      opacity: 1,
-                      fillOpacity: 0,
-                      weight: 2
-                    };
-                    var additionalLayer = L.geoJson(additionalData, {style: style});
-                    additionalLayer.addTo(_map);
-                    _map.on('baselayerchange', function(e) {
-                      additionalLayer.bringToFront();
-                    });
-                  });
+                    _loadAdditionalLayer(currentOptions.additionalLayer);
                 }
             });
             $.getJSON(currentOptions.resultFileTour2, function (data) {
