@@ -80,16 +80,20 @@ function computeResults(data) {
   return results;
 }
 
+
+function getEntityCode (rawCode) {
+  if (rawCode === '2A' || rawCode === '2B') {
+    return rawCode;
+  } else {
+    return ""+parseInt(rawCode);
+  }
+}
 /**
  * This function retrieve the id of the geometrical layer.
  */
 function getBorderId(layer) {
   entityCode = layer.feature.properties.code;
-  if (entityCode === '2A' || entityCode === '2B') {
-    return entityCode;
-  } else {
-    return ""+parseInt(entityCode);
-  }
+  return getEntityCode(entityCode);
 }
 
 /**
@@ -98,9 +102,5 @@ function getBorderId(layer) {
  */
 function getResultId(feature) {
   entityCode = feature.properties.code;
-  if (entityCode === '2A' || entityCode === '2B') {
-    return entityCode;
-  } else {
-    return ""+parseInt(entityCode);
-  }
+  return getEntityCode(entityCode);
 }
