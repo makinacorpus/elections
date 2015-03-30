@@ -253,6 +253,14 @@ var App = function (dataset) {
                 target: 'dpt'
             }
         ];
+        if (currentOptions.additionalLayer) {
+            dataSources.push({
+                url: currentOptions.additionalLayer,
+                type: 'additional',
+                name: 'regions'
+            });
+        }
+
         var dataSourcesDeferred = [];
 
         /**
@@ -270,7 +278,7 @@ var App = function (dataset) {
             dataSources = _parseResults(dataSources, arguments);
 
             // Build displays
-            dataSources.forEach(_buildDisplay);
+            dataSources.forEach(_eachParsedSource);
         }
 
         // Store any received data into main dataSources objects
@@ -285,6 +293,7 @@ var App = function (dataset) {
                 var jsonType = sources[index].type;
                 switch (jsonType) {
                     case 'entities':
+                    case 'additional':
                         sources[index].geojson = data;
                         break;
                     case 'data':
@@ -297,19 +306,34 @@ var App = function (dataset) {
             return sources;
         }
 
-        function _buildDisplay (dataSource) {
+        function _eachParsedSource (dataSource) {
             var layer, geojson;
             if (dataSource.type === 'data') {
 
-                geojson = _getEntitiesData(dataSources, dataSource.target);
+                geojson = _getTargetedEntities(dataSources, dataSource.target);
                 layer   = _layerFromGeojson(geojson, _onEachFeature(legend, dataSource.results))
-                layer.addTo(_map);
+
+            } else if (dataSource.type === 'additional') {
+
+                layer = L.geoJson(dataSource.geojson, {
+                    style: {
+                        clickable: false,
+                        color: '#291333',
+                        opacity: 1,
+                        fillOpacity: 0,
+                        weight: 2
+                    }
+                });
             }
+
+            layer && layer.addTo(_map);
+
         }
 
-        function _getEntitiesData (sources, target) {
-            var source;
+        // Return matching target/name dataSource or forst if target is undefined
+        function _getTargetedEntities (sources, target) {
             if (!sources) return;
+            var source;
 
             // Select entities matching target name
             for (var s in sources) {
