@@ -155,26 +155,33 @@ var App = function (dataset) {
             };
             return ret;
         }
-        function _onEachFeature (legend, resultsSet) {
-            var ret = function (feature, layer) {
-                var entity  = resultsSet[getResultId(feature)];
-                var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
-                var opacity = 0.8;
-
-                // Set shape styles
-                layer.setStyle({
+        function _featureStyle (resultsSet, feature) {
+            var entity  = resultsSet[getResultId(feature)];
+            var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
+            var opacity = 0.8;
+            var style;
+            if (feature.geometry.type === 'MultiLineString') {
+                style = {
+                    color: color,
+                    weight: 4,
+                    opacity: 1
+                };
+            } else {
+                style = {
                     fillColor: color,
                     weight: 1,
                     fillOpacity: opacity,
                     color: '#291333',
-                });
-                if (feature.geometry.type == 'MultiLineString') {
-                    layer.setStyle({
-                        color: color,
-                        weight: 4,
-                        opacity: 1
-                    });
-                }
+                };
+            }
+            return style;
+        }
+        function _onEachFeature (legend, resultsSet) {
+            var ret = function (feature, layer) {
+
+                // Set shape styles
+                var style = _featureStyle(resultsSet, feature);
+                layer.setStyle(style);
 
                 // Event bindings
                 layer.on({
