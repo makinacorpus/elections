@@ -301,7 +301,7 @@ var App = function (dataset) {
         };
 
         legend.update = function (entity, currentResults) {
-            var html = '<h3>' + currentOptions.legendTitle + '</h3>';
+            var html = currentOptions.legendTitle;
             if (entity && currentResults[entity]) {
                 var total          = 0;
                 var total_exprimes = 0;
