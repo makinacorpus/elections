@@ -230,52 +230,133 @@ var App = function (dataset) {
          */
 
 
-        // So layers can be accessed from one another.
-        var tour1Layer, tour2Layer;
+        /**
+         * Main data sources references
+         * TODO: Use an external datasource for each usecase
+         */
+        var dataSources = [
+            {
+                type: 'entities',
+                url: currentOptions.entityFile
+            },
+            {
+                type: 'data',
+                url: currentOptions.resultFile,
+                name: '1er tour'
+            },
+            {
+                type: 'data',
+                url: currentOptions.resultFileTour2,
+                name: '2ème tour'
+            }
+        ];
+        var dataSourcesDeferred = [];
 
-        // Read result from json
-        var results         = {};
-        var results2        = {};
-        $.getJSON(currentOptions.resultFile, function (data) {
-            results = computeResults(data);
+        /**
+         * Make each needed XHR query & store deferred object as array
+         */
+        dataSources.forEach(function (dataSource, index, array) {
+            dataSourcesDeferred.push($.getJSON(dataSource.url));
+        });
 
-            // Add additionnal data.
-            results = _computeTotals(results);
+        // Use "apply" call to be able to provide an array as multiple parameters
+        $.when.apply(null, dataSourcesDeferred).done(_jsonReceived);
 
-            /**
-             * Draw entitys
-             */
-            $.getJSON(currentOptions.entityFile, function(geojson) {
+        function _jsonReceived () {
+            // arguments consists of an array of arrays. Each one contains [data, status, jqxhr] for one ajax reply
+            dataSources = _parseResults(dataSources, arguments);
 
-                // Attach geojson layer to map
-                tour1Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results));
-                tour1Layer.addTo(_map);
+            // Build displays
+            dataSources.forEach(_buildDisplay);
+        }
 
-                // Set the map view to fit layer
-                if (typeof departement !== 'undefined') {
-                  _map.fitBounds(tour1Layer.getBounds());
-                }
+        // Store any received data into main dataSources objects
+        function _parseResults (sources, args) {
+            // arguments do not implement forEAch method, so calling it from Array prototype
+            [].forEach.call(args, function (reply, index) {
+                var data     = reply[0];
+                var status   = reply[1];
+                var jqxhr    = reply[2];
 
-                // Eventually add additional layer.
-                if (currentOptions.additionalLayer) {
-                    _loadAdditionalLayer(currentOptions.additionalLayer);
+                // According to each dataType, make suitable transforms
+                var jsonType = sources[index].type;
+                switch (jsonType) {
+                    case 'entities':
+                        sources[index].geojson = data;
+                        break;
+                    case 'data':
+                        sources[index].results = _computeTotals(computeResults(data));
+                        break;
+                    default:
+                        null;
                 }
             });
+            return sources;
+        }
 
-            $.getJSON(currentOptions.resultFileTour2, function (data) {
-                results2 = computeResults(data);
+        function _buildDisplay (dataSource) {
+            var layer, geojson;
+            if (dataSource.type === 'data') {
 
-                // Add additionnal data.
-                results2 = _computeTotals(results2);
+                geojson = _getEntitiesData(dataSources);
+                layer   = _layerFromGeojson(geojson, _onEachFeature(legend, dataSource.results))
+                layer.addTo(_map);
+            }
+        }
 
-                /**
-                 * Draw entitys
-                 */
-                $.getJSON(currentOptions.entityFile, function(geojson) {
+        function _getEntitiesData (sources, name) {
+            if (!sources) return;
+            var source;
+            for (var s in sources) {
+                source = sources[s];
+                if (source.type === 'entities' && (source.name === name || !source.name)) {
+                    return source.geojson;
+                }
+            }
+        }
 
-                    // Attach geojson layer to map
-                    tour2Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results2));
-                    tour2Layer.addTo(_map);
+
+
+/*
+
+                    $.getJSON(currentOptions.resultFile, function (data) {
+                        results = computeResults(data);
+                        // Add additionnal data.
+                        results = _computeTotals(results);
+                    });
+
+                    $.getJSON(currentOptions.resultFileTour2, function (data) {
+                        results2 = computeResults(data);
+
+                        // Add additionnal data.
+                        results2 = _computeTotals(results2);
+                    });
+
+
+                    $.getJSON(currentOptions.entityFile, function(geojson) {
+                        // Attach geojson layer to map
+                        tour1Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results));
+                        tour1Layer.addTo(_map);
+                    });
+
+                    $.getJSON(currentOptions.entityFile, function(geojson) {
+                        // Attach geojson layer to map
+                        tour2Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results2));
+                        tour2Layer.addTo(_map);
+                    });
+
+                    // Set the map view to fit layer
+                    if (typeof departement !== 'undefined') {
+                      _map.fitBounds(tour1Layer.getBounds());
+                    }
+
+                    // Eventually add additional layer.
+                    if (currentOptions.additionalLayer) {
+                        _loadAdditionalLayer(currentOptions.additionalLayer);
+                    }
+
+
+
 
                     // Handle layers.
                     var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
@@ -287,9 +368,10 @@ var App = function (dataset) {
                     layers.addBaseLayer(tour2Layer, '2ème tour');
                     layers.addTo(_map);
                     _map.fire('baselayerchange');
-                });
-            });
-        });
+
+
+
+*/
 
         // Optionnal logo
         if (dataset && dataset.logo) {
