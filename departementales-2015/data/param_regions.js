@@ -12,7 +12,7 @@ var options = {
   entityFile: 'data/regions_2015.geojson',
   neutralColor: '#AAAAAA',
   // Legend options
-  legendTitle: 'Résultats par région',
+  legendTitle: '<h3>Résultats par région</h3>',
   entityName: 'Région :',
   legendHelp: 'Survolez une région pour plus de détails.',
   // Additionnal layer ?

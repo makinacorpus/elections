@@ -10,7 +10,7 @@ var options = {
   entityFile: 'data/cantons/cantons_01_2015.geojson',
   neutralColor: '#AAAAAA',
   // Legend options
-  legendTitle: 'Résultats par canton',
+  legendTitle: '<h3>Résultats par canton</h3>',
   entityName: 'Canton :',
   legendHelp: 'Survolez un canton pour plus de détails.',
   // Additionnal layer ?
