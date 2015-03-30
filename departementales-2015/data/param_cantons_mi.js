@@ -67,6 +67,9 @@ function computeResults(data) {
     results[resultId].scores['BLANC'] = parseInt(currentData.Mentions.Blancs.Nombre);
     results[resultId].scores['NUL'] = parseInt(currentData.Mentions.Nuls.Nombre);
     var resultats = currentData.Resultats;
+    if (!resultats.length) {
+      resultats = [resultats];
+    }
     var currentPartis = [];
     for (var j = 0; j < resultats.length; j++) {
       var temp = resultats[j];
