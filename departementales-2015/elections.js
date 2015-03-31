@@ -226,10 +226,14 @@ var App = function (dataset) {
             dataSources.push({
                 url: currentOptions.additionalLayer,
                 type: 'additional',
-                name: 'regions'
+                name: 'regions',
+                inControls : false
             });
         }
 
+        /**
+         * Layers visibility controler
+         */
         var layersControl = L.control.layers(null, null, {
             position: 'topleft',
             collapsed: false,
@@ -301,7 +305,10 @@ var App = function (dataset) {
                     }
                 });
 
-                layersControl.addOverlay(layer, dataSource.name);
+                if (dataSource.inControls) {
+                    layersControl.addOverlay(layer, dataSource.name);
+                }
+
                 _map.on('baselayerchange', function (e) {
                     layer._map && layer.bringToFront();
                 });
