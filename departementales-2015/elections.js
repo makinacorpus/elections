@@ -194,19 +194,6 @@ var App = function (dataset) {
             };
             return ret;
         }
-        function _computeTotals (resultsSet) {
-            var total;
-            for (var r in resultsSet) {
-                total = 0;
-                for (var part in resultsSet[r].scores) {
-                    if (part != "ABSTENTION" && part != "NUL" && part != "BLANC") {
-                        total += resultsSet[r].scores[part];
-                    }
-                }
-                resultsSet[r].total = total;
-            }
-            return resultsSet;
-        }
         function _loadAdditionalLayer (jsonURL) {
             $.getJSON(jsonURL, function(additionalData) {
                 var additionalLayer = L.geoJson(additionalData, {
@@ -239,9 +226,6 @@ var App = function (dataset) {
         $.getJSON(currentOptions.resultFile, function (data) {
             results = computeResults(data);
 
-            // Add additionnal data.
-            results = _computeTotals(results);
-
             /**
              * Draw entitys
              */
@@ -264,9 +248,6 @@ var App = function (dataset) {
 
             $.getJSON(currentOptions.resultFileTour2, function (data) {
                 results2 = computeResults(data);
-
-                // Add additionnal data.
-                results2 = _computeTotals(results2);
 
                 /**
                  * Draw entitys
