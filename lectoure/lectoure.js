@@ -143,6 +143,14 @@ var App = function () {
                 }
               };
             }
+            // Add "special" results.
+            // We may add them there since they are the same each time
+            // the bureau comes up, so they will be rewritten each time
+            // but with the same value.
+            results[bureau].scores['ABSTENTION'] = parseInt(currentData.Abstentions);
+            results[bureau].scores['BLANC'] = parseInt(currentData.Blancs);
+            results[bureau].scores['NUL'] = parseInt(currentData.Nuls);
+            // Normal results.
             if (score > results[bureau].winner.score) {
               results[bureau].winner = {
                 parti: parti,
@@ -155,14 +163,6 @@ var App = function () {
               };
             }
             results[bureau].scores[parti] = score;
-          }
-          var total;
-          for (var r in results) {
-            total = 0;
-            for (var part in results[r].scores) {
-              total += results[r].scores[part];
-            }
-            results[r].total = total;
           }
 
           // Now add layer.
@@ -307,7 +307,6 @@ var App = function () {
             var j = 7;
             while (j < 27) {
               parti = currentData['FIELD'+j];
-              console.log(parti);
               // Transform parti.
               switch(parti) {
                 case 'HOLLANDE':
