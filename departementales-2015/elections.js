@@ -248,11 +248,16 @@ var App = function (dataset) {
             });
         }
 
-        var dataSourcesDeferred = [];
+        var layersControl = L.control.layers(null, null, {
+            position: 'topleft',
+            collapsed: false,
+            autoZIndex: false
+        }).addTo(_map);
 
         /**
          * Make each needed XHR query & store deferred object as array
          */
+        var dataSourcesDeferred = [];
         dataSources.forEach(function (dataSource, index, array) {
             dataSourcesDeferred.push($.getJSON(dataSource.url));
         });
@@ -284,7 +289,7 @@ var App = function (dataset) {
                         sources[index].geojson = data;
                         break;
                     case 'data':
-                        sources[index].results = _computeTotals(computeResults(data));
+                        sources[index].results = computeResults(data);
                         break;
                     default:
                         null;
@@ -300,6 +305,8 @@ var App = function (dataset) {
                 geojson = _getTargetedEntities(dataSources, dataSource.target);
                 layer   = _layerFromGeojson(geojson, _onEachFeature(legend, dataSource.results))
 
+                layersControl.addBaseLayer(layer, dataSource.name);
+
             } else if (dataSource.type === 'additional') {
 
                 layer = L.geoJson(dataSource.geojson, {
@@ -311,42 +318,27 @@ var App = function (dataset) {
                         weight: 2
                     }
                 });
+
+                layersControl.addOverlay(layer, dataSource.name);
+                _map.on('baselayerchange', function (e) {
+                    layer._map && layer.bringToFront();
+                });
             }
 
             layer && layer.addTo(_map);
 
             /**
              * TODO :
-             *     Data layer selector (L.control.layers)
-             *     "Stay on top" for additional layers
              *     Fitbound on current selected data
              */
 
 
-/*
-
+            /*
                     // Set the map view to fit layer
                     if (typeof departement !== 'undefined') {
                       _map.fitBounds(tour1Layer.getBounds());
                     }
-
-                    // Eventually add additional layer.
-                    if (currentOptions.additionalLayer) {
-                        _loadAdditionalLayer(currentOptions.additionalLayer);
-                    }
-
-                    // Handle layers.
-                    var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
-                    // Add the first layer to the layerSwitcher.
-                    layers.addBaseLayer(tour1Layer, '1er tour');
-                    // Remove tour1 so tour2 is automatically selected.
-                    _map.removeLayer(tour1Layer);
-                    // Add the layer to the layerSwitcher.
-                    layers.addBaseLayer(tour2Layer, '2ème tour');
-                    layers.addTo(_map);
-                    _map.fire('baselayerchange');
-
- */
+            */
 
         }
 
