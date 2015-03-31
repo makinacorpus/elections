@@ -194,10 +194,22 @@ var App = function (dataset) {
             };
             return ret;
         }
-        /**
-         * End
-         */
 
+        /**
+         * Return matching target/name dataSource or first if target is undefined
+         */
+        function _getTargetedEntities (sources, target) {
+            if (!sources) return;
+            var source;
+
+            // Select entities matching target name
+            for (var s in sources) {
+                source = sources[s];
+                if (source.type === 'entities' && (source.id === target || !target)) {
+                    return source.geojson;
+                }
+            }
+        }
 
         /**
          * Main data sources references
@@ -349,21 +361,6 @@ var App = function (dataset) {
             */
         }
 
-        /**
-         * Return matching target/name dataSource or first if target is undefined
-         */
-        function _getTargetedEntities (sources, target) {
-            if (!sources) return;
-            var source;
-
-            // Select entities matching target name
-            for (var s in sources) {
-                source = sources[s];
-                if (source.type === 'entities' && (source.id === target || !target)) {
-                    return source.geojson;
-                }
-            }
-        }
 
         // Optionnal logo
         if (dataset && dataset.logo) {
