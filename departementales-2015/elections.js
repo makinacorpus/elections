@@ -233,6 +233,7 @@ var App = function (dataset) {
 
         /**
          * Layers visibility controler
+         * (initialized without any base layer or overlay)
          */
         var layersControl = L.control.layers(null, null, {
             position: 'topleft',
@@ -248,18 +249,32 @@ var App = function (dataset) {
             dataSourcesDeferred.push($.getJSON(dataSource.url));
         });
 
-        // Use "apply" call to be able to provide an array as multiple parameters
+        /**
+         * Ajax queries achievement control
+         * Wait for every 'getJSON' to be done, then...
+         * (Use "apply" call to be able to provide an array as multiple parameters)
+         */
         $.when.apply(null, dataSourcesDeferred).done(_jsonReceived);
 
+        /**
+         * When every getJSON are done...
+         */
         function _jsonReceived () {
-            // arguments consists of an array of arrays. Each one contains [data, status, jqxhr] for one ajax reply
+            /**
+             * 'arguments' consists of an array of arrays.
+             * Each one contains [data, status, jqxhr] for one ajax reply
+             */
             dataSources = _parseResults(dataSources, arguments);
 
-            // Build displays
+            /**
+             * Build displays
+             */
             dataSources.forEach(_eachParsedSource);
         }
 
-        // Store any received data into main dataSources objects
+        /**
+         * Store any received data into main dataSources objects
+         */
         function _parseResults (sources, args) {
             // arguments do not implement forEAch method, so calling it from Array prototype
             [].forEach.call(args, function (reply, index) {
@@ -284,6 +299,10 @@ var App = function (dataset) {
             return sources;
         }
 
+        /**
+         * Create each layer
+         * and add it to map object
+         */
         function _eachParsedSource (dataSource) {
             var layer, geojson;
             if (dataSource.type === 'data') {
@@ -328,10 +347,11 @@ var App = function (dataset) {
                       _map.fitBounds(tour1Layer.getBounds());
                     }
             */
-
         }
 
-        // Return matching target/name dataSource or forst if target is undefined
+        /**
+         * Return matching target/name dataSource or first if target is undefined
+         */
         function _getTargetedEntities (sources, target) {
             if (!sources) return;
             var source;
