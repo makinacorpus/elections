@@ -194,24 +194,6 @@ var App = function (dataset) {
             };
             return ret;
         }
-        function _loadAdditionalLayer (jsonURL) {
-            $.getJSON(jsonURL, function(additionalData) {
-                var additionalLayer = L.geoJson(additionalData, {
-                    style: {
-                        clickable: false,
-                        color: '#291333',
-                        opacity: 1,
-                        fillOpacity: 0,
-                        weight: 2
-                    }
-                });
-                additionalLayer.addTo(_map);
-
-                _map.on('baselayerchange', function(e) {
-                    additionalLayer.bringToFront();
-                });
-            });
-        }
         /**
          * End
          */
