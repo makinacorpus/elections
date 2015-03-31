@@ -225,7 +225,7 @@ var App = function (dataset) {
             {
                 url:    currentOptions.entityFile,
                 type:   'entities',
-                name:   'dpt'
+                id:     'dpt'
             },
             {
                 url:    currentOptions.resultFile,
@@ -358,7 +358,7 @@ var App = function (dataset) {
             // Select entities matching target name
             for (var s in sources) {
                 source = sources[s];
-                if (source.type === 'entities' && (source.name === target || !target)) {
+                if (source.type === 'entities' && (source.id === target || !target)) {
                     return source.geojson;
                 }
             }
