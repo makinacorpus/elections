@@ -230,6 +230,27 @@ var App = function (dataset) {
             }
         }
 
+        function _buildOverall (scores) {
+            // Build overall bar-graph
+            var overall, sortedScores = [], total = 0;
+            for (var parti in scores) {
+                total += scores[parti];
+                sortedScores.push({ value: scores[parti], name: parti });
+            }
+            sortedScores.sort(function (a, b) {
+                return b.value - a.value;
+            });
+            overall           = document.createElement('ul');
+            overall.className = 'overall';
+            sortedScores.forEach(function (element) {
+                var li         = document.createElement('li');
+                li.className   = element.name.toLowerCase();
+                li.style.width = (element.value * 100 / total) + '%';
+                overall.appendChild(li);
+            });
+            return overall.outerHTML;
+        }
+
         /**
          * Main data sources references
          * TODO: Use an external datasource for each usecase
@@ -414,7 +435,6 @@ var App = function (dataset) {
         };
 
         legend.update = function (entityId, currentResults) {
-            console.log(entityId);
             var html = currentOptions.legendTitle;
             if (entityId && currentResults[entityId]) {
                 var total          = 0;
@@ -440,25 +460,9 @@ var App = function (dataset) {
                     return b.score - a.score;
                 });
 
-                // Build overall bar-graph
-                var sortedScores = [];
-                for (var parti in scores) {
-                    sortedScores.push({ value: scores[parti], name: parti });
-                }
-                sortedScores.sort(function (a, b) {
-                    return b.value - a.value;
-                });
                 html += '<p>' + currentOptions.entityName + ' ' + currentResults[entityId].name + '</p>';
-                var overall       = document.createElement('ul');
-                overall.className = 'overall';
-                sortedScores.forEach(function (element) {
-                    var li = document.createElement('li');
-                    li.className = element.name.toLowerCase();
-                    li.style.width = (element.value * 100 / total) + '%';
-                    overall.appendChild(li);
-                });
 
-                html += overall.outerHTML;
+                html += _buildOverall(scores);
 
                 html += '<ul>';
                 for (var parti in scores) {
