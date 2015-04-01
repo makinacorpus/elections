@@ -347,6 +347,7 @@ var App = function (dataset) {
                         break;
                     case 'data':
                         sources[index].results = computeResults(data);
+                        sources[index].results = _addEachTotals(sources[index].results);
                         break;
                     default:
                         null;
@@ -405,6 +406,52 @@ var App = function (dataset) {
                       _map.fitBounds(tour1Layer.getBounds());
                     }
             */
+        }
+
+        function _isParti (parti) {
+            return (parti !== "ABSTENTION" && parti !== "NUL" && parti !== "BLANC");
+        }
+
+        function _addTotals (result) {
+
+            var electeurs = 0;
+            var exprimes  = {
+                total: {
+                    voix: 0,
+                    '%': null
+                }
+            };
+
+            var value;
+            for (var parti in result.scores) {
+                value               = parseInt(result.scores[parti], 10) || 0;
+                electeurs           += value;
+                exprimes.total.voix += _isParti(parti) ? value : 0;
+            }
+            exprimes.total['%'] = 100 * exprimes.total.voix / electeurs;
+
+            for (var parti in result.scores) {
+                value               = parseInt(result.scores[parti], 10) || 0;
+                if (_isParti(parti)) {
+                    exprimes[parti] = {
+                        voix: value,
+                        '%': 100 * value / exprimes.total.voix
+                    };
+                }
+            }
+
+            result.exprimes  = exprimes;
+            result.electeurs = electeurs;
+            return result;
+        }
+
+        function _addEachTotals (resultsSet) {
+
+            for (var entityId in resultsSet) {
+                resultsSet[entityId] = _addTotals(resultsSet[entityId]);
+            }
+            console.log(resultsSet['01']);
+            return resultsSet;
         }
 
 
