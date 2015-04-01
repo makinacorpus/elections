@@ -121,7 +121,10 @@ var App = function (dataset) {
         /**
          * Factorized methods
          */
+
         function _resetHighlight (e) {
+            // Dependencies: none
+
             var layer = e.target;
             var w     = (layer.feature.geometry.type === 'MultiLineString') ? 4 : 1;
 
@@ -130,7 +133,10 @@ var App = function (dataset) {
                 fillOpacity: 0.8
             });
         }
+
         function _layerFromGeojson (geojson, onEach) {
+            // Dependencies: L
+
             return L.geoJson(geojson, {
                 onEachFeature: onEach,
                 pointToLayer: function (feature, latlng) {
@@ -138,12 +144,17 @@ var App = function (dataset) {
                 }
             });
         }
+
         function _layerClick (e) {
+            // Dependencies: getReulstId(), currentOptions, window
+
             var id     = getResultId(e.target.feature);
             var target = currentOptions.link.replace('feature', id);
             window.open(target, "_blank");
         }
+
         function _highlightFeature (legend, resultsSet) {
+            // Dependencies: none
             var ret = function (e) {
                 var layer = e.target;
                 var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
@@ -155,7 +166,10 @@ var App = function (dataset) {
             };
             return ret;
         }
+
         function _featureStyle (resultsSet, feature) {
+            // Dependencies: colors, currentOptions
+
             var entity  = resultsSet[getResultId(feature)];
             var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
             var opacity = 0.8;
@@ -176,7 +190,10 @@ var App = function (dataset) {
             }
             return style;
         }
+
         function _onEachFeature (legend, resultsSet) {
+            // Dependencies: _featureStyle
+
             var ret = function (feature, layer) {
 
                 // Set shape styles
@@ -199,6 +216,8 @@ var App = function (dataset) {
          * Return matching target/name dataSource or first if target is undefined
          */
         function _getTargetedEntities (sources, target) {
+            // Dependencies: none
+
             if (!sources) return;
             var source;
 
@@ -272,6 +291,8 @@ var App = function (dataset) {
          * When every getJSON are done...
          */
         function _jsonReceived () {
+            // Dependencies: dataSources, _parseResults(), _eachParsedSource()
+
             /**
              * 'arguments' consists of an array of arrays.
              * Each one contains [data, status, jqxhr] for one ajax reply
@@ -288,6 +309,8 @@ var App = function (dataset) {
          * Store any received data into main dataSources objects
          */
         function _parseResults (sources, args) {
+            // Dependencies: computeResults()
+
             // arguments do not implement forEAch method, so calling it from Array prototype
             [].forEach.call(args, function (reply, index) {
                 var data     = reply[0];
@@ -316,6 +339,8 @@ var App = function (dataset) {
          * and add it to map object
          */
         function _eachParsedSource (dataSource) {
+            // Dependencies: _getTargetedEntities(), _layerFromGeojson(), _onEachFeature(), dataSources, legend, layersControl, _map
+
             var layer, geojson;
             if (dataSource.type === 'data') {
 
