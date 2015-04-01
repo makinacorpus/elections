@@ -434,16 +434,16 @@ var App = function (dataset) {
             return this._div;
         };
 
-        legend.update = function (entityId, currentResults) {
+        legend.update = function (entityId, resultsSet) {
             var html = currentOptions.legendTitle;
-            if (entityId && currentResults[entityId]) {
+            if (entityId && resultsSet[entityId]) {
                 var total          = 0;
                 var total_exprimes = 0;
                 var votes_exprimes = [];
-                var scores         = currentResults[entityId].scores;
+                var scores         = resultsSet[entityId].scores;
                 var elus           = [];
-                if (currentResults[entityId].elus) {
-                  elus           = currentResults[entityId].elus;
+                if (resultsSet[entityId].elus) {
+                  elus           = resultsSet[entityId].elus;
                 }
                 for (var parti in scores) {
                     if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
@@ -460,7 +460,7 @@ var App = function (dataset) {
                     return b.score - a.score;
                 });
 
-                html += '<p>' + currentOptions.entityName + ' ' + currentResults[entityId].name + '</p>';
+                html += '<p>' + currentOptions.entityName + ' ' + resultsSet[entityId].name + '</p>';
 
                 html += _buildOverall(scores);
 
@@ -479,7 +479,7 @@ var App = function (dataset) {
 
                 votes_exprimes.forEach(function(vote){
                     var label_parti = vote.parti;
-                    var isWinner    = (vote.score === currentResults[entityId].winner.score);
+                    var isWinner    = (vote.score === resultsSet[entityId].winner.score);
                     html += '<li>';
                     html += isWinner ? '<strong>' : '';
                     var nbElus = '';
