@@ -413,16 +413,17 @@ var App = function (dataset) {
             return this._div;
         };
 
-        legend.update = function (entity, currentResults) {
+        legend.update = function (entityId, currentResults) {
+            console.log(entityId);
             var html = currentOptions.legendTitle;
-            if (entity && currentResults[entity]) {
+            if (entityId && currentResults[entityId]) {
                 var total          = 0;
                 var total_exprimes = 0;
                 var votes_exprimes = [];
-                var scores         = currentResults[entity].scores;
+                var scores         = currentResults[entityId].scores;
                 var elus           = [];
-                if (currentResults[entity].elus) {
-                  elus           = currentResults[entity].elus;
+                if (currentResults[entityId].elus) {
+                  elus           = currentResults[entityId].elus;
                 }
                 for (var parti in scores) {
                     if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
@@ -447,7 +448,7 @@ var App = function (dataset) {
                 sortedScores.sort(function (a, b) {
                     return b.value - a.value;
                 });
-                html += '<p>' + currentOptions.entityName + ' ' + currentResults[entity].name + '</p>';
+                html += '<p>' + currentOptions.entityName + ' ' + currentResults[entityId].name + '</p>';
                 var overall       = document.createElement('ul');
                 overall.className = 'overall';
                 sortedScores.forEach(function (element) {
@@ -474,7 +475,7 @@ var App = function (dataset) {
 
                 votes_exprimes.forEach(function(vote){
                     var label_parti = vote.parti;
-                    var isWinner    = (vote.score === currentResults[entity].winner.score);
+                    var isWinner    = (vote.score === currentResults[entityId].winner.score);
                     html += '<li>';
                     html += isWinner ? '<strong>' : '';
                     var nbElus = '';
