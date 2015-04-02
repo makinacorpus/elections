@@ -449,7 +449,6 @@ var App = function (dataset) {
             for (var entityId in resultsSet) {
                 resultsSet[entityId] = _addTotals(resultsSet[entityId]);
             }
-            console.log(resultsSet['01']);
             return resultsSet;
         }
 
