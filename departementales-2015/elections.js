@@ -418,7 +418,7 @@ var App = function (dataset) {
              *     Fitbound on current selected data
              */
              // Set the map view to fit layer
-             if (!!layer && dataSource.fit === true) {
+             if (!!layer && dataSource.fit === true && options.fitBounds !== false) {
                  _map.fitBounds(layer.getBounds());
              }
         }
