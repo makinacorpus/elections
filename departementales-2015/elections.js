@@ -251,6 +251,16 @@ var App = function (dataset) {
             return overall.outerHTML;
         }
 
+        function _validate (sources) {
+            var validated = []
+            sources.forEach(function (source, index) {
+                if (!source.url)  return;
+                if (!source.type) return;
+                validated.push(source);
+            });
+            return validated;
+        }
+
         /**
          * Main data sources references
          * TODO: Use an external datasource for each usecase
@@ -284,6 +294,11 @@ var App = function (dataset) {
                 inControls : false
             });
         }
+
+        /**
+         * Avoid invalid dataSource
+         */
+        dataSources = _validate(dataSources);
 
         /**
          * Layers visibility controler
