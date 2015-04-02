@@ -300,7 +300,9 @@ var App = function (dataset) {
          */
         var dataSourcesDeferred = [];
         dataSources.forEach(function (dataSource, index, array) {
-            dataSourcesDeferred.push($.getJSON(dataSource.url));
+            if (dataSource.url) {
+                dataSourcesDeferred.push($.getJSON(dataSource.url));
+            }
         });
 
         /**
