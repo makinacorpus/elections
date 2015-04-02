@@ -326,7 +326,7 @@ var App = function (dataset) {
          * Wait for every 'getJSON' to be done, then...
          * (Use "apply" call to be able to provide an array as multiple parameters)
          */
-        $.when.apply(null, dataSourcesDeferred).done(_jsonReceived);
+        $.when.apply(null, dataSourcesDeferred).then(_jsonReceived);
 
         /**
          * When every getJSON are done...
