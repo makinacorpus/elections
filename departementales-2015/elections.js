@@ -266,7 +266,7 @@ var App = function (dataset) {
          * Main data sources references
          * TODO: Use an external datasource for each usecase
          */
-        var dataSources = [
+        var dataSources = dataSources || [
             {
                 url:    currentOptions.entityFile,
                 type:   'entities',
