@@ -121,7 +121,10 @@ var App = function (dataset) {
         /**
          * Factorized methods
          */
+
         function _resetHighlight (e) {
+            // Dependencies: none
+
             var layer = e.target;
             var w     = (layer.feature.geometry.type === 'MultiLineString') ? 4 : 1;
 
@@ -130,7 +133,10 @@ var App = function (dataset) {
                 fillOpacity: 0.8
             });
         }
+
         function _layerFromGeojson (geojson, onEach) {
+            // Dependencies: L
+
             return L.geoJson(geojson, {
                 onEachFeature: onEach,
                 pointToLayer: function (feature, latlng) {
@@ -138,12 +144,17 @@ var App = function (dataset) {
                 }
             });
         }
+
         function _layerClick (e) {
+            // Dependencies: getReulstId(), currentOptions, window
+
             var id     = getResultId(e.target.feature);
             var target = currentOptions.link.replace('feature', id);
             window.open(target, "_blank");
         }
+
         function _highlightFeature (legend, resultsSet) {
+            // Dependencies: none
             var ret = function (e) {
                 var layer = e.target;
                 var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
@@ -155,7 +166,10 @@ var App = function (dataset) {
             };
             return ret;
         }
+
         function _featureStyle (resultsSet, feature) {
+            // Dependencies: colors, currentOptions
+
             var entity  = resultsSet[getResultId(feature)];
             var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
             var opacity = 0.8;
@@ -176,7 +190,10 @@ var App = function (dataset) {
             }
             return style;
         }
+
         function _onEachFeature (legend, resultsSet) {
+            // Dependencies: _featureStyle
+
             var ret = function (feature, layer) {
 
                 // Set shape styles
@@ -194,9 +211,169 @@ var App = function (dataset) {
             };
             return ret;
         }
-        function _loadAdditionalLayer (jsonURL) {
-            $.getJSON(jsonURL, function(additionalData) {
-                var additionalLayer = L.geoJson(additionalData, {
+
+        /**
+         * Return matching target/name dataSource or first if target is undefined
+         */
+        function _getTargetedEntities (sources, target) {
+            // Dependencies: none
+
+            if (!sources) return;
+            var source;
+
+            // Select entities matching target name
+            for (var s in sources) {
+                source = sources[s];
+                if (source.type === 'entities' && (source.id === target || !target)) {
+                    return source.geojson;
+                }
+            }
+        }
+
+        function _buildOverall (scores) {
+            // Build overall bar-graph
+            var overall, sortedScores = [], total = 0;
+            for (var parti in scores) {
+                total += scores[parti];
+                sortedScores.push({ value: scores[parti], name: parti });
+            }
+            sortedScores.sort(function (a, b) {
+                return b.value - a.value;
+            });
+            overall           = document.createElement('ul');
+            overall.className = 'overall';
+            sortedScores.forEach(function (element) {
+                var li         = document.createElement('li');
+                li.className   = element.name.toLowerCase();
+                li.style.width = (element.value * 100 / total) + '%';
+                overall.appendChild(li);
+            });
+            return overall.outerHTML;
+        }
+
+        /**
+         * Main data sources references
+         * TODO: Use an external datasource for each usecase
+         */
+        var dataSources = [
+            {
+                url:    currentOptions.entityFile,
+                type:   'entities',
+                id:     'dpt'
+            },
+            {
+                url:    currentOptions.resultFile,
+                type:   'data',
+                name:   '1er tour',
+                target: 'dpt'
+            },
+            {
+                url:    currentOptions.resultFileTour2,
+                type:   'data',
+                name:   '2ème tour',
+                target: 'dpt'
+            }
+        ];
+        if (currentOptions.additionalLayer) {
+            dataSources.push({
+                url: currentOptions.additionalLayer,
+                type: 'additional',
+                name: 'regions',
+                inControls : false
+            });
+        }
+
+        /**
+         * Layers visibility controler
+         * (initialized without any base layer or overlay)
+         */
+        var layersControl = L.control.layers(null, null, {
+            position: 'topleft',
+            collapsed: false,
+            autoZIndex: false
+        }).addTo(_map);
+
+        /**
+         * Make each needed XHR query & store deferred object as array
+         */
+        var dataSourcesDeferred = [];
+        dataSources.forEach(function (dataSource, index, array) {
+            dataSourcesDeferred.push($.getJSON(dataSource.url));
+        });
+
+        /**
+         * Ajax queries achievement control
+         * Wait for every 'getJSON' to be done, then...
+         * (Use "apply" call to be able to provide an array as multiple parameters)
+         */
+        $.when.apply(null, dataSourcesDeferred).done(_jsonReceived);
+
+        /**
+         * When every getJSON are done...
+         */
+        function _jsonReceived () {
+            // Dependencies: dataSources, _parseResults(), _eachParsedSource()
+
+            /**
+             * 'arguments' consists of an array of arrays.
+             * Each one contains [data, status, jqxhr] for one ajax reply
+             */
+            dataSources = _parseResults(dataSources, arguments);
+
+            /**
+             * Build displays
+             */
+            dataSources.forEach(_eachParsedSource);
+        }
+
+        /**
+         * Store any received data into main dataSources objects
+         */
+        function _parseResults (sources, args) {
+            // Dependencies: computeResults()
+
+            // arguments do not implement forEAch method, so calling it from Array prototype
+            [].forEach.call(args, function (reply, index) {
+                var data     = reply[0];
+                var status   = reply[1];
+                var jqxhr    = reply[2];
+
+                // According to each dataType, make suitable transforms
+                var jsonType = sources[index].type;
+                switch (jsonType) {
+                    case 'entities':
+                    case 'additional':
+                        sources[index].geojson = data;
+                        break;
+                    case 'data':
+                        sources[index].results = computeResults(data);
+                        sources[index].results = _addEachTotals(sources[index].results);
+                        break;
+                    default:
+                        null;
+                }
+            });
+            return sources;
+        }
+
+        /**
+         * Create each layer
+         * and add it to map object
+         */
+        function _eachParsedSource (dataSource) {
+            // Dependencies: _getTargetedEntities(), _layerFromGeojson(), _onEachFeature(), dataSources, legend, layersControl, _map
+
+            var layer, geojson;
+            if (dataSource.type === 'data') {
+
+                geojson = _getTargetedEntities(dataSources, dataSource.target);
+                layer   = _layerFromGeojson(geojson, _onEachFeature(legend, dataSource.results))
+
+                layersControl.addBaseLayer(layer, dataSource.name);
+
+            } else if (dataSource.type === 'additional') {
+
+                layer = L.geoJson(dataSource.geojson, {
                     style: {
                         clickable: false,
                         color: '#291333',
@@ -205,72 +382,78 @@ var App = function (dataset) {
                         weight: 2
                     }
                 });
-                additionalLayer.addTo(_map);
 
-                _map.on('baselayerchange', function(e) {
-                    additionalLayer.bringToFront();
+                if (dataSource.inControls) {
+                    layersControl.addOverlay(layer, dataSource.name);
+                }
+
+                _map.on('baselayerchange', function (e) {
+                    layer._map && layer.bringToFront();
                 });
-            });
-        }
-        /**
-         * End
-         */
+            }
 
-
-        // So layers can be accessed from one another.
-        var tour1Layer, tour2Layer;
-
-        // Read result from json
-        var results         = {};
-        var results2        = {};
-        $.getJSON(currentOptions.resultFile, function (data) {
-            results = computeResults(data);
+            layer && layer.addTo(_map);
 
             /**
-             * Draw entitys
+             * TODO :
+             *     Fitbound on current selected data
              */
-            $.getJSON(currentOptions.entityFile, function(geojson) {
 
-                // Attach geojson layer to map
-                tour1Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results));
-                tour1Layer.addTo(_map);
 
-                // Set the map view to fit layer
-                if (typeof departement !== 'undefined') {
-                  _map.fitBounds(tour1Layer.getBounds());
+            /*
+                    // Set the map view to fit layer
+                    if (typeof departement !== 'undefined') {
+                      _map.fitBounds(tour1Layer.getBounds());
+                    }
+            */
+        }
+
+        function _isParti (parti) {
+            return (parti !== "ABSTENTION" && parti !== "NUL" && parti !== "BLANC");
+        }
+
+        function _addTotals (result) {
+
+            var electeurs = 0;
+            var exprimes  = {
+                total: {
+                    voix: 0,
+                    '%': null
                 }
+            };
 
-                // Eventually add additional layer.
-                if (currentOptions.additionalLayer) {
-                    _loadAdditionalLayer(currentOptions.additionalLayer);
+            var value;
+            for (var parti in result.scores) {
+                value               = parseInt(result.scores[parti], 10) || 0;
+                electeurs           += value;
+                exprimes.total.voix += _isParti(parti) ? value : 0;
+            }
+            exprimes.total['%'] = 100 * exprimes.total.voix / electeurs;
+
+            for (var parti in result.scores) {
+                value               = parseInt(result.scores[parti], 10) || 0;
+                if (_isParti(parti)) {
+                    exprimes[parti] = {
+                        voix: value,
+                        '%': 100 * value / exprimes.total.voix
+                    };
                 }
-            });
+            }
 
-            $.getJSON(currentOptions.resultFileTour2, function (data) {
-                results2 = computeResults(data);
+            result.exprimes  = exprimes;
+            result.electeurs = electeurs;
+            return result;
+        }
 
-                /**
-                 * Draw entitys
-                 */
-                $.getJSON(currentOptions.entityFile, function(geojson) {
+        function _addEachTotals (resultsSet) {
 
-                    // Attach geojson layer to map
-                    tour2Layer = _layerFromGeojson(geojson, _onEachFeature(legend, results2));
-                    tour2Layer.addTo(_map);
+            for (var entityId in resultsSet) {
+                resultsSet[entityId] = _addTotals(resultsSet[entityId]);
+            }
+            console.log(resultsSet['01']);
+            return resultsSet;
+        }
 
-                    // Handle layers.
-                    var layers = L.control.layers(null, null, {collapsed: false, position: 'topleft'});
-                    // Add the first layer to the layerSwitcher.
-                    layers.addBaseLayer(tour1Layer, '1er tour');
-                    // Remove tour1 so tour2 is automatically selected.
-                    _map.removeLayer(tour1Layer);
-                    // Add the layer to the layerSwitcher.
-                    layers.addBaseLayer(tour2Layer, '2ème tour');
-                    layers.addTo(_map);
-                    _map.fire('baselayerchange');
-                });
-            });
-        });
 
         // Optionnal logo
         if (dataset && dataset.logo) {
@@ -298,16 +481,16 @@ var App = function (dataset) {
             return this._div;
         };
 
-        legend.update = function (entity, currentResults) {
+        legend.update = function (entityId, resultsSet) {
             var html = currentOptions.legendTitle;
-            if (entity && currentResults[entity]) {
+            if (entityId && resultsSet[entityId]) {
                 var total          = 0;
                 var total_exprimes = 0;
                 var votes_exprimes = [];
-                var scores         = currentResults[entity].scores;
+                var scores         = resultsSet[entityId].scores;
                 var elus           = [];
-                if (currentResults[entity].elus) {
-                  elus           = currentResults[entity].elus;
+                if (resultsSet[entityId].elus) {
+                  elus           = resultsSet[entityId].elus;
                 }
                 for (var parti in scores) {
                     if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
@@ -324,25 +507,9 @@ var App = function (dataset) {
                     return b.score - a.score;
                 });
 
-                // Build overall bar-graph
-                var sortedScores = [];
-                for (var parti in scores) {
-                    sortedScores.push({ value: scores[parti], name: parti });
-                }
-                sortedScores.sort(function (a, b) {
-                    return b.value - a.value;
-                });
-                html += '<p>' + currentOptions.entityName + ' ' + currentResults[entity].name + '</p>';
-                var overall       = document.createElement('ul');
-                overall.className = 'overall';
-                sortedScores.forEach(function (element) {
-                    var li = document.createElement('li');
-                    li.className = element.name.toLowerCase();
-                    li.style.width = (element.value * 100 / total) + '%';
-                    overall.appendChild(li);
-                });
+                html += '<p>' + currentOptions.entityName + ' ' + resultsSet[entityId].name + '</p>';
 
-                html += overall.outerHTML;
+                html += _buildOverall(scores);
 
                 html += '<ul>';
                 for (var parti in scores) {
@@ -359,7 +526,7 @@ var App = function (dataset) {
 
                 votes_exprimes.forEach(function(vote){
                     var label_parti = vote.parti;
-                    var isWinner    = (vote.score === currentResults[entity].winner.score);
+                    var isWinner    = (vote.score === resultsSet[entityId].winner.score);
                     html += '<li>';
                     html += isWinner ? '<strong>' : '';
                     var nbElus = '';
