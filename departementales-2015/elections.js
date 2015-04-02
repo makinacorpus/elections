@@ -265,13 +265,15 @@ var App = function (dataset) {
                 url:    currentOptions.resultFile,
                 type:   'data',
                 name:   '1er tour',
-                target: 'dpt'
+                target: 'dpt',
+                fit:    true,
             },
             {
                 url:    currentOptions.resultFileTour2,
                 type:   'data',
                 name:   '2ème tour',
-                target: 'dpt'
+                target: 'dpt',
+                fit:    true,
             }
         ];
         if (currentOptions.additionalLayer) {
@@ -393,19 +395,14 @@ var App = function (dataset) {
             }
 
             layer && layer.addTo(_map);
-
             /**
              * TODO :
              *     Fitbound on current selected data
              */
-
-
-            /*
-                    // Set the map view to fit layer
-                    if (typeof departement !== 'undefined') {
-                      _map.fitBounds(tour1Layer.getBounds());
-                    }
-            */
+             // Set the map view to fit layer
+             if (!!layer && dataSource.fit === true) {
+                 _map.fitBounds(layer.getBounds());
+             }
         }
 
         function _isParti (parti) {
