@@ -1,4 +1,5 @@
 var App = function (dataset) {
+    "use strict";
 
     var departement, pymChild, zoomOnScroll = true;
 
