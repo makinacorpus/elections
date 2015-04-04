@@ -49,7 +49,6 @@ var App = function (dataset) {
         "DIV":"#F0F0F0",
         "DIV2":"#F0F0F0",
         "DLF":"#CCC",
-        // "UC":"#74C2C3",
         "UD":"#ADC1FD",
         "UG":"#FFC0C0",
         "egal":"#fff",
