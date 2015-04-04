@@ -137,16 +137,28 @@ var App = function (dataset) {
         function _layerFromGeojson (geojson, onEach) {
             // Dependencies: L
 
-            return L.geoJson(geojson, {
+            // Check for type of geojson.
+            if (geojson.type && geojson.type === 'Topology') {
+              var _tempLayer = L.geoJson(null, {
                 onEachFeature: onEach,
                 pointToLayer: function (feature, latlng) {
-                    return L.circleMarker(latlng);
+                  return L.circleMarker(latlng);
                 }
-            });
+              });
+              return omnivore.topojson(geojson, null, _tempLayer);
+            } else {
+              // Type == FeatureCollection.
+              return L.geoJson(geojson, {
+                onEachFeature: onEach,
+                pointToLayer: function (feature, latlng) {
+                  return L.circleMarker(latlng);
+                }
+              });
+            }
         }
 
         function _layerClick (e) {
-            // Dependencies: getReulstId(), currentOptions, window
+            // Dependencies: getResultId(), currentOptions, window
 
             var id     = getResultId(e.target.feature);
             var target = currentOptions.link.replace('feature', id);
