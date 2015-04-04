@@ -407,7 +407,7 @@ var App = function (dataset) {
                 layer = L.geoJson(dataSource.geojson, {
                     style: {
                         clickable: false,
-                        color: '#291333',
+                        color: currentOptions.additionalColor || '#291333',
                         opacity: 1,
                         fillOpacity: 0,
                         weight: 2

@@ -16,7 +16,8 @@ var options = {
   legendHelp: 'Survolez un bureau de vote pour plus de détails. Les bureaux de votes en blanc indiquent un candidat élu au premier tour.',
   displayNames: false,
   // Additionnal layer ?
-  additionalLayer: 'data/cantons/cantons_49_angers_1_a7.geojson'
+  additionalLayer: 'data/cantons/cantons_49_angers_1_a7.geojson',
+  additionalColor: '#FFF'
 };
 
 
