@@ -320,7 +320,7 @@ var App = function (dataset) {
             position: 'topleft',
             collapsed: false,
             autoZIndex: false
-        }).addTo(_map);
+        });
         var layersGroup = L.layerGroup();
 
         /**
@@ -356,6 +356,11 @@ var App = function (dataset) {
              * Build displays
              */
             dataSources.forEach(_eachParsedSource);
+
+            // Only display layersControl if there is more than one.
+            if (layersGroup.getLayers().length > 1) {
+              layersControl.addTo(_map);
+            }
         }
 
         /**
