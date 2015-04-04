@@ -321,6 +321,7 @@ var App = function (dataset) {
             collapsed: false,
             autoZIndex: false
         }).addTo(_map);
+        var layersGroup = L.layerGroup();
 
         /**
          * Make each needed XHR query & store deferred object as array
@@ -399,8 +400,13 @@ var App = function (dataset) {
 
                 geojson = _getTargetedEntities(dataSources, dataSource.target);
                 layer   = _layerFromGeojson(geojson, _onEachFeature(legend, dataSource.results))
+                layersGroup.addLayer(layer);
 
+                // Remove other base layers from _map.
                 layersControl.addBaseLayer(layer, dataSource.name);
+                layersGroup.eachLayer(function (_tempLayer) {
+                  _map.removeLayer(_tempLayer);
+                });
 
             } else if (dataSource.type === 'additional') {
 
