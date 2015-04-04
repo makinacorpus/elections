@@ -177,6 +177,9 @@ html, body {
   bottom: 0;
   max-height: 50px;
 }
+.candidats-names {
+  font-size: .8em;
+}
 
 .leaflet-bar a.leaflet-control-touchhover-toggled {
   background: #888;

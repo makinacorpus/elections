@@ -14,6 +14,7 @@ var options = {
   legendTitle: '<h3>Résultats par bureau de vote</h3><p>',
   entityName: 'Bureau de vote :',
   legendHelp: 'Survolez un bureau de vote pour plus de détails. Les bureaux de votes en blanc indiquent un candidat élu au premier tour.',
+  displayNames: false,
   // Additionnal layer ?
   additionalLayer: 'data/cantons/cantons_49_angers_1_a7.geojson'
 };
@@ -46,6 +47,7 @@ function computeResults(data) {
     results[resultId] = {
       name: entityName,
       scores: {},
+      names: {},
       winner: {
         parti: 'NUL',
         score: 0
@@ -58,6 +60,7 @@ function computeResults(data) {
     var j = 11;
     while (j < 34) {
       parti       = currentData['FIELD'+(j+1)];
+      name        = currentData['FIELD'+j];
       if (parti === "") {
         break;
       } else {
@@ -75,6 +78,7 @@ function computeResults(data) {
           };
         }
         results[resultId].scores[parti] = score;
+        results[resultId].names[parti] = name;
       }
       // Iterate.
       j += 4;

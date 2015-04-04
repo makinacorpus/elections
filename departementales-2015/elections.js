@@ -514,8 +514,12 @@ var App = function (dataset) {
                 var votes_exprimes = [];
                 var scores         = resultsSet[entityId].scores;
                 var elus           = [];
+                var names          = [];
                 if (resultsSet[entityId].elus) {
                   elus           = resultsSet[entityId].elus;
+                }
+                if (currentOptions.displayNames && currentOptions.displayNames === true) {
+                  names          = resultsSet[entityId].names;
                 }
                 for (var parti in scores) {
                     if (parti != "ABSTENTION" && parti != "NUL" && parti != "BLANC") {
@@ -561,6 +565,9 @@ var App = function (dataset) {
                         nbElus += 's';
                       }
                       nbElus += ')';
+                    }
+                    if (names[label_parti]) {
+                      html += '<span class="candidats-names">' + names[label_parti] + '</span><br />';
                     }
                     html += label_parti + ' ' + vote.ratio + '% (' + vote.score + ' voix)' + nbElus + '</li>';
                     html += isWinner ? '</strong>' : '';
