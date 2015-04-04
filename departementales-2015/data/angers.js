@@ -42,7 +42,7 @@ function computeResults(data) {
     if(entityId === ''){
       continue;
     }
-    entityName  = currentData.FIELD4;
+    entityName  = currentData.FIELD3 + ' - ' + currentData.FIELD4;
     resultId    = entityId;
     // Init.
     results[resultId] = {
