@@ -130,7 +130,7 @@ var App = function (dataset) {
 
             layer.setStyle({
                 weight: w,
-                fillOpacity: 0.8
+                fillOpacity: 0.4
             });
         }
 
@@ -172,7 +172,7 @@ var App = function (dataset) {
                 var w     = (layer.feature.geometry.type === 'MultiLineString') ? 8 : 4;
                 layer.setStyle({
                     weight: w,
-                    fillOpacity: 1
+                    fillOpacity: 0.7
                 });
                 legend.update(getBorderId(layer), resultsSet);
             };
@@ -184,7 +184,7 @@ var App = function (dataset) {
 
             var entity  = resultsSet[getResultId(feature)];
             var color   = entity ? colors[entity.winner.parti] : currentOptions.neutralColor;
-            var opacity = 0.8;
+            var opacity = 0.4;
             var style;
             if (feature.geometry.type === 'MultiLineString') {
                 style = {
