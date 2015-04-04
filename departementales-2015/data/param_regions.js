@@ -14,7 +14,6 @@ var options = {
   neutralColor: '#AAAAAA',
   // Legend options
   legendTitle: '<h3>Résultats par région</h3>',
-  entityName: 'Région :',
   legendHelp: 'Survolez une région pour plus de détails.',
   // Additionnal layer ?
   // additionalLayer:

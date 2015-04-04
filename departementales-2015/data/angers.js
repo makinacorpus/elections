@@ -12,7 +12,6 @@ var options = {
   neutralColor: '#FFFFFF',
   // Legend options
   legendTitle: '<h3>Résultats par bureau de vote</h3><p>',
-  entityName: 'Bureau de vote :',
   legendHelp: 'Survolez un bureau de vote pour plus de détails. Les bureaux de votes en blanc indiquent un candidat élu au premier tour.',
   displayNames: false,
   // Additionnal layer ?
@@ -42,7 +41,7 @@ function computeResults(data) {
     if(entityId === ''){
       continue;
     }
-    entityName  = currentData.FIELD3 + ' - ' + currentData.FIELD4;
+    entityName  = 'Canton : ' + currentData.FIELD2 + '<br />Bureau : ' + currentData.FIELD3 + ' - ' + currentData.FIELD4;
     resultId    = entityId;
     // Init.
     results[resultId] = {

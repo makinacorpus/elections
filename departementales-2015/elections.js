@@ -547,7 +547,7 @@ var App = function (dataset) {
                     return b.score - a.score;
                 });
 
-                html += '<p>' + currentOptions.entityName + ' ' + resultsSet[entityId].name + '</p>';
+                html += '<p>' + resultsSet[entityId].name + '</p>';
 
                 html += _buildOverall(scores);
 

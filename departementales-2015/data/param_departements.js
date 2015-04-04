@@ -13,7 +13,6 @@ var options = {
   neutralColor: '#FFFFFF',
   // Legend options
   legendTitle: '<h3>Résultats par département</h3><p><small>La couleur du département montre la nuance ayant recueilli le plus grand nombre de voix, pas celle qui a le plus grand nombre d\'élus.</small></p>',
-  entityName: 'Département : ',
   legendHelp: 'Survolez un département pour plus de détails.',
   // Additionnal layer ?
   additionalLayer: 'data/regions_2015.geojson',
@@ -37,7 +36,7 @@ function computeResults(data) {
   for (var i = 1; i < data.length; i++) {
     currentData = data[i];
     entityId    = currentData.FIELD1;
-    entityName  = currentData.FIELD2;
+    entityName  = 'Département : ' + currentData.FIELD2;
     resultId    = entityId;
     // Init.
     results[resultId] = {

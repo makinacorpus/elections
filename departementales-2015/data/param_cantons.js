@@ -11,7 +11,6 @@ var options = {
   neutralColor: '#AAAAAA',
   // Legend options
   legendTitle: '<h3>Résultats par canton</h3>',
-  entityName: 'Canton :',
   legendHelp: 'Survolez un canton pour plus de détails.',
   // Additionnal layer ?
   // additionalLayer:
@@ -44,7 +43,7 @@ function computeResults(data) {
   for (var i = 0; i < data.length; i++) {
     currentData = data[i];
     entityId    = currentData.FIELD3;
-    entityName  = currentData.FIELD4;
+    entityName  = 'Canton : ' + currentData.FIELD4;
     resultId    = entityId;
     depId       = currentData.FIELD1;
     if (depId !== currentDept) {

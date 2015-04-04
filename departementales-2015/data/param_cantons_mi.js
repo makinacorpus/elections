@@ -12,7 +12,6 @@ var options = {
   neutralColor: '#FFFFFF',
   // Legend options
   legendTitle: '<h3>Résultats par canton</h3><p><a href="http://cartes-elections.makina-corpus.net/departementales-2015/resultats-departements.html">Tous les départements</a></p>',
-  entityName: 'Canton :',
   legendHelp: 'Survolez un canton pour plus de détails. Les cantons en blanc indiquent un candidat élu au premier tour.',
   // Additionnal layer ?
   // additionalLayer:
@@ -50,7 +49,7 @@ function computeResults(data) {
   for (var i = 0; i < cantons.length; i++) {
     currentData = cantons[i];
     entityId    = ""+parseInt(currentData.CodCan);
-    entityName  = currentData.LibCan;
+    entityName  = 'Canton : ' + currentData.LibCan;
     resultId    = entityId;
     // Init.
     results[resultId] = {
