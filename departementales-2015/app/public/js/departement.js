@@ -87,7 +87,7 @@ var App = function (dataset) {
     var self = this;
 
     var options = {
-        tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
+        tileUrl: 'http://{s}.tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
         contour: {
             url: '../../../resources/bureaux/' + departement + '.geojson',
             type: 'geojson',

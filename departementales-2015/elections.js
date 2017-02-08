@@ -103,7 +103,7 @@ var App = function (dataset) {
         // Create tiles layers
         _tileLayers = {
             // Default tile layer
-            makina: L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
+            makina: L.tileLayer('http://{s}.tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
                 attribution: 'Cartes par <a href="http://makina-corpus.com/expertise/cartographie">Makina Corpus</a> & données &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
                 maxZoom: 14
             }),

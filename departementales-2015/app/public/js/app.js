@@ -12,7 +12,7 @@ var App = function(){
   /** options **/
 
   var options = {
-    tileUrl: 'http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
+    tileUrl: 'http://{s}.tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png',
     minZoom: 5,
     maxZoom: 14,
     candidats: {

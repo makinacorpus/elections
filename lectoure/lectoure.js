@@ -97,15 +97,15 @@ var App = function () {
         }
         
         // Add base layers to the 3 maps.
-        var tileLayer = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
+        var tileLayer = L.tileLayer('http://{s}.tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
             maxZoom: 14
         });
         tileLayer.addTo(self.map);
-        var tileLayer2 = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
+        var tileLayer2 = L.tileLayer('http://{s}.tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
             maxZoom: 14
         });
         tileLayer2.addTo(self.map2);
-        var tileLayer3 = L.tileLayer('http://tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
+        var tileLayer3 = L.tileLayer('http://{s}.tilestream.makina-corpus.net/v2/osmlight-france/{z}/{x}/{y}.png', {
             maxZoom: 14
         });
         tileLayer3.addTo(self.map3);
